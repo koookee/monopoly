@@ -11,7 +11,7 @@ public class Player {
         this.name = name;
         this.money = 0;
         this.properties = new ArrayList<>();
-        this.position = 0; 
+        this.position = 0;
     }
 
     public String getName() {
@@ -30,9 +30,7 @@ public class Player {
         this.money = paid;
     }
 
-    public void pay(Player x){
 
-    }
 
 
 
