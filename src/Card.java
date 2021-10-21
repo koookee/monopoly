@@ -4,9 +4,11 @@ public class Card {
     private String color;
 
 
+
     public Card(String name, int cost) {
         this.name = name;
         this.cost = cost;
+
 
     }
 

@@ -1,19 +1,22 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
     private ArrayList<GameModelView> views;
+    private ArrayList<ArrayList<Player>> positions;
 
 
     public GameModel(){
         this.status = GameModel.Status.UNDECIDED;
         this.turn = GameModel.Turn.P1_TURN;
         this.views = new ArrayList();
-
+        this.positions = new ArrayList<>();
 
 
     }
+
     public void addGameModelView(GameModelView view){
         this.views.add(view);
     }
@@ -43,10 +46,18 @@ public class GameModel {
         }
     }
 
+    /*
+    WE GOTTA IMPLEMENT THIS SHIT MY LORDY
+    */
+
+
     public void play(){
+        int roll = (int)(Math.random()*6+1);
 
+
+
+        this.changeTurn();
     }
-
 
 
 
@@ -57,6 +68,7 @@ public class GameModel {
         P4_WINS,
         UNDECIDED;
     }
+
     public static enum Turn{
         P1_TURN,
         P2_TURN,
