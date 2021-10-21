@@ -1,15 +1,18 @@
+
 import java.util.*;
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
     private ArrayList<GameView> views;
     private Map<Integer, Card> gameBoard;
+    private ArrayList<ArrayList<Player>> positions; 
 
 
     public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
         this.turn = GameModel.Turn.P1_TURN;
         this.views = new ArrayList();
+        this.positions = new ArrayList<>();
         this.gameBoard = new HashMap();
 
 
@@ -22,6 +25,7 @@ public class GameModel {
                 "morrison Street","keefer Street","mcLeod Street","rochester Street","parliament Hill","rideau Canal"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400};
 
+
         String[] colors = {"Brown","Brown","light blue","light blue","light blue","pink","pink","pink","orange","orange","orange","yellow","yellow",
                 "yellow","green","green","green","blue","blue"};
 
@@ -33,6 +37,7 @@ public class GameModel {
 
 
     public void addGameModelView(GameView view){
+
         this.views.add(view);
     }
 
@@ -61,10 +66,18 @@ public class GameModel {
         }
     }
 
+    /*
+    WE GOTTA IMPLEMENT THIS SHIT MY LORDY
+    */
+
+
     public void play(){
+        int roll = (int)(Math.random()*6+1);
 
+
+
+        this.changeTurn();
     }
-
 
 
 
@@ -75,6 +88,7 @@ public class GameModel {
         P4_WINS,
         UNDECIDED;
     }
+
     public static enum Turn{
         P1_TURN,
         P2_TURN,
