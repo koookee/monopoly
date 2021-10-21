@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Game
+public class Game implements GameView
 {
     private Parser parser;
     private boolean gameIsOver;
@@ -121,5 +121,10 @@ public class Game
     public static void main(String[] args) {
         Game game = new Game();
         game.displayGameMenu();
+    }
+
+    @Override
+    public void handleGameStatusUpdate(GameEvent e) {
+
     }
 }
