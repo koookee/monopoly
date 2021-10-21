@@ -1,17 +1,19 @@
-import java.util.*
+import java.util.*;
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
-    private ArrayList<GameModelView> views;
+    private ArrayList<GameView> views;
+    private Map<Integer, Card> gameBoard;
 
 
-    public GameModel(){
+    public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
         this.turn = GameModel.Turn.P1_TURN;
         this.views = new ArrayList();
+        this.gameBoard = new HashMap();
 
-    private Map<Integer, Card> gameBoard;
 
+    }
 
     public void createGameBoard(){
 
@@ -29,12 +31,12 @@ public class GameModel {
 
     }
 
-    }
-    public void addGameModelView(GameModelView view){
+
+    public void addGameModelView(GameView view){
         this.views.add(view);
     }
 
-    public void removeGameModelView(GameModelView view){
+    public void removeGameModelView(GameView view){
         this.views.remove(view);
     }
 
