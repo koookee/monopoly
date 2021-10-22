@@ -5,14 +5,12 @@ public class GameModel {
     private GameModel.Turn turn;
     private ArrayList<GameView> views;
     private Map<Integer, Card> gameBoard;
-    private ArrayList<ArrayList<Player>> positions; 
 
 
     public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
         this.turn = GameModel.Turn.P1_TURN;
         this.views = new ArrayList();
-        this.positions = new ArrayList<>();
         this.gameBoard = new HashMap();
 
 
