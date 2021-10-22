@@ -65,6 +65,9 @@ public class GameModel {
                 break;
         }
     }
+    private void updateStatus(){
+        return; //TODO: we need to figure out how to do the win checking
+    }
 
     /*
     WE GOTTA IMPLEMENT THIS SHIT MY LORDY
@@ -73,8 +76,12 @@ public class GameModel {
 
     public void play(){
         int roll = (int)(Math.random()*6+1);
+        //If player X turn set there position to += the roll amount
 
-
+        for (GameView view :
+                views) {
+            view.handleGameStatusUpdate(new GameEvent(this, turn, status));
+        }
 
         this.changeTurn();
     }

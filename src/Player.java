@@ -14,6 +14,13 @@ public class Player {
         this.position = 0;
     }
 
+    public void payRent(Player player, Card card){
+        player.money -= card.getRent();
+    }
+    public void collectMoney(Card card){
+        this.money += card.getRent();
+    }
+
     public String getName() {
         return name;
     }
@@ -31,7 +38,11 @@ public class Player {
     }
 
 
+    public int getPosition() {
+        return position;
+    }
 
-
-
+    public void setPosition(int position) {
+        this.position = position;
+    }
 }

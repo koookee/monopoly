@@ -2,10 +2,12 @@ public class Card {
     private String name;
     private int cost;
     private String color;
+    private boolean isOwned;
 
 
 
     public Card(String name, int cost) {
+        this.isOwned = false;
         this.name = name;
         this.cost = cost;
 
@@ -27,9 +29,7 @@ public class Card {
      * @author Andre
      * @param player
      */
-    public void collectRent(Player player){
 
-    }
 
     /**
      * @author Andre
