@@ -27,7 +27,10 @@ public class Card {
 
     public boolean isOwned() { return isOwned; }
 
-
+    public void setOwned(boolean owned){
+        isOwned = owned;
+        this.owner = null;
+    }
     public void setOwned( Player owner) {
         isOwned = true;
         this.owner = owner;

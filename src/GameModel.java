@@ -1,4 +1,5 @@
 
+import java.sql.SQLOutput;
 import java.util.*;
 public class GameModel {
     private GameModel.Status status;
@@ -8,6 +9,7 @@ public class GameModel {
     private ArrayList<Player> players;
     private Player activePlayer;
     private Card currentCard;
+
 
 
     public GameModel() {
@@ -62,35 +64,79 @@ public class GameModel {
     }
 
     private void changeTurn(){
+        int index = players.indexOf(activePlayer);
+        if(index+1> players.size()-1){
+            index=0;
+        } else {
+            index += 1;
+        }
         switch (turn) {
             case P1_TURN:
                 turn = GameModel.Turn.P2_TURN;
-                activePlayer = players.get(1);
+                activePlayer = players.get(index);
                 break;
             case P2_TURN:
                 turn = GameModel.Turn.P3_TURN;
-                activePlayer = players.get(2);
+                activePlayer = players.get(index);
                 break;
             case P3_TURN:
                 turn = GameModel.Turn.P4_TURN;
-                activePlayer = players.get(3);
+                activePlayer = players.get(index);
                 break;
             case P4_TURN:
                 turn = GameModel.Turn.P1_TURN;
-                activePlayer = players.get(0);
+                activePlayer = players.get(index);
                 break;
         }
     }
     private void updateStatus(){
-        return; //TODO: we need to figure out how to do the win checking
+        int inactivePlayers = 0;
+        int index = -1;
+        int removePlayer = -1;
+
+        for(Player x: players){
+            if(x.getMoney()<=0){
+                removePlayer = players.indexOf(x);
+                inactivePlayers ++;
+                x.setPlaying(false);
+                for(Card c : x.getProperties()){
+                    c.setOwned(false);
+                }
+
+            }
+
+        }
+
+        if(removePlayer != -1){
+            players.remove(removePlayer);
+        }
+
+        System.out.println(players.size());
+
+        if(players.size() == 1){
+            switch(players.get(0).getName()){
+                case "P1":
+                    status = Status.P1_WINS;
+                    break;
+
+                case "P2":
+                    status = Status.P2_WINS;
+                    break;
+
+                case "P3":
+                    status = Status.P3_WINS;
+                    break;
+
+                case "P4":
+                    status = Status.P4_WINS;
+                    break;
+            }
+        }
     }
 
-    /*
-    WE GOTTA IMPLEMENT THIS SHIT MY LORDY
-    */
-
-
     public void play(){
+        this.updateStatus();
+
         int roll = (int)(Math.random()*6+1);
 
         if(activePlayer.getPosition() + roll > 21){
@@ -105,17 +151,18 @@ public class GameModel {
         }
         //If player X turn set there position to += the roll amount
 
-        for (GameView view :
-                views) {
+        for (GameView view : views) {
             view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,roll));
         }
 
         this.changeTurn();
+
     }
 
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
     }
+
     public Player getActivePlayer() {
         return activePlayer;
     }
