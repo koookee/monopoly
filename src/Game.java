@@ -123,6 +123,10 @@ public class Game implements GameView
                     model.buyProperty();
                     System.out.println("your money is now: "+model.getActivePlayer().getMoney());
                 }
+                else if (commandString.equals("pass")) {
+                    System.out.println("You're passing");
+
+                }
 
 
             }
@@ -156,20 +160,26 @@ public class Game implements GameView
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
-        System.out.println(gameModel.getActivePlayer().getName()+ " rolled "+ e.getRoll());
-        System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
-        if (!e.getCard().isOwned()){
-            System.out.println("Would you like to buy this property?");
-            Command buyCommand = parser.getCommand();
-            processCommand(buyCommand, 0);
+        if (!e.getStatus().equals(GameModel.Status.UNDECIDED)){
+            System.out.println("game is over");
+            inGame = false;
+            gameIsOver = true;
+        }else {
+            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll());
+            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
+            if (!e.getCard().isOwned()) {
+                System.out.println("Would you like to buy this property? or pass");
+                Command buyCommand = parser.getCommand();
+                processCommand(buyCommand, 0);
 
-        }else
-        {
-            System.out.println(e.getCard().getOwner().getName()+ " owns this property lol");
-            gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
-            System.out.println("you paid " +e.getCard().getOwner().getName() + " " +e.getCard().getRent() + " dollars" );
-            System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+            } else {
+                System.out.println(e.getCard().getOwner().getName() + " owns this property lol");
+                gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
+                System.out.println("you paid " + e.getCard().getOwner().getName() + " " + e.getCard().getRent() + " dollars");
+                System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+            }
         }
+
 
 
 
