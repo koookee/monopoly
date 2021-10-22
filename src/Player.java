@@ -8,7 +8,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        this.money = 0;
+        this.money = 1500;
         this.position = 0;
     }
 
@@ -31,8 +31,9 @@ public class Player {
         this.money = paid;
     }
 
-    public void buyCard(){
-
+    public void buyCard(Card currentCard){
+        this.money -= currentCard.getCost();
+        currentCard.setOwned(this);
     }
 
 

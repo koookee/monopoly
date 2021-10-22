@@ -8,22 +8,29 @@ public class GameEvent extends EventObject {
 
 
     private GameModel.Status status;
-    private Player activePlayer;
-    private Card card;
 
-    public GameEvent(GameModel gameModel, GameModel.Status status, Player activePlayer, Card card) {
+    private Card card;
+    private int roll;
+
+    public GameEvent(GameModel gameModel, GameModel.Status status, Card card, int roll) {
         super(gameModel);
 
         this.status = status;
-        this.activePlayer = activePlayer;
+
         this.card = card;
+        this.roll = roll;
     }
 
-
+    public int getRoll() {
+        return roll;
+    }
 
     public GameModel.Status getStatus() {
         return status;
     }
 
-    public Player getActivePlayer() {return activePlayer;}
+
+    public Card getCard() {
+        return card;
+    }
 }
