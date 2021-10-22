@@ -1,5 +1,5 @@
 /**
- * @author Andre 
+ * @author Andre
  */
 import java.util.EventObject;
 

@@ -29,22 +29,23 @@ public class Game implements GameView
      */
 
 
-    /**
-     * @author Hussein
-     * Starts the game
-     */
-    public void play()
-    {
-        while (!gameIsOver) {
+//    /**
+//     * @author Hussein
+//     * Starts the game
+//     */
+//    public void play()
+//    {
+//        while (!gameIsOver) {
+//
+//            Command command = parser.getCommand();
+//            processCommand(command, 1);
+//        }
+//
+//        System.out.println("---------------------------------------------------------------");
+//        System.out.println("Thank you for playing. Good bye.");
+//        System.out.println("---------------------------------------------------------------");
+//    }
 
-            Command command = parser.getCommand();
-            processCommand(command, 1);
-        }
-
-        System.out.println("---------------------------------------------------------------");
-        System.out.println("Thank you for playing. Good bye.");
-        System.out.println("---------------------------------------------------------------");
-    }
 
     /**
      * @Author: Hussein
@@ -62,7 +63,7 @@ public class Game implements GameView
             Command menuCommand = parser.getCommand();
             processCommand(menuCommand, 0);
         }
-        play();
+
     }
 
     /**
@@ -118,13 +119,16 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
     }
 
+    @Override
+    public void handleGameStatusUpdate(GameEvent e) {
+        GameModel gameModel = (GameModel) e.getSource();
+
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
         game.displayGameMenu();
     }
 
-    @Override
-    public void handleGameStatusUpdate(GameEvent e) {
 
-    }
 }
