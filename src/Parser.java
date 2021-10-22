@@ -22,14 +22,13 @@ public class Parser
      */
     public Command getCommand()
     {
-        String commandString = new String();
+        String commandString;
         commandString = scanner.nextLine();
 
         if(validCommands.isValidCommand(commandString)) {
             return new Command(commandString);
         }
         else {
-
             return new Command("");
         }
     }
