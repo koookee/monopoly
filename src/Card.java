@@ -3,6 +3,7 @@ public class Card {
     private int cost;
     private String color;
     private boolean isOwned;
+    private Player owner;
 
 
 
@@ -24,11 +25,14 @@ public class Card {
         this.color = color;
     }
 
+    public boolean isOwned() { return isOwned; }
 
-    /**
-     * @author Andre
-     * @param player
-     */
+
+    public void setOwned(boolean owned, Player owner) {
+        isOwned = owned;
+        this.owner = owner;
+    }
+
 
 
     /**

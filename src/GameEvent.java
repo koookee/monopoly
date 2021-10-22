@@ -6,20 +6,24 @@ import java.util.EventObject;
 public class GameEvent extends EventObject {
 
 
-    private GameModel.Turn turn;
+
     private GameModel.Status status;
+    private Player activePlayer;
+    private Card card;
 
-    public GameEvent(GameModel gameModel, GameModel.Turn turn, GameModel.Status status ) {
+    public GameEvent(GameModel gameModel, GameModel.Status status, Player activePlayer, Card card) {
         super(gameModel);
-        this.turn = turn;
+
         this.status = status;
+        this.activePlayer = activePlayer;
+        this.card = card;
     }
 
-    public GameModel.Turn getTurn() {
-        return turn;
-    }
+
 
     public GameModel.Status getStatus() {
         return status;
     }
+
+    public Player getActivePlayer() {return activePlayer;}
 }
