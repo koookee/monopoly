@@ -89,24 +89,17 @@ public class GameModel {
     WE GOTTA IMPLEMENT THIS SHIT MY LORDY
     */
 
-
+    /**
+     * Author: Andre and Hussein
+     */
     public void play(){
         int roll = (int)(Math.random()*6+1);
 
-        if(activePlayer.getPosition() + roll > 21){
-            activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-
-
-
-        }else{
-            activePlayer.setPosition(activePlayer.getPosition() + roll);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-        }
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % 22);
+        currentCard = gameBoard.get(activePlayer.getPosition());
         //If player X turn set there position to += the roll amount
 
-        for (GameView view :
-                views) {
+        for (GameView view : views) {
             view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,roll));
         }
 
