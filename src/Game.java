@@ -5,8 +5,11 @@ import java.util.Scanner;
 public class Game implements GameView
 {
     private Parser parser;
-    private boolean gameIsOver;
+    private GameModel gameModel;
     private boolean inMenu;
+    boolean inGame;
+    private  boolean gameIsOver;
+    private GameModel model;
 
 
 
@@ -17,8 +20,10 @@ public class Game implements GameView
     public Game()
     {
         parser = new Parser();
-        gameIsOver = false;
+
         inMenu = true;
+        model = new GameModel();
+        model.addGameModelView(this);
 
 
     }
@@ -66,6 +71,17 @@ public class Game implements GameView
 
     }
 
+    private void inGameMenu(){
+
+
+        while(inGame){
+            System.out.println("\nIt is " + model.getActivePlayer().getName() +"'s turn, your current balance is " + model.getActivePlayer().getMoney());
+            Command gameCommand = parser.getCommand();
+            processCommand(gameCommand, 0);
+        }
+
+    }
+
     /**
      * @author Hussein
      * Processes a given command. It will be processed depending on the state of the game. If the player
@@ -86,11 +102,29 @@ public class Game implements GameView
         if (commandString.equals("help")) printHelp();
 
 
+
         if (state == 0){
-            if (commandString.equals("play")) inMenu = false;
+            if (commandString.equals("play"))
+            {
+                inMenu = false;
+                inGame = true;
+            }
             else if (commandString.equals("quit")) {
                 inMenu = false;
                 gameIsOver = true;
+            }
+            else if(inGame){
+
+                if (commandString.equals("roll")){
+                    model.play();
+
+                }
+                else if(commandString.equals("buy")){
+                    model.buyProperty();
+                    System.out.println("your money is now: "+model.getActivePlayer().getMoney());
+                }
+
+
             }
             else {
                 System.out.println("---------------------------------------------------------------");
@@ -121,14 +155,33 @@ public class Game implements GameView
 
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
-        GameModel gameModel = (GameModel) e.getSource();
+        this.gameModel = (GameModel) e.getSource();
+        System.out.println(gameModel.getActivePlayer().getName()+ " rolled "+ e.getRoll());
+        System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
+        if (!e.getCard().isOwned()){
+            System.out.println("Would you like to buy this property?");
+            Command buyCommand = parser.getCommand();
+            processCommand(buyCommand, 0);
+
+        }else
+        {
+            System.out.println(e.getCard().getOwner().getName()+ " owns this property lol");
+            gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
+            System.out.println("you paid " +e.getCard().getOwner().getName() + " " +e.getCard().getRent() + " dollars" );
+            System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+        }
 
 
+
+    }
+    public void play(){
+        displayGameMenu();
+        inGameMenu();
     }
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.displayGameMenu();
+        game.play();
     }
 
 

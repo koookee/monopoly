@@ -7,6 +7,7 @@ public class GameModel {
     private Map<Integer, Card> gameBoard;
     private ArrayList<Player> players;
     private Player activePlayer;
+    private Card currentCard;
 
 
     public GameModel() {
@@ -19,6 +20,7 @@ public class GameModel {
         this.addPlayer("P2");
         this.addPlayer("P3");
         this.addPlayer("P4");
+        createGameBoard();
     }
 
     private void addPlayer(String name){
@@ -32,14 +34,14 @@ public class GameModel {
 
         String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","lauier Avenue","waller Street","bronson Avenue","hurdman Road",
                 "Lett Street","lampman Crescent","macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place","perly Drive",
-                "morrison Street","keefer Street","mcLeod Street","rochester Street","parliament Hill","rideau Canal"};
+                "morrison Street","keefer Street","mcLeod Street","parliament Hill","rideau Canal"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400};
 
 
         String[] colors = {"Brown","Brown","light blue","light blue","light blue","pink","pink","pink","orange","orange","orange","yellow","yellow",
                 "yellow","green","green","green","blue","blue"};
 
-        for (int i = 0; i < streetNames.length; i++) {
+        for (int i = 0; i < streetNames.length-1; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
 
@@ -90,28 +92,33 @@ public class GameModel {
 
     public void play(){
         int roll = (int)(Math.random()*6+1);
-        Card currentCard;
+
         if(activePlayer.getPosition() + roll > 21){
             activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
-            currentCard = gameBoard.get(activePlayer.getPosition());
+            currentCard = gameBoard.get(activePlayer.getPosition()-1);
 
 
 
         }else{
             activePlayer.setPosition(activePlayer.getPosition() + roll);
-            currentCard = gameBoard.get(activePlayer.getPosition());
+            currentCard = gameBoard.get(activePlayer.getPosition()-1);
         }
         //If player X turn set there position to += the roll amount
 
         for (GameView view :
                 views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, activePlayer, currentCard));
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,roll));
         }
 
         this.changeTurn();
     }
 
-
+    public void buyProperty(){
+        this.activePlayer.buyCard(currentCard);
+    }
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
 
     public static enum Status {
         P1_WINS,
