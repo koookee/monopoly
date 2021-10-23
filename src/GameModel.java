@@ -111,7 +111,6 @@ public class GameModel {
             players.remove(removePlayer);
         }
 
-        System.out.println(players.size());
 
         if(players.size() == 1){
             switch(players.get(0).getName()){

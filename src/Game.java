@@ -61,7 +61,7 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
         System.out.println("Welcome to Monopoly!");
         System.out.println("For a list of all the commands, type 'help'");
-        System.out.println("Type 'play' when you're ready");
+        System.out.println("Type 'start' when you're ready");
         System.out.println("---------------------------------------------------------------");
 
         while (inMenu) {
@@ -71,11 +71,16 @@ public class Game implements GameView
 
     }
 
-    private void inGameMenu(){
 
+    private void inGameMenu(){
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("Welcome to Monopoly!");
+        System.out.println("Type 'roll' to start your turn ");
+        System.out.println("---------------------------------------------------------------");
 
         while(inGame){
             System.out.println("\nIt is " + model.getActivePlayer().getName() +"'s turn, your current balance is " + model.getActivePlayer().getMoney());
+            System.out.println("Roll when your are ready");
             Command gameCommand = parser.getCommand();
             processCommand(gameCommand, 0);
         }
@@ -104,7 +109,7 @@ public class Game implements GameView
 
 
         if (state == 0){
-            if (commandString.equals("play"))
+            if (commandString.equals("start"))
             {
                 inMenu = false;
                 inGame = true;
@@ -122,6 +127,24 @@ public class Game implements GameView
                 else if(commandString.equals("buy")){
                     model.buyProperty();
                     System.out.println("your money is now: "+model.getActivePlayer().getMoney());
+                }
+                else if (commandString.equals("pass")) {
+                    System.out.println("You're passing");
+
+                }
+                else if(commandString.equals("state")){
+                    System.out.println(model.getActivePlayer().getName());
+                    System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
+                    System.out.print("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
+                    for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
+                        if(i < model.getActivePlayer().getProperties().size()-1 ) {
+                            System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+                        }else{
+                            System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+                        }
+
+                    }
+
                 }
 
 
@@ -156,20 +179,26 @@ public class Game implements GameView
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
-        System.out.println(gameModel.getActivePlayer().getName()+ " rolled "+ e.getRoll());
-        System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
-        if (!e.getCard().isOwned()){
-            System.out.println("Would you like to buy this property?");
-            Command buyCommand = parser.getCommand();
-            processCommand(buyCommand, 0);
+        if (!e.getStatus().equals(GameModel.Status.UNDECIDED)){
+            System.out.println("game is over");
+            inGame = false;
+            gameIsOver = true;
+        }else {
+            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll());
+            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
+            if (!e.getCard().isOwned()) {
+                System.out.println("Would you like to buy this property? or pass");
+                Command buyCommand = parser.getCommand();
+                processCommand(buyCommand, 0);
 
-        }else
-        {
-            System.out.println(e.getCard().getOwner().getName()+ " owns this property lol");
-            gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
-            System.out.println("you paid " +e.getCard().getOwner().getName() + " " +e.getCard().getRent() + " dollars" );
-            System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+            } else {
+                System.out.println(e.getCard().getOwner().getName() + " owns this property lol");
+                gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
+                System.out.println("you paid " + e.getCard().getOwner().getName() + " " + e.getCard().getRent() + " dollars");
+                System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+            }
         }
+
 
 
 
