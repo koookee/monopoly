@@ -18,7 +18,8 @@ public class Player {
     }
 
     public void payRent(Player player, Card card){
-        player.money -= card.getRent();
+        this.money -= card.getRent();
+        player.collectMoney(card);
     }
     public void collectMoney(Card card){
         this.money += card.getRent();
