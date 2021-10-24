@@ -194,7 +194,6 @@ public class Game implements GameView
     }
     public void play(){
         displayGameMenu();
-
     }
 
     public static void main(String[] args) {
