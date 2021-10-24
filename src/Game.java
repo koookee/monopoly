@@ -80,11 +80,10 @@ public class Game implements GameView
 
         while(inGame){
             System.out.println("\nIt is " + model.getActivePlayer().getName() +"'s turn, your current balance is " + model.getActivePlayer().getMoney());
-            System.out.println("Roll when your are ready");
+            System.out.println("Roll when you are ready");
             Command gameCommand = parser.getCommand();
-            processCommand(gameCommand, 0);
+            processCommand(gameCommand, 1);
         }
-
     }
 
     /**
@@ -151,12 +150,12 @@ public class Game implements GameView
             }
             else {
                 System.out.println("---------------------------------------------------------------");
-                System.out.println("List of currently available commands: 'play', 'help', 'quit'");
+                System.out.println("List of currently available commands: 'start', 'help', 'quit'");
                 System.out.println("---------------------------------------------------------------");
             }
         }
         else if (state == 1){
-            if (commandString.equals("quit")) gameIsOver = true;
+            if (commandString.equals("quit")) inGame = false;
         }
     }
 
@@ -198,10 +197,6 @@ public class Game implements GameView
                 System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
             }
         }
-
-
-
-
     }
     public void play(){
         displayGameMenu();

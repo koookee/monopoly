@@ -46,12 +46,10 @@ public class GameModel {
         for (int i = 0; i < streetNames.length-1; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
-
     }
 
 
     public void addGameModelView(GameView view){
-
         this.views.add(view);
     }
 
@@ -65,11 +63,8 @@ public class GameModel {
 
     private void changeTurn(){
         int index = players.indexOf(activePlayer);
-        if(index+1> players.size()-1){
-            index=0;
-        } else {
-            index += 1;
-        }
+        index++;
+        index = index % 4;
         switch (turn) {
             case P1_TURN:
                 turn = GameModel.Turn.P2_TURN;
@@ -102,9 +97,7 @@ public class GameModel {
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
                 }
-
             }
-
         }
 
         if(removePlayer != -1){
@@ -138,13 +131,11 @@ public class GameModel {
 
         int roll = (int)(Math.random()*6+1);
 
-        if(activePlayer.getPosition() + roll > 21){
+        if (activePlayer.getPosition() + roll > 21){
             activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
             currentCard = gameBoard.get(activePlayer.getPosition()-1);
-
-
-
-        }else{
+        }
+        else{
             activePlayer.setPosition(activePlayer.getPosition() + roll);
             currentCard = gameBoard.get(activePlayer.getPosition()-1);
         }
@@ -155,7 +146,6 @@ public class GameModel {
         }
 
         this.changeTurn();
-
     }
 
     public void buyProperty(){
