@@ -11,8 +11,6 @@ public class Game implements GameView
     private  boolean gameIsOver;
     private GameModel model;
 
-
-
     /**
      * @author Hussein
      * Constructor for the Game class
@@ -20,12 +18,10 @@ public class Game implements GameView
     public Game()
     {
         parser = new Parser();
-
         inMenu = true;
+        inGame = false;
         model = new GameModel();
         model.addGameModelView(this);
-
-
     }
 
     /**
@@ -105,48 +101,17 @@ public class Game implements GameView
 
         if (commandString.equals("help")) printHelp();
 
-
-
         if (state == 0){
             if (commandString.equals("start"))
             {
                 inMenu = false;
                 inGame = true;
+                inGameMenu();
             }
             else if (commandString.equals("quit")) {
                 inMenu = false;
                 gameIsOver = true;
-            }
-            else if(inGame){
-
-                if (commandString.equals("roll")){
-                    model.play();
-
-                }
-                else if(commandString.equals("buy")){
-                    model.buyProperty();
-                    System.out.println("your money is now: "+model.getActivePlayer().getMoney());
-                }
-                else if (commandString.equals("pass")) {
-                    System.out.println("You're passing");
-
-                }
-                else if(commandString.equals("state")){
-                    System.out.println(model.getActivePlayer().getName());
-                    System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
-                    System.out.print("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
-                    for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
-                        if(i < model.getActivePlayer().getProperties().size()-1 ) {
-                            System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
-                        }else{
-                            System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
-                        }
-
-                    }
-
-                }
-
-
+                System.out.println("Thank you for playing");
             }
             else {
                 System.out.println("---------------------------------------------------------------");
@@ -155,7 +120,36 @@ public class Game implements GameView
             }
         }
         else if (state == 1){
-            if (commandString.equals("quit")) inGame = false;
+            if (commandString.equals("quit")) {
+                inGame = false;
+                System.out.println("Thank you for playing");
+            }
+            if (commandString.equals("roll")){
+                model.play();
+
+            }
+            else if(commandString.equals("buy")){
+                model.buyProperty();
+                System.out.println("your money is now: "+model.getActivePlayer().getMoney());
+            }
+            else if (commandString.equals("pass")) {
+                System.out.println("You're passing");
+
+            }
+            else if(commandString.equals("state")){
+                System.out.println(model.getActivePlayer().getName());
+                System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
+                System.out.print("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
+                for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
+                    if(i < model.getActivePlayer().getProperties().size()-1 ) {
+                        System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+                    }else{
+                        System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+                    }
+
+                }
+
+            }
         }
     }
 
@@ -200,7 +194,7 @@ public class Game implements GameView
     }
     public void play(){
         displayGameMenu();
-        inGameMenu();
+
     }
 
     public static void main(String[] args) {
