@@ -9,8 +9,6 @@ public class Card {
         this.isOwned = false;
         this.name = name;
         this.cost = cost;
-
-
     }
 
     /**

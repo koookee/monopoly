@@ -7,9 +7,7 @@ public class Game implements GameView
     private Parser parser;
     private GameModel gameModel;
     private boolean inMenu;
-    private boolean done = false;
-    boolean inGame;
-    private  boolean gameIsOver;
+    private boolean inGame;
     private GameModel model;
 
     /**

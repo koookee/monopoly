@@ -5,7 +5,6 @@ import java.util.EventObject;
 
 public class GameEvent extends EventObject {
     private GameModel.Status status;
-
     private Card card;
     private int roll;
 
@@ -25,7 +24,6 @@ public class GameEvent extends EventObject {
     public GameModel.Status getStatus() {
         return status;
     }
-
 
     public Card getCard() {
         return card;

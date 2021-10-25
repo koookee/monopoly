@@ -1,4 +1,3 @@
 public interface GameView {
-    public void handleGameStatusUpdate(GameEvent e);
-
+    void handleGameStatusUpdate(GameEvent e);
 }
