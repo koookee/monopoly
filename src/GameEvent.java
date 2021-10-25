@@ -8,16 +8,16 @@ import java.util.EventObject;
 public class GameEvent extends EventObject {
     private GameModel.Status status;
     private Card card;
-    private int roll;
+    private int[] roll;
 
     /**
      * The GameEvent contructor
-     * @param gameModel the game model of type GameModel 
+     * @param gameModel the game model of type GameModel
      * @param status the status of type enum
      * @param card the card of type Card for the property
      * @param roll the roll of type int for the roll number
      */
-    public GameEvent(GameModel gameModel, GameModel.Status status, Card card, int roll) {
+    public GameEvent(GameModel gameModel, GameModel.Status status, Card card, int[] roll) {
         super(gameModel);
 
         this.status = status;
@@ -30,7 +30,7 @@ public class GameEvent extends EventObject {
      * Gets the roll number
      * @return the int roll
      */
-    public int getRoll() {
+    public int[] getRoll() {
         return roll;
     }
 

@@ -88,4 +88,8 @@ public class Card {
     public int getRent() {
         return (int) (cost * 0.1) ;
     }
+
+    public String getColor() {
+        return this.color;
+    }
 }

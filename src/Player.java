@@ -16,7 +16,7 @@ public class Player {
     private ArrayList<Card> properties;
 
     /**
-     * 
+     *
      * @param name
      */
     public Player(String name){

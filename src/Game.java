@@ -160,15 +160,23 @@ public class Game implements GameView
         System.out.println("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
         for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
             if(i < model.getActivePlayer().getProperties().size()-1 ) {
-                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+                System.out.println(i+1 + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
             }else{
-                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+                System.out.println(i+1 + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
             }
         }
     }
 
     /**
-     * This class handles the update to the view of the game class
+     * Prints when a player goes bankrupt
+     * @param playerName the string of the player that went bankrupt
+     */
+    public static void printBankruptcy(String playerName){
+        System.out.println(playerName + " went bankrupt");
+    }
+
+/**
+ * This class handles the update to the view of the game class
      * @param e is a game event that holds useful information
      */
     @Override
@@ -179,8 +187,9 @@ public class Game implements GameView
             inGame = false;
         }
         else {
-            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll());
-            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
+            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll()[0] + " " + e.getRoll()[1]);
+            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost() + " color: " + e.getCard().getColor());
+
             if (!e.getCard().isOwned()) {
                 System.out.println("Would you like to buy this property? or pass");
                 Command command = parser.getCommand();
@@ -195,6 +204,7 @@ public class Game implements GameView
                 System.out.println("you paid " + e.getCard().getOwner().getName() + " " + e.getCard().getRent() + " dollars");
                 System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
             }
+
         }
     }
 

@@ -14,6 +14,8 @@ public class GameModel {
     private ArrayList<Player> players;
     private Player activePlayer;
     private Card currentCard;
+    private int numTimesRolledDouble;
+
 
 
 
@@ -28,6 +30,7 @@ public class GameModel {
         this.views = new ArrayList();
         this.gameBoard = new HashMap();
         this.players = new ArrayList<>();
+        this.numTimesRolledDouble = 0;
         this.addPlayer("P1");
         this.addPlayer("P2");
         this.addPlayer("P3");
@@ -133,6 +136,7 @@ public class GameModel {
 
         for(Player x: players){
             if(x.getMoney()<=0){
+                Game.printBankruptcy(x.getName());
                 removePlayer = players.indexOf(x);
                 x.setPlaying(false);
                 for(Card c : x.getProperties()){
@@ -176,26 +180,7 @@ public class GameModel {
         int dice1 = (int)(Math.random()*6+1);
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
-        //System.out.println(dice1 + " " + dice2);
 
-        while(dice1 == dice2){
-            dice1 =(int)(Math.random()*6+1);
-            dice2 = (int)(Math.random()*6+1);
-            //System.out.println(dice1 + "" + dice2);
-            roll += dice1 + dice2;
-        }
-
-        // This breaks the program when roll is > 1
-        /*
-        if (activePlayer.getPosition() + roll > 21){
-            activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-        }
-        else{
-            activePlayer.setPosition(activePlayer.getPosition() + roll);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-        }
-        */
 
         activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
         currentCard = gameBoard.get(activePlayer.getPosition());
@@ -203,10 +188,18 @@ public class GameModel {
         //If player X turn set there position to += the roll amount
 
         for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,roll));
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+        }
+        this.updateStatus();
+        if(dice1 == dice2 && numTimesRolledDouble<=3){
+            this.play();
+            this.numTimesRolledDouble++;
+        }else{
+            this.changeTurn();
+            this.numTimesRolledDouble = 0;
         }
 
-        this.changeTurn();
+
     }
 
     /**
@@ -233,6 +226,9 @@ public class GameModel {
         return currentCard;
     }
 
+
+
+
     /**
      * enum that holds the different statuses for the game, certain player winning or undecided
      */
@@ -253,4 +249,5 @@ public class GameModel {
         P3_TURN,
         P4_TURN;
     }
+
 }
