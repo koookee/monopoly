@@ -130,8 +130,11 @@ public class Game implements GameView
         }
         else if(state == 2){
             if(commandString.equals("buy")){
-                model.buyProperty();
-                System.out.println("your money is now: " + model.getActivePlayer().getMoney());
+                if (model.getActivePlayer().getMoney() > model.getCurrentCard().getCost()) {
+                    model.buyProperty();
+                    System.out.println("Your money is now: " + model.getActivePlayer().getMoney());
+                }
+                else System.out.println("Not enough money");
             }
             else if (commandString.equals("pass")) {
                 System.out.println("You're passing");

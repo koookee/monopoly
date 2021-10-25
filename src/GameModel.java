@@ -37,11 +37,12 @@ public class GameModel {
                 "rideau Canal", "street 21", "street 22"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
 
+
         String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
                 "orange","orange","orange", "red","red","red","yellow","yellow", "yellow","green","green",
                 "green","blue","blue"};
 
-        for (int i = 0; i < streetNames.length-1; i++) {
+        for (int i = 0; i < streetNames.length; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
     }
@@ -136,7 +137,6 @@ public class GameModel {
             dice2 = (int)(Math.random()*6+1);
             //System.out.println(dice1 + "" + dice2);
             roll += dice1 + dice2;
-
         }
 
         // This breaks the program when roll is > 1
@@ -150,6 +150,7 @@ public class GameModel {
             currentCard = gameBoard.get(activePlayer.getPosition()-1);
         }
         */
+
         activePlayer.setPosition((activePlayer.getPosition() + roll) % 22);
         currentCard = gameBoard.get(activePlayer.getPosition());
 
@@ -168,6 +169,10 @@ public class GameModel {
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public Card getCurrentCard() {
+        return currentCard;
     }
 
     public static enum Status {
