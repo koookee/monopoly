@@ -25,9 +25,6 @@ public class Game implements GameView
         model.addGameModelView(this);
     }
 
-
-
-
     /**
      * @Author: Hussein
      * Displays and allows the player to interact with the game menu
@@ -154,6 +151,9 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
     }
 
+    /**
+     * Prints a description of the state
+     */
     private void printState(){
         System.out.println(model.getActivePlayer().getName());
         System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
@@ -167,6 +167,10 @@ public class Game implements GameView
         }
     }
 
+    /**
+     * This class handles the update to the view of the game class
+     * @param e is a game event that holds useful information
+     */
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
@@ -193,10 +197,18 @@ public class Game implements GameView
             }
         }
     }
+
+    /**
+     * this method starts the game
+     */
     public void play(){
         displayGameMenu();
     }
 
+    /**
+     * the main method
+     * @param args
+     */
     public static void main(String[] args) {
         Game game = new Game();
         game.play();

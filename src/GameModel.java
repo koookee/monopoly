@@ -1,10 +1,11 @@
-import java.util.*;
-
 /**
- * @author Andre, Jack, Cassidy, Hussain
+ * @author Andre, Jack, Cassidy, Hussein
  * This class represents the model of our monoploy game
  *
  */
+
+import java.util.*;
+
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
@@ -223,10 +224,18 @@ public class GameModel {
         return activePlayer;
     }
 
+
+    /**
+     * Getter for the current card that the player is on.
+     * @return Returns a Card that is the current card that the player is on.
+     */
     public Card getCurrentCard() {
         return currentCard;
     }
 
+    /**
+     * enum that holds the different statuses for the game, certain player winning or undecided
+     */
     public static enum Status {
         P1_WINS,
         P2_WINS,
@@ -235,6 +244,9 @@ public class GameModel {
         UNDECIDED;
     }
 
+    /**
+     * enum that holds the different turns of players in monopoly.
+     */
     public static enum Turn{
         P1_TURN,
         P2_TURN,
