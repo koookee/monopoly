@@ -1,2 +1,7 @@
-# monopoly
-Maybe we could document the controls in this file?
+# Monopoly
+
+<p>by Andre Hazim, Hussein Elmokdad, Jack Mackinnon, and Cassidy Pacada</p>
+
+
+##
+
