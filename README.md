@@ -13,9 +13,9 @@ To run the program, the player must have Java installed. Once the executable fil
 ## Deliverables
 The deliverables include
 - The Monopoly Game jar file and source files 
-    -This includes the executable file to actually run the game as well as the code that was written for this milestone
+- -This includes the executable file to actually run the game as well as the code that was written for this milestone
 - The UML class diagrams
-    -This 
+- -This 
 - The sequence diagrams
 
 
