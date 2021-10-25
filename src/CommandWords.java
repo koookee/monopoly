@@ -1,7 +1,7 @@
 
 public class CommandWords
 {
-    private static final String[] validCommands = {"pass", "buy", "state", "quit", "play", "help", "roll", "start"};
+    private static final String[] validCommands = {"pass", "buy", "state", "quit", "play", "help", "roll", "start", "done"};
 
     /**
      * The CommandWords constructor

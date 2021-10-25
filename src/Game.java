@@ -7,6 +7,7 @@ public class Game implements GameView
     private Parser parser;
     private GameModel gameModel;
     private boolean inMenu;
+    private boolean done = false;
     boolean inGame;
     private  boolean gameIsOver;
     private GameModel model;
@@ -101,19 +102,16 @@ public class Game implements GameView
 
         if (commandString.equals("help")) printHelp();
 
-        if (state == 0){
-            if (commandString.equals("start"))
-            {
+        if (state == 0) {
+            if (commandString.equals("start")) {
                 inMenu = false;
                 inGame = true;
                 inGameMenu();
-            }
-            else if (commandString.equals("quit")) {
+            } else if (commandString.equals("quit")) {
                 inMenu = false;
                 gameIsOver = true;
                 System.out.println("Thank you for playing");
-            }
-            else {
+            } else {
                 System.out.println("---------------------------------------------------------------");
                 System.out.println("List of currently available commands: 'start', 'help', 'quit'");
                 System.out.println("---------------------------------------------------------------");
@@ -128,6 +126,7 @@ public class Game implements GameView
                 model.play();
 
             }
+            /**
             else if(commandString.equals("buy")){
                 model.buyProperty();
                 System.out.println("your money is now: "+model.getActivePlayer().getMoney());
@@ -150,6 +149,52 @@ public class Game implements GameView
                 }
 
             }
+             **/
+        }
+        else if(state == 2){
+
+            if(commandString.equals("buy")){
+                model.buyProperty();
+                System.out.println("your money is now: "+model.getActivePlayer().getMoney());
+            }
+            else if (commandString.equals("pass")) {
+                System.out.println("You're passing");
+
+            }
+            else if(commandString.equals("state")){
+                System.out.println(model.getActivePlayer().getName());
+                System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
+                System.out.println("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
+                for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
+                    if(i < model.getActivePlayer().getProperties().size()-1 ) {
+                        System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+                    }else{
+                        System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+                    }
+
+                }
+
+            }
+            else if(commandString.equals("done")){
+                done = true;
+            }
+            else if(commandString.equals("quit")){
+                inGame = false;
+                gameIsOver = true;
+            }
+            else{
+                System.out.println("Invalid command! Try 'buy', 'pass', state', 'done', or 'quit'!");
+                Command buyCommand = parser.getCommand();
+                processCommand(buyCommand, 2);
+
+            }
+            while(!done){
+                System.out.println("Use another command! Use 'done' to exit turn.");
+                Command buyCommand = parser.getCommand();
+                processCommand(buyCommand, 2);
+
+            }
+
         }
     }
 
@@ -182,7 +227,8 @@ public class Game implements GameView
             if (!e.getCard().isOwned()) {
                 System.out.println("Would you like to buy this property? or pass");
                 Command buyCommand = parser.getCommand();
-                processCommand(buyCommand, 0);
+                processCommand(buyCommand, 2);
+
 
             } else {
                 System.out.println(e.getCard().getOwner().getName() + " owns this property lol");

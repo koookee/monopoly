@@ -34,7 +34,7 @@ public class GameModel {
 
     public void createGameBoard(){
 
-        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","lauier Avenue","waller Street","bronson Avenue","hurdman Road",
+        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue","waller Street","bronson Avenue","hurdman Road",
                 "Lett Street","lampman Crescent","macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place","perly Drive",
                 "morrison Street","keefer Street","mcLeod Street","parliament Hill","rideau Canal"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400};
@@ -129,7 +129,18 @@ public class GameModel {
     public void play(){
         this.updateStatus();
 
-        int roll = (int)(Math.random()*6+1);
+        int dice1 = (int)(Math.random()*6+1);
+        int dice2 = (int)(Math.random()*6+1);
+        int roll = dice1 + dice2;
+        //System.out.println(dice1 + " " + dice2);
+
+        while(dice1 == dice2){
+            dice1 =(int)(Math.random()*6+1);
+            dice2 = (int)(Math.random()*6+1);
+            //System.out.println(dice1 + "" + dice2);
+            roll += dice1 + dice2;
+
+        }
 
         if (activePlayer.getPosition() + roll > 21){
             activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
