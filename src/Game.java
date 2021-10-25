@@ -1,6 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * This class displays our game to the terminal
+ *
+ */
 
 public class Game implements GameView
 {
@@ -24,30 +26,6 @@ public class Game implements GameView
     }
 
     /**
-     * @author Andre
-     * Creates the game board
-     */
-
-
-//    /**
-//     * @author Hussein
-//     * Starts the game
-//     */
-//    public void play()
-//    {
-//        while (!gameIsOver) {
-//
-//            Command command = parser.getCommand();
-//            processCommand(command, 1);
-//        }
-//
-//        System.out.println("---------------------------------------------------------------");
-//        System.out.println("Thank you for playing. Good bye.");
-//        System.out.println("---------------------------------------------------------------");
-//    }
-
-
-    /**
      * @Author: Hussein
      * Displays and allows the player to interact with the game menu
      */
@@ -64,6 +42,11 @@ public class Game implements GameView
             processCommand(menuCommand, 0);
         }
     }
+
+
+    /**
+     * Displays and allows player to interact with the actual game so that they can play
+     */
 
     private void inGameMenu(){
         System.out.println("---------------------------------------------------------------");
@@ -168,19 +151,34 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
     }
 
+    /**
+     * Prints a description of the state
+     */
     private void printState(){
         System.out.println(model.getActivePlayer().getName());
         System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
         System.out.println("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
         for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
             if(i < model.getActivePlayer().getProperties().size()-1 ) {
-                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+                System.out.println(i+1 + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
             }else{
-                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+                System.out.println(i+1 + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
             }
         }
     }
 
+    /**
+     * Prints when a player goes bankrupt
+     * @param playerName the string of the player that went bankrupt
+     */
+    public static void printBankruptcy(String playerName){
+        System.out.println(playerName + " went bankrupt");
+    }
+
+/**
+ * This class handles the update to the view of the game class
+     * @param e is a game event that holds useful information
+     */
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
@@ -189,8 +187,9 @@ public class Game implements GameView
             inGame = false;
         }
         else {
-            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll());
-            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
+            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll()[0] + " " + e.getRoll()[1]);
+            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost() + " color: " + e.getCard().getColor());
+
             if (!e.getCard().isOwned()) {
                 System.out.println("Would you like to buy this property? or pass");
                 Command command = parser.getCommand();
@@ -205,12 +204,21 @@ public class Game implements GameView
                 System.out.println("you paid " + e.getCard().getOwner().getName() + " " + e.getCard().getRent() + " dollars");
                 System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
             }
+
         }
     }
+
+    /**
+     * this method starts the game
+     */
     public void play(){
         displayGameMenu();
     }
 
+    /**
+     * the main method
+     * @param args
+     */
     public static void main(String[] args) {
         Game game = new Game();
         game.play();

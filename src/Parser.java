@@ -1,3 +1,8 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * The parser that scanes the game commands
+ *
+ */
 import java.util.Scanner;
 
 public class Parser
@@ -6,7 +11,7 @@ public class Parser
     private Scanner scanner;
 
     /**
-     * @author: Hussein
+     *
      * The constructor for the Parser class
      */
     public Parser()
@@ -16,7 +21,6 @@ public class Parser
     }
 
     /**
-     * @author Hussein
      * Allows the user to enter a command
      * @return a Command object that contains the user input
      */

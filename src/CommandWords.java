@@ -1,4 +1,8 @@
-
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * This class is used to for checking the avaliable command words.
+ *
+ */
 public class CommandWords
 {
     private static final String[] validCommands = {"pass", "buy", "state", "quit", "play", "help", "roll", "start", "done"};
@@ -12,7 +16,6 @@ public class CommandWords
     }
 
     /**
-     * @author Hussein
      * Checks whether the entered String is a valid command
      * @return true if the string is a valid command, false otherwise
      */

@@ -1,8 +1,12 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * This class is used for reading the unputs of the players.
+ *
+ */
 public class Command {
     private String commandWord;
 
     /**
-     * @author: Hussein
      * The constructor for the command class
      * @param firstWord the string that the user entered
      */
@@ -12,7 +16,6 @@ public class Command {
     }
 
     /**
-     * @author Hussein
      * Gets the command word entered by the user
      * @return The command word
      */
@@ -22,7 +25,6 @@ public class Command {
     }
 
     /**
-     * @author Hussein
      * @return true if this command was not understood
      */
     public boolean isUnknown()

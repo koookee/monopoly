@@ -1,4 +1,11 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussein
+ * This class represents the model of our monoploy game
+ *
+ */
+
 import java.util.*;
+
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
@@ -7,6 +14,15 @@ public class GameModel {
     private ArrayList<Player> players;
     private Player activePlayer;
     private Card currentCard;
+    private int numTimesRolledDouble;
+
+
+
+
+    /**
+     * this is the default contructor
+     * We set the amount of players to 4 as the default since we haven't added the ai yet
+     */
 
     public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
@@ -14,13 +30,19 @@ public class GameModel {
         this.views = new ArrayList();
         this.gameBoard = new HashMap();
         this.players = new ArrayList<>();
+        this.numTimesRolledDouble = 0;
         this.addPlayer("P1");
         this.addPlayer("P2");
         this.addPlayer("P3");
         this.addPlayer("P4");
-        createGameBoard();
+        this.createGameBoard();
     }
 
+    /**
+     * This method adds a player to our list of players
+     * We set the active player to the first player since they are Player 1
+     * @param name is the String of the name the player wants
+     */
     private void addPlayer(String name){
         players.add(new Player(name));
         if(players.size()==1){
@@ -28,6 +50,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * This method creates the gameboard for the players
+     */
     public void createGameBoard(){
         // As of right now "Go" does not exist
         String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
@@ -36,6 +61,8 @@ public class GameModel {
                 "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
                 "rideau Canal", "street 21", "street 22"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
+
+
 
 
         String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
@@ -47,18 +74,34 @@ public class GameModel {
         }
     }
 
+
+    /**
+     * This method adds a view to the model
+     * @param view a view that the model will notify
+     */
     public void addGameModelView(GameView view){
         this.views.add(view);
     }
 
+    /**
+     * this method removes a view from the model
+     * @param view a view that will be removed
+     */
     public void removeGameModelView(GameView view){
         this.views.remove(view);
     }
 
+    /**
+     * A getter for the status
+     * @return the Enum status
+     */
     public GameModel.Status getStatus(){
         return this.status;
     }
 
+    /**
+     * this method changes the players turn
+     */
     private void changeTurn(){
         int index = players.indexOf(activePlayer);
         index++;
@@ -82,15 +125,19 @@ public class GameModel {
                 break;
         }
     }
+
+    /**
+     * this method updates the status of the game
+     * to show if a player is in or out
+     */
     private void updateStatus(){
-        int inactivePlayers = 0;
-        int index = -1;
+
         int removePlayer = -1;
 
         for(Player x: players){
             if(x.getMoney()<=0){
+                Game.printBankruptcy(x.getName());
                 removePlayer = players.indexOf(x);
-                inactivePlayers ++;
                 x.setPlaying(false);
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
@@ -124,57 +171,67 @@ public class GameModel {
         }
     }
 
+    /**
+     * this method is called to play the game
+     */
     public void play(){
         this.updateStatus();
 
         int dice1 = (int)(Math.random()*6+1);
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
-        //System.out.println(dice1 + " " + dice2);
 
-        while(dice1 == dice2){
-            dice1 =(int)(Math.random()*6+1);
-            dice2 = (int)(Math.random()*6+1);
-            //System.out.println(dice1 + "" + dice2);
-            roll += dice1 + dice2;
-        }
 
-        // This breaks the program when roll is > 1
-        /*
-        if (activePlayer.getPosition() + roll > 21){
-            activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-        }
-        else{
-            activePlayer.setPosition(activePlayer.getPosition() + roll);
-            currentCard = gameBoard.get(activePlayer.getPosition()-1);
-        }
-        */
-
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % 22);
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
         currentCard = gameBoard.get(activePlayer.getPosition());
 
         //If player X turn set there position to += the roll amount
 
         for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,roll));
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+        }
+        this.updateStatus();
+        if(dice1 == dice2 && numTimesRolledDouble<=3){
+            this.play();
+            this.numTimesRolledDouble++;
+        }else{
+            this.changeTurn();
+            this.numTimesRolledDouble = 0;
         }
 
-        this.changeTurn();
+
     }
 
+    /**
+     * this method is used to buy a property for a player
+     */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
     }
 
+    /**
+     * getter for the activePlayer
+     * @return Returns a Player that is the current player
+     */
     public Player getActivePlayer() {
         return activePlayer;
     }
 
+
+    /**
+     * Getter for the current card that the player is on.
+     * @return Returns a Card that is the current card that the player is on.
+     */
     public Card getCurrentCard() {
         return currentCard;
     }
 
+
+
+
+    /**
+     * enum that holds the different statuses for the game, certain player winning or undecided
+     */
     public static enum Status {
         P1_WINS,
         P2_WINS,
@@ -183,10 +240,14 @@ public class GameModel {
         UNDECIDED;
     }
 
+    /**
+     * enum that holds the different turns of players in monopoly.
+     */
     public static enum Turn{
         P1_TURN,
         P2_TURN,
         P3_TURN,
         P4_TURN;
     }
+
 }
