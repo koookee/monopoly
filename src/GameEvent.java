@@ -4,9 +4,6 @@
 import java.util.EventObject;
 
 public class GameEvent extends EventObject {
-
-
-
     private GameModel.Status status;
 
     private Card card;

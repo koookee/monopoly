@@ -65,9 +65,7 @@ public class Game implements GameView
             Command menuCommand = parser.getCommand();
             processCommand(menuCommand, 0);
         }
-
     }
-
 
     private void inGameMenu(){
         System.out.println("---------------------------------------------------------------");
@@ -100,18 +98,18 @@ public class Game implements GameView
 
         String commandString = command.getCommandWord();
 
-        if (commandString.equals("help")) printHelp();
-
         if (state == 0) {
             if (commandString.equals("start")) {
                 inMenu = false;
                 inGame = true;
                 inGameMenu();
-            } else if (commandString.equals("quit")) {
+            }
+            else if (commandString.equals("quit")) {
                 inMenu = false;
-                gameIsOver = true;
                 System.out.println("Thank you for playing");
-            } else {
+            }
+            else if (commandString.equals("help")) printHelp();
+            else {
                 System.out.println("---------------------------------------------------------------");
                 System.out.println("List of currently available commands: 'start', 'help', 'quit'");
                 System.out.println("---------------------------------------------------------------");
@@ -122,79 +120,35 @@ public class Game implements GameView
                 inGame = false;
                 System.out.println("Thank you for playing");
             }
-            if (commandString.equals("roll")){
+            else if (commandString.equals("roll")){
                 model.play();
-
             }
-            /**
-            else if(commandString.equals("buy")){
-                model.buyProperty();
-                System.out.println("your money is now: "+model.getActivePlayer().getMoney());
-            }
-            else if (commandString.equals("pass")) {
-                System.out.println("You're passing");
-
-            }
-            else if(commandString.equals("state")){
-                System.out.println(model.getActivePlayer().getName());
-                System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
-                System.out.print("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
-                for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
-                    if(i < model.getActivePlayer().getProperties().size()-1 ) {
-                        System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
-                    }else{
-                        System.out.print(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
-                    }
-
-                }
-
-            }
-             **/
+            else if (commandString.equals("help")) printHelp();
+            else if (commandString.equals("state")) printState();
+            else System.out.println("Invalid command! Try 'roll', 'state', 'help', or 'quit'!");
         }
         else if(state == 2){
-
             if(commandString.equals("buy")){
                 model.buyProperty();
-                System.out.println("your money is now: "+model.getActivePlayer().getMoney());
+                System.out.println("your money is now: " + model.getActivePlayer().getMoney());
             }
             else if (commandString.equals("pass")) {
                 System.out.println("You're passing");
-
+            }
+            else if (commandString.equals("help")) {
+                printHelp();
             }
             else if(commandString.equals("state")){
-                System.out.println(model.getActivePlayer().getName());
-                System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
-                System.out.println("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
-                for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
-                    if(i < model.getActivePlayer().getProperties().size()-1 ) {
-                        System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
-                    }else{
-                        System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
-                    }
-
-                }
-
-            }
-            else if(commandString.equals("done")){
-                done = true;
+                printState();
             }
             else if(commandString.equals("quit")){
                 inGame = false;
-                gameIsOver = true;
             }
             else{
-                System.out.println("Invalid command! Try 'buy', 'pass', state', 'done', or 'quit'!");
+                System.out.println("Invalid command! Try 'buy', 'pass', 'state', or 'quit'!");
                 Command buyCommand = parser.getCommand();
                 processCommand(buyCommand, 2);
-
             }
-            while(!done){
-                System.out.println("Use another command! Use 'done' to exit turn.");
-                Command buyCommand = parser.getCommand();
-                processCommand(buyCommand, 2);
-
-            }
-
         }
     }
 
@@ -214,22 +168,37 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
     }
 
+    private void printState(){
+        System.out.println(model.getActivePlayer().getName());
+        System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
+        System.out.println("Your number of properties is " + model.getActivePlayer().getProperties().size() + " ");
+        for (int i = 0; i < model.getActivePlayer().getProperties().size(); i++) {
+            if(i < model.getActivePlayer().getProperties().size()-1 ) {
+                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + ",");
+            }else{
+                System.out.println(i + ": " + model.getActivePlayer().getProperties().get(i).getName() + "");
+            }
+        }
+    }
+
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
         if (!e.getStatus().equals(GameModel.Status.UNDECIDED)){
             System.out.println("game is over");
             inGame = false;
-            gameIsOver = true;
-        }else {
+        }
+        else {
             System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll());
             System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost());
             if (!e.getCard().isOwned()) {
                 System.out.println("Would you like to buy this property? or pass");
-                Command buyCommand = parser.getCommand();
-                processCommand(buyCommand, 2);
-
-
+                Command command = parser.getCommand();
+                processCommand(command, 2);
+                while (!command.getCommandWord().equals("buy") && !command.getCommandWord().equals("pass")){
+                    command = parser.getCommand();
+                    processCommand(command, 2);
+                }
             } else {
                 System.out.println(e.getCard().getOwner().getName() + " owns this property lol");
                 gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
@@ -246,6 +215,4 @@ public class Game implements GameView
         Game game = new Game();
         game.play();
     }
-
-
 }

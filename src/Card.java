@@ -5,8 +5,6 @@ public class Card {
     private boolean isOwned;
     private Player owner;
 
-
-
     public Card(String name, int cost) {
         this.isOwned = false;
         this.name = name;

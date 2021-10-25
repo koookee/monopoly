@@ -1,5 +1,3 @@
-
-import java.sql.SQLOutput;
 import java.util.*;
 public class GameModel {
     private GameModel.Status status;
@@ -9,8 +7,6 @@ public class GameModel {
     private ArrayList<Player> players;
     private Player activePlayer;
     private Card currentCard;
-
-
 
     public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
