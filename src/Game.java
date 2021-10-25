@@ -1,6 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * This class displays our game to the terminal
+ *
+ */
 
 public class Game implements GameView
 {
@@ -23,28 +25,7 @@ public class Game implements GameView
         model.addGameModelView(this);
     }
 
-    /**
-     * @author Andre
-     * Creates the game board
-     */
 
-
-//    /**
-//     * @author Hussein
-//     * Starts the game
-//     */
-//    public void play()
-//    {
-//        while (!gameIsOver) {
-//
-//            Command command = parser.getCommand();
-//            processCommand(command, 1);
-//        }
-//
-//        System.out.println("---------------------------------------------------------------");
-//        System.out.println("Thank you for playing. Good bye.");
-//        System.out.println("---------------------------------------------------------------");
-//    }
 
 
     /**
@@ -64,6 +45,11 @@ public class Game implements GameView
             processCommand(menuCommand, 0);
         }
     }
+
+
+    /**
+     * Displays and allows player to interact with the actual game so that they can play
+     */
 
     private void inGameMenu(){
         System.out.println("---------------------------------------------------------------");

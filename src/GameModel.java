@@ -1,4 +1,10 @@
 import java.util.*;
+
+/**
+ * @author Andre, Jack, Cassidy, Hussain
+ * This class represents the model of our monoploy game
+ *
+ */
 public class GameModel {
     private GameModel.Status status;
     private GameModel.Turn turn;
@@ -7,6 +13,13 @@ public class GameModel {
     private ArrayList<Player> players;
     private Player activePlayer;
     private Card currentCard;
+
+
+
+    /**
+     * this is the default contructor
+     * We set the amount of players to 4 as the default since we haven't added the ai yet
+     */
 
     public GameModel() {
         this.status = GameModel.Status.UNDECIDED;
@@ -18,9 +31,14 @@ public class GameModel {
         this.addPlayer("P2");
         this.addPlayer("P3");
         this.addPlayer("P4");
-        createGameBoard();
+        this.createGameBoard();
     }
 
+    /**
+     * This method adds a player to our list of players
+     * We set the active player to the first player since they are Player 1
+     * @param name is the String of the name the player wants
+     */
     private void addPlayer(String name){
         players.add(new Player(name));
         if(players.size()==1){
@@ -28,6 +46,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * This method creates the gameboard for the players
+     */
     public void createGameBoard(){
         // As of right now "Go" does not exist
         String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
@@ -36,6 +57,8 @@ public class GameModel {
                 "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
                 "rideau Canal", "street 21", "street 22"};
         int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
+
+
 
 
         String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
@@ -47,18 +70,34 @@ public class GameModel {
         }
     }
 
+
+    /**
+     * This method adds a view to the model
+     * @param view a view that the model will notify
+     */
     public void addGameModelView(GameView view){
         this.views.add(view);
     }
 
+    /**
+     * this method removes a view from the model
+     * @param view a view that will be removed
+     */
     public void removeGameModelView(GameView view){
         this.views.remove(view);
     }
 
+    /**
+     * A getter for the status
+     * @return the Enum status
+     */
     public GameModel.Status getStatus(){
         return this.status;
     }
 
+    /**
+     * this method changes the players turn
+     */
     private void changeTurn(){
         int index = players.indexOf(activePlayer);
         index++;
@@ -82,15 +121,18 @@ public class GameModel {
                 break;
         }
     }
+
+    /**
+     * this method updates the status of the game
+     * to show if a player is in or out
+     */
     private void updateStatus(){
-        int inactivePlayers = 0;
-        int index = -1;
+
         int removePlayer = -1;
 
         for(Player x: players){
             if(x.getMoney()<=0){
                 removePlayer = players.indexOf(x);
-                inactivePlayers ++;
                 x.setPlaying(false);
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
@@ -124,6 +166,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * this method is called to play the game
+     */
     public void play(){
         this.updateStatus();
 
@@ -151,7 +196,7 @@ public class GameModel {
         }
         */
 
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % 22);
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
         currentCard = gameBoard.get(activePlayer.getPosition());
 
         //If player X turn set there position to += the roll amount
@@ -163,10 +208,17 @@ public class GameModel {
         this.changeTurn();
     }
 
+    /**
+     * this method is used to buy a property for a player
+     */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
     }
 
+    /**
+     * getter for the activePlayer
+     * @return Returns a Player that is the current player
+     */
     public Player getActivePlayer() {
         return activePlayer;
     }

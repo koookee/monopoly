@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
+
 public class Player {
     private String name;
     private int money;
