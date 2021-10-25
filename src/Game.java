@@ -90,12 +90,13 @@ public class Game implements GameView
      */
     private void processCommand(Command command, int state)
     {
+        /*
         if(command.isUnknown()) {
             System.out.println("---------------------------------------------------------------");
             System.out.println("Invalid command");
             System.out.println("---------------------------------------------------------------");
         }
-
+       */
         String commandString = command.getCommandWord();
 
         if (state == 0) {
@@ -146,8 +147,6 @@ public class Game implements GameView
             }
             else{
                 System.out.println("Invalid command! Try 'buy', 'pass', 'state', or 'quit'!");
-                Command buyCommand = parser.getCommand();
-                processCommand(buyCommand, 2);
             }
         }
     }

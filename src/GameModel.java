@@ -29,21 +29,22 @@ public class GameModel {
     }
 
     public void createGameBoard(){
+        // As of right now "Go" does not exist
+        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
+                "waller Street","bronson Avenue","hurdman Road","Lett Street","lampman Crescent",
+                "macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place",
+                "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
+                "rideau Canal", "street 21", "street 22"};
+        int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
 
-        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue","waller Street","bronson Avenue","hurdman Road",
-                "Lett Street","lampman Crescent","macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place","perly Drive",
-                "morrison Street","keefer Street","mcLeod Street","parliament Hill","rideau Canal"};
-        int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400};
-
-
-        String[] colors = {"Brown","Brown","light blue","light blue","light blue","pink","pink","pink","orange","orange","orange","yellow","yellow",
-                "yellow","green","green","green","blue","blue"};
+        String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
+                "orange","orange","orange", "red","red","red","yellow","yellow", "yellow","green","green",
+                "green","blue","blue"};
 
         for (int i = 0; i < streetNames.length-1; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
     }
-
 
     public void addGameModelView(GameView view){
         this.views.add(view);
@@ -138,6 +139,8 @@ public class GameModel {
 
         }
 
+        // This breaks the program when roll is > 1
+        /*
         if (activePlayer.getPosition() + roll > 21){
             activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
             currentCard = gameBoard.get(activePlayer.getPosition()-1);
@@ -146,6 +149,10 @@ public class GameModel {
             activePlayer.setPosition(activePlayer.getPosition() + roll);
             currentCard = gameBoard.get(activePlayer.getPosition()-1);
         }
+        */
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % 22);
+        currentCard = gameBoard.get(activePlayer.getPosition());
+
         //If player X turn set there position to += the roll amount
 
         for (GameView view : views) {
