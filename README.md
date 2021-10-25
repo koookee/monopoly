@@ -11,12 +11,13 @@ As of Milestone 1, this program simulates a text-based version of Monopoly for a
 To run the program, the player must have Java installed. Once the executable file is run, the game starts in the console. All four players must be on the same console. Valid commands are prompted and the user can type those commands into the console to play the game.
 
 ## Deliverables
-The deliverables include
+
 - The Monopoly Game jar file and source files 
-  - This includes the executable file to actually run the game as well as the code that was written for this milestone
+  - This includes the executable file to actually run the game as well as the code that was written for this milestone.
 - The UML class diagrams
-  - This 
-- The sequence diagrams
+  - These diagrams depict how each of the classes interact with each other as well as their attributes.
+- The sequence diagrams 
+  - These diagrams depict the logic behind certain events that occur during the program. The sequence diagrams in this program demonstrate what happens when a player buys a property, rents a property, wins the game, or goes bankrupt.
 
 
 ## Known Issues
