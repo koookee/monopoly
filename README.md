@@ -10,6 +10,7 @@ As of Milestone 1, this program simulates a text-based version of Monopoly for a
 
 To run the program, the player must have Java JDK 11 installed. Once the executable file is run, the game starts in the console. All four players must be on the same console. Valid commands are prompted and the user can type those commands into the console to play the game.
 
+To start the game the firsst user must type in start. They will be prompted to roll the dice but they can also quit the game or access the help menu whenever they want to by using the quit or help commands. If they choose to roll, they will be given property information. They may choose to check their player status and then buy or pass on the property. Should they land on  a property that is owned by another player the rent will automatically be deducted. The game ends when all players are bankrupt except for one.
 
 
 ## Deliverables
@@ -26,7 +27,7 @@ To run the program, the player must have Java JDK 11 installed. Once the executa
 #### Class Design Decisions
 
 - To follow the MVC design pattern, we created a GameModel class that handles the general logic behind the main aspects of the game such as dice rolling, updating player status, and creating the board. Most of the logic in dealing with the user inputted commands goes into the Game class which updates variables and displays output depending on which command words the user inputs. This is the view aspect of the MVC as it calls the GameModel class to know how to update the display. The parser class acts as the controller and receives user inputs that it turns into command words for the Game class to use.
-- 
+- There is an Interface called GameView in order to properly turn Game into the view to fulfill the V portion of the MVC design pattern.
 
 #### Other Design Decisions
 
