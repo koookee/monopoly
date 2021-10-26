@@ -194,7 +194,7 @@ public class Game implements GameView
                 System.out.println("Would you like to buy this property? or pass");
                 Command command = parser.getCommand();
                 processCommand(command, 2);
-                while (!command.getCommandWord().equals("buy") && !command.getCommandWord().equals("pass")){
+                while (!command.getCommandWord().equals("buy") && !command.getCommandWord().equals("pass") && !command.getCommandWord().equals("quit")){
                     command = parser.getCommand();
                     processCommand(command, 2);
                 }
