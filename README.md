@@ -22,8 +22,15 @@ To run the program, the player must have Java JDK 11 installed. Once the executa
  - These diagrams depict the logic behind certain events that occur during the program. The sequence diagrams in this program demonstrate what happens when a player rolls the dice, buys a property, pays rent, wins the game, or goes bankrupt.
 
 ## Design Decisions
-- A hashmap was used for 
 
+#### Class Design Decisions
+
+- To follow the MVC design pattern, we created a GameModel class that handles the general logic behind the main aspects of the game such as dice rolling, updating player status, and creating the board. Most of the logic in dealing with the user inputted commands goes into the Game class which updates variables and displays output depending on which command words the user inputs. This is the view aspect of the MVC as it calls the GameModel class to know how to update the display. The parser class acts as the controller and receives user inputs that it turns into command words for the Game class to use.
+- 
+
+#### Other Design Decisions
+
+- A hashmap was used to keep track of the card/property that a player is on as this was the easiest way to keep track of all the cards. The cards that affect a player are directly related to their position on the board so using their position as a key to which card to display made the most sense. 
 
 ## Known Issues
 
@@ -31,8 +38,7 @@ If a user has rolled and landed on a property that they choose to buy or pass, t
 
 ## Roadmap Ahead
 
-In Milestone 2 the game will transition from text-based to being playable within a GUI such that the user can control their piece's movements using their mouse and various buttons. As well, as each Milestone progresses, additional Monopoly features will be implemented. These include jail, utility tiles, railroad tiles, property add-ons such as houses and hotels, and in game programmed players. 
-
+In Milestone 2 the game will transition from text-based to being playable within a GUI such that the user can control their piece's movements using their mouse and various buttons. As well, as each Milestone progresses, additional Monopoly features will be implemented. These include jail, utility tiles, railroad tiles, property add-ons such as houses and hotels, and in game programmed players. Eventually mutiple versions of Monopoly will be created and the player will have the option to save their games and come back to them later. As well, as the project continues, the code and design will continue to be refined and improved.
 
 
 
