@@ -1,9 +1,11 @@
-/**
+/*
  * @author Andre, Jack, Cassidy, Hussain
  * This class displays our game to the terminal
  *
  */
 
+
+/*
 public class Game implements GameView
 {
     private Parser parser;
@@ -12,10 +14,11 @@ public class Game implements GameView
     private boolean inGame;
     private GameModel model;
 
-    /**
-     * @author Hussein
+    */
+/**
      * Constructor for the Game class
-     */
+     *//*
+
     public Game()
     {
         parser = new Parser();
@@ -25,10 +28,11 @@ public class Game implements GameView
         model.addGameModelView(this);
     }
 
-    /**
-     * @Author: Hussein
+    */
+/**
      * Displays and allows the player to interact with the game menu
-     */
+     *//*
+
     private void displayGameMenu()
     {
         System.out.println("---------------------------------------------------------------");
@@ -44,9 +48,11 @@ public class Game implements GameView
     }
 
 
-    /**
+    */
+/**
      * Displays and allows player to interact with the actual game so that they can play
-     */
+     *//*
+
 
     private void inGameMenu(){
         System.out.println("---------------------------------------------------------------");
@@ -62,22 +68,25 @@ public class Game implements GameView
         }
     }
 
-    /**
-     * @author Hussein
+    */
+/**
      * Processes a given command. It will be processed depending on the state of the game. If the player
      * is in the game menu for example, in-game commands like state, buy, etc. will not work
      * @param command The command to process.
      * @param state The state the game is in. 0 is game menu, 1 is during the game
-     */
+     *//*
+
     private void processCommand(Command command, int state)
     {
-        /*
+        */
+/*
         if(command.isUnknown()) {
             System.out.println("---------------------------------------------------------------");
             System.out.println("Invalid command");
             System.out.println("---------------------------------------------------------------");
         }
-       */
+       *//*
+
         String commandString = command.getCommandWord();
 
         if (state == 0) {
@@ -135,10 +144,11 @@ public class Game implements GameView
         }
     }
 
-    /**
-     * @Author: Hussein
+    */
+/**
      * Prints a description of all the game commands
-     */
+     *//*
+
     private void printHelp()
     {
         System.out.println("---------------------------------------------------------------");
@@ -151,9 +161,11 @@ public class Game implements GameView
         System.out.println("---------------------------------------------------------------");
     }
 
-    /**
+    */
+/**
      * Prints a description of the state
-     */
+     *//*
+
     private void printState(){
         System.out.println(model.getActivePlayer().getName());
         System.out.println("Your current balance is: $" + model.getActivePlayer().getMoney());
@@ -167,18 +179,22 @@ public class Game implements GameView
         }
     }
 
-    /**
+    */
+/**
      * Prints when a player goes bankrupt
      * @param playerName the string of the player that went bankrupt
-     */
+     *//*
+
     public static void printBankruptcy(String playerName){
         System.out.println(playerName + " went bankrupt");
     }
 
+    */
 /**
- * This class handles the update to the view of the game class
+     * This class handles the update to the view of the game class
      * @param e is a game event that holds useful information
-     */
+     *//*
+
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.gameModel = (GameModel) e.getSource();
@@ -208,19 +224,24 @@ public class Game implements GameView
         }
     }
 
-    /**
+    */
+/**
      * this method starts the game
-     */
+     *//*
+
     public void play(){
         displayGameMenu();
     }
 
-    /**
+    */
+/**
      * the main method
      * @param args
-     */
+     *//*
+
     public static void main(String[] args) {
         Game game = new Game();
         game.play();
     }
 }
+*/
