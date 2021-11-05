@@ -9,9 +9,13 @@ import java.util.jar.JarEntry;
 
 public class GameFrame extends JFrame implements GameView {
 
+    private Parser parser;
+    private boolean inGame;
+    private boolean inMenu;
     private GameModel model;
     private Map<Integer,Card> board;
     private ArrayList<JPanel> squares;
+    private GameModel gameModel;
 
     public GameFrame(){
         super("Monopoly");
@@ -23,6 +27,16 @@ public class GameFrame extends JFrame implements GameView {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1600,1024);
         this.createSquares();
+
+        // New stuff -----
+
+        parser = new Parser();
+        inMenu = true;
+        inGame = false;
+        model = new GameModel();
+        model.addGameModelView(this);
+
+        // ---------------
 
     }
 
@@ -76,10 +90,38 @@ public class GameFrame extends JFrame implements GameView {
         this.setVisible(true);
     }
 
+    /**
+     * This class handles the update to the view of the game class
+     * @param e is a game event that holds useful information
+     */
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
+        this.gameModel = (GameModel) e.getSource();
+        if (!e.getStatus().equals(GameModel.Status.UNDECIDED)){
+            System.out.println("game is over");
+            inGame = false;
+        }
+        else {
+            System.out.println(gameModel.getActivePlayer().getName() + " rolled " + e.getRoll()[0] + " " + e.getRoll()[1]);
+            System.out.println("The card you are on is " + e.getCard().getName() + " cost: " + e.getCard().getCost() + " color: " + e.getCard().getColor());
 
+            if (!e.getCard().isOwned()) {
+                System.out.println("Would you like to buy this property? or pass");
+                Command command = parser.getCommand();
+                gameModel.processCommand(command, 2);
+                while (!command.getCommandWord().equals("buy") && !command.getCommandWord().equals("pass") && !command.getCommandWord().equals("quit")){
+                    command = parser.getCommand();
+                    gameModel.processCommand(command, 2);
+                }
+            } else {
+                System.out.println(e.getCard().getOwner().getName() + " owns this property lol");
+                gameModel.getActivePlayer().payRent(e.getCard().getOwner(), e.getCard());
+                System.out.println("you paid " + e.getCard().getOwner().getName() + " " + e.getCard().getRent() + " dollars");
+                System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
+            }
+        }
     }
+
 
     public static void main(String[] args) {
         GameFrame gameFrame = new GameFrame();

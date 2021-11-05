@@ -18,7 +18,11 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
 
-
+    private Parser parser;
+    private GameModel gameModel;
+    private boolean inMenu;
+    private boolean inGame;
+    private GameModel model;
 
 
     /**
@@ -38,6 +42,10 @@ public class GameModel {
         this.addPlayer("P3");
         this.addPlayer("P4");
         this.createGameBoard();
+
+        parser = new Parser();
+        inMenu = true;
+        inGame = false;
     }
 
     /**
@@ -142,7 +150,7 @@ public class GameModel {
 
         for(Player x: players){
             if(x.getMoney()<=0){
-                Game.printBankruptcy(x.getName());
+                printBankruptcy(x.getName());
                 removePlayer = players.indexOf(x);
                 x.setPlaying(false);
                 for(Card c : x.getProperties()){
@@ -233,8 +241,165 @@ public class GameModel {
     }
 
 
+    // ---------------------------------------------------------------------------------
+    /**
+     * Displays and allows the player to interact with the game menu
+     */
+    private void displayGameMenu()
+    {
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("Welcome to Monopoly!");
+        System.out.println("For a list of all the commands, type 'help'");
+        System.out.println("Type 'start' when you're ready");
+        System.out.println("---------------------------------------------------------------");
+
+        while (inMenu) {
+            Command menuCommand = parser.getCommand();
+            processCommand(menuCommand, 0);
+        }
+    }
 
 
+    /**
+     * Displays and allows player to interact with the actual game so that they can play
+     */
+
+    private void inGameMenu(){
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("Welcome to Monopoly!");
+        System.out.println("Type 'roll' to start your turn ");
+        System.out.println("---------------------------------------------------------------");
+
+        while(inGame){
+            System.out.println("\nIt is " + getActivePlayer().getName() +"'s turn, your current balance is " + getActivePlayer().getMoney());
+            System.out.println("Roll when you are ready");
+            Command gameCommand = parser.getCommand();
+            processCommand(gameCommand, 1);
+        }
+    }
+
+    /**
+     * Processes a given command. It will be processed depending on the state of the game. If the player
+     * is in the game menu for example, in-game commands like state, buy, etc. will not work
+     * @param command The command to process.
+     * @param state The state the game is in. 0 is game menu, 1 is during the game
+     */
+    public void processCommand(Command command, int state)
+    {
+        String commandString = command.getCommandWord();
+
+        if (state == 0) {
+            if (commandString.equals("start")) {
+                inMenu = false;
+                inGame = true;
+                inGameMenu();
+            }
+            else if (commandString.equals("quit")) {
+                inMenu = false;
+                System.out.println("Thank you for playing");
+            }
+            else if (commandString.equals("help")) printHelp();
+            else {
+                System.out.println("---------------------------------------------------------------");
+                System.out.println("List of currently available commands: 'start', 'help', 'quit'");
+                System.out.println("---------------------------------------------------------------");
+            }
+        }
+        else if (state == 1){
+            if (commandString.equals("quit")) {
+                inGame = false;
+                System.out.println("Thank you for playing");
+            }
+            else if (commandString.equals("roll")){
+                playGame();
+            }
+            else if (commandString.equals("help")) printHelp();
+            else if (commandString.equals("state")) printState();
+            else System.out.println("Invalid command! Try 'roll', 'state', 'help', or 'quit'!");
+        }
+        else if(state == 2){
+            if(commandString.equals("buy")){
+                if (getActivePlayer().getMoney() > getCurrentCard().getCost()) {
+                    buyProperty();
+                    System.out.println("Your money is now: " + getActivePlayer().getMoney());
+                }
+                else System.out.println("Not enough money");
+            }
+            else if (commandString.equals("pass")) {
+                System.out.println("You're passing");
+            }
+            else if (commandString.equals("help")) {
+                printHelp();
+            }
+            else if(commandString.equals("state")){
+                printState();
+            }
+            else if(commandString.equals("quit")){
+                inGame = false;
+            }
+            else{
+                System.out.println("Invalid command! Try 'buy', 'pass', 'state', or 'quit'!");
+            }
+        }
+    }
+
+    /**
+     * Prints a description of all the game commands
+     */
+    private void printHelp()
+    {
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("List of all commands are: ");
+        System.out.println("pass: passes turn to the next player");
+        System.out.println("buy: buys the property you are on (assuming it's available)");
+        System.out.println("state: shows your current state (money, owned properties, etc.)");
+        System.out.println("play: starts the game");
+        System.out.println("quit: quits the game");
+        System.out.println("---------------------------------------------------------------");
+    }
+
+    /**
+     * Prints a description of the state
+     */
+    private void printState(){
+        System.out.println(this.getActivePlayer().getName());
+        System.out.println("Your current balance is: $" + this.getActivePlayer().getMoney());
+        System.out.println("Your number of properties is " + this.getActivePlayer().getProperties().size() + " ");
+        for (int i = 0; i < this.getActivePlayer().getProperties().size(); i++) {
+            if(i < this.getActivePlayer().getProperties().size()-1 ) {
+                System.out.println(i+1 + ": " + this.getActivePlayer().getProperties().get(i).getName() + ",");
+            }else{
+                System.out.println(i+1 + ": " + this.getActivePlayer().getProperties().get(i).getName() + "");
+            }
+        }
+    }
+
+    /**
+     * Prints when a player goes bankrupt
+     * @param playerName the string of the player that went bankrupt
+     */
+    public static void printBankruptcy(String playerName){
+        System.out.println(playerName + " went bankrupt");
+    }
+
+
+
+    /**
+     * this method starts the game
+     */
+    public void playGame(){
+        displayGameMenu();
+    }
+
+    /**
+     * the main method
+     * @param args
+     */
+    public static void main(String[] args) {
+        GameModel model = new GameModel();
+        model.playGame();
+    }
+    // ---------------------------------------------------------------------------------
     /**
      * enum that holds the different statuses for the game, certain player winning or undecided
      */
