@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import java.awt.geom.AffineTransform;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,7 +16,11 @@ public class GameFrame extends JFrame implements GameView {
     private GameModel model;
     private Map<Integer,Card> board;
     private ArrayList<JPanel> squares;
+
     private GameModel gameModel;
+    private final int botSquares = 6, leftSquares = 12, topSquares =17, rightSquares = 23;
+    private  JPanel mainPanel;
+    private JPanel playerPanel;
 
     public GameFrame(){
         super("Monopoly");
@@ -27,6 +32,8 @@ public class GameFrame extends JFrame implements GameView {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1600,1024);
         this.createSquares();
+        this.mainPanel = paintBoard();
+        this.playerPanel = paintPlayerInfo(model.getActivePlayer());
 
         // New stuff -----
 
@@ -40,16 +47,22 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+
     private void createSquares(){
-        for (Card c :
-                this.model.getGameBoard().values()) {
+        for (int i = 0; i < this.model.getGameBoard().size(); i++) {
+
+            Card c = this.model.getGameBoard().get(i);
             JPanel square = new JPanel(new BorderLayout());
             square.setBorder(new LineBorder(Color.black));
             square.setPreferredSize(new Dimension(150,200));
             JPanel squareTop = new JPanel();
             squareTop.setBackground(c.getColor());
-            squareTop.add(new JLabel(c.getName()));
+            JLabel name = new JLabel(c.getName());
+
+
+            squareTop.add(name);
             square.add(squareTop, BorderLayout.PAGE_START);
+
 
             squares.add(square);
         }
@@ -68,24 +81,58 @@ public class GameFrame extends JFrame implements GameView {
         mainPanel.add(top, BorderLayout.PAGE_START);
         mainPanel.add(right, BorderLayout.LINE_END);
         for (int i = 0; i < squares.size(); i++) {
-            if(i<=5){
+            if(i<=botSquares-1){
                 bot.add(squares.get(5-i));
-            }else if(i>5 && i<=11){
+            }else if(i>botSquares-1 && i<=leftSquares-1){
                 left.add(squares.get(i));
             }
-            else if(i>11 && i<=16){
+            else if(i>leftSquares-1 && i<=topSquares-1){
                 top.add(squares.get(i));
             }
-            else if(i>16 && i<=22){
+            else if(i>topSquares-1 && i<=rightSquares-1){
                 right.add(squares.get(i));
             }
         }
         return mainPanel;
     }
+
+    private JPanel paintPlayerInfo(Player activePlayer){
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JLabel playerName = new JLabel("Player: " + activePlayer.getName());
+        mainPanel.add(playerName, BorderLayout.PAGE_START);
+        JPanel bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BoxLayout(bodyPanel,BoxLayout.PAGE_AXIS));
+        JLabel playerMoney = new JLabel("Player Money: $"+ activePlayer.getMoney()+ "\n");
+        bodyPanel.add(playerMoney);
+        String playerProperties = "";
+        for (Card c :
+                activePlayer.getProperties()) {
+            playerProperties += c.getName() + " \n";
+        }
+        JLabel playerPropertiesLabel = new JLabel("Player Properties :" + playerProperties);
+        bodyPanel.add(playerPropertiesLabel);
+
+        JLabel playerPosition = new JLabel("Player Position: " + activePlayer.getPosition());
+        bodyPanel.add(playerPosition);
+
+        mainPanel.add(bodyPanel,BorderLayout.CENTER);
+
+        JPanel footerPanel = new JPanel(new GridLayout(3,3));
+        JButton rollButton = new JButton("Roll");
+        rollButton.addActionListener(e -> model.play());
+        footerPanel.add(rollButton);
+        mainPanel.add(footerPanel, BorderLayout.PAGE_END);
+        return mainPanel;
+
+    }
     public void displayGUI(){
         this.setLayout(new BorderLayout());
-        JPanel mainPanel = paintBoard();
+        this.mainPanel.revalidate();
+        this.playerPanel.revalidate();
+        this.add(playerPanel, BorderLayout.LINE_END);
         this.add(mainPanel,BorderLayout.CENTER);
+
+
 
         this.setVisible(true);
     }
@@ -96,6 +143,7 @@ public class GameFrame extends JFrame implements GameView {
      */
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
+        /*
         this.gameModel = (GameModel) e.getSource();
         if (!e.getStatus().equals(GameModel.Status.UNDECIDED)){
             System.out.println("game is over");
@@ -120,12 +168,19 @@ public class GameFrame extends JFrame implements GameView {
                 System.out.println("You now have " + gameModel.getActivePlayer().getMoney() + " dollars");
             }
         }
+        
+         */
+
+        this.model = (GameModel) e.getSource();
+        System.out.println("doing stuff");
+        playerPanel = paintPlayerInfo(model.getActivePlayer());
+        displayGUI();
     }
 
 
     public static void main(String[] args) {
         GameFrame gameFrame = new GameFrame();
-
         gameFrame.displayGUI();
+
     }
 }
