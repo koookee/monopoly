@@ -4,6 +4,8 @@
  *
  */
 
+import java.awt.*;
+import java.net.Inet4Address;
 import java.util.*;
 
 public class GameModel {
@@ -55,23 +57,27 @@ public class GameModel {
      */
     public void createGameBoard(){
         // As of right now "Go" does not exist
-        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
+        String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
                 "waller Street","bronson Avenue","hurdman Road","Lett Street","lampman Crescent",
                 "macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place",
                 "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
                 "rideau Canal", "street 21", "street 22"};
-        int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
+        int[] costs = {0,60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
 
 
 
 
-        String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
-                "orange","orange","orange", "red","red","red","yellow","yellow", "yellow","green","green",
-                "green","blue","blue"};
+        Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.CYAN,Color.pink,Color.pink,Color.pink,
+                Color.orange,Color.orange,Color.orange, Color.red, Color.red, Color.red,Color.yellow,Color.yellow, Color.yellow,Color.green,Color.green,
+                Color.green,new Color(0,135,225),new Color(0,135,225)};
 
         for (int i = 0; i < streetNames.length; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
+    }
+
+    public Map<Integer,Card> getGameBoard(){
+        return this.gameBoard;
     }
 
 
