@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
+    private int prevPostion;
     private String name;
     private int money;
     private int position;
@@ -25,6 +26,7 @@ public class Player {
         this.position = 0;
         this.playing = true;
         properties = new ArrayList<>();
+        this.prevPostion = 0;
     }
 
     /**
@@ -116,7 +118,12 @@ public class Player {
      * @param position the int of the position
      */
     public void setPosition(int position) {
+
         this.position = position;
+    }
+
+    public int getPrevPostion() {
+        return prevPostion;
     }
 
     @Override
@@ -130,5 +137,9 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, position);
+    }
+
+    public void setPrevPosition(int position) {
+        this.prevPostion = position;
     }
 }
