@@ -32,7 +32,7 @@ public class GameFrame extends JFrame implements GameView {
 
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1600,1024);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.createSquares();
         this.mainPanel = paintBoard();
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
