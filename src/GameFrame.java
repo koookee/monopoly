@@ -8,11 +8,10 @@ import java.util.Map;
 
 
 public class GameFrame extends JFrame implements GameView {
-
-
     private GameModel model;
     private Map<Integer,Card> board;
     private ArrayList<JPanel> squares;
+    private ArrayList<JPanel> squaresCenter;
 
     private final JLabel icon = new JLabel(new ImageIcon("boot.png"));
     private final JLabel icon2 = new JLabel(new ImageIcon("pin.png"));
@@ -28,21 +27,13 @@ public class GameFrame extends JFrame implements GameView {
         this.model = new GameModel();
         model.addGameModelView(this);
         this.squares = new ArrayList<>();
+        this.squaresCenter = new ArrayList<>();
         this.board = model.getGameBoard();
-
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.createSquares();
         this.mainPanel = paintBoard();
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
-
-
-        model = new GameModel();
-        model.addGameModelView(this);
-
-
-
     }
 
 
@@ -81,11 +72,19 @@ public class GameFrame extends JFrame implements GameView {
             square.add(squareBot);
 
             squares.add(square);
+
+            squaresCenter.add(squareBody);
         }
+        /*
         squares.get(0).add(icon,1);
         squares.get(0).add(icon2,1);
         squares.get(0).add(icon3,1);
         squares.get(0).add(icon4,1);
+        */
+        squaresCenter.get(0).add(icon);
+        squaresCenter.get(0).add(icon2);
+        squaresCenter.get(0).add(icon3);
+        squaresCenter.get(0).add(icon4);
     }
 
     private JPanel paintBoard(){
@@ -186,29 +185,26 @@ public class GameFrame extends JFrame implements GameView {
         int position = activePlayer.getPosition();
 
         if(activePlayer.getName().equals("P1")){
-
-            squares.get(position).add(icon);
-
-            System.out.println(squares.get(position).getComponents().length);;
+            //squares.get(position).add(icon);
+            squaresCenter.get(position).add(icon);
+            //System.out.println(squares.get(position).getComponents().length);;
         }else if(activePlayer.getName().equals("P2")){
-
-            squares.get(position).add(icon2);
+            //squares.get(position).add(icon2);
+            squaresCenter.get(position).add(icon2);
         }
         else if (activePlayer.getName().equals("P3")) {
-            squares.get(position).add(icon3,2);
+            //squares.get(position).add(icon3,2);
+            squaresCenter.get(position).add(icon3);
         }
         else if (activePlayer.getName().equals("P4")) {
-
-            squares.get(position).add(icon4,2);
+            //squares.get(position).add(icon4,2);
+            squaresCenter.get(position).add(icon4);
         }
-
-
     }
 
 
     public static void main(String[] args) {
         GameFrame gameFrame = new GameFrame();
         gameFrame.displayGUI();
-
     }
 }
