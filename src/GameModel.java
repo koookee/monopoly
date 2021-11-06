@@ -195,7 +195,7 @@ public class GameModel {
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
-
+        activePlayer.setPrevPosition(activePlayer.getPosition());
         activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
         currentCard = gameBoard.get(activePlayer.getPosition());
 
@@ -206,7 +206,7 @@ public class GameModel {
         }
         this.updateStatus();
         if(dice1 == dice2 && numTimesRolledDouble<=3){
-            this.play();
+
             this.numTimesRolledDouble++;
         }else{
             this.changeTurn();
