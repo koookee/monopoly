@@ -18,10 +18,15 @@ public class GameFrame extends JFrame implements GameView {
     private final JLabel icon3 = new JLabel(new ImageIcon("iron.png"));
     private final JLabel icon4 = new JLabel(new ImageIcon("hat.png"));
 
+    private JLabel[] icons;
+
+    private int playerNum;
     private final int botSquares = 6, leftSquares = 12, topSquares =17, rightSquares = 23;
     private final int botSquareNum = 6, leftSquareNum =6 , topSquareNum =5,rightSquareNum = 6;
     private  JPanel mainPanel;
     private JPanel playerPanel;
+
+
 
     public GameFrame() {
         super("Monopoly");
@@ -31,22 +36,25 @@ public class GameFrame extends JFrame implements GameView {
         this.squaresCenter = new ArrayList<>();
         this.board = model.getGameBoard();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
         this.setSize(1600, 1024);
-        this.createSquares();
-        this.mainPanel = paintBoard();
+
 
 
         model = new GameModel();
         model.addGameModelView(this);
 
         WelcomeController control = new WelcomeController();
-        int playerNum = control.getPlayerNumber(this);
+        this.playerNum = control.getPlayerNumber(this);
+
         model.addPlayers(playerNum);
+
+        this.createSquares();
+        this.mainPanel = paintBoard();
 
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
-        icon.setName("icon");
+
         icon.setBounds(1,25, 50,50);
         icon2.setBounds(150,25, 50,50);
         icon3.setBounds(150,100, 50,50);
@@ -91,10 +99,10 @@ public class GameFrame extends JFrame implements GameView {
             layeredPane.add(square,JLayeredPane.DEFAULT_LAYER);
 
             if(i==0){
-                layeredPane.add(icon,JLayeredPane.PALETTE_LAYER);
-                layeredPane.add(icon2,JLayeredPane.PALETTE_LAYER);
-                layeredPane.add(icon3,JLayeredPane.PALETTE_LAYER);
-                layeredPane.add(icon4,JLayeredPane.PALETTE_LAYER);
+                for (int j = 0; j < this.playerNum; j++) {
+                    layeredPane.add(icons[j],JLayeredPane.PALETTE_LAYER);
+                }
+
             }
 
             squares.add(layeredPane);
@@ -116,9 +124,9 @@ public class GameFrame extends JFrame implements GameView {
 
         for (int i = 0; i < squares.size(); i++) {
             if (i <= botSquares - 1) {
-                bot.add(squares.get(5 - i));
+                bot.add(squares.get(botSquares - i -1));
             } else if (i > botSquares - 1 && i <= leftSquares - 1) {
-                left.add(squares.get(i));
+                left.add(squares.get(leftSquares+botSquares-i-1));
             } else if (i > leftSquares - 1 && i <= topSquares - 1) {
                 top.add(squares.get(i));
             } else if (i > topSquares - 1 && i <= rightSquares - 1) {
@@ -165,18 +173,12 @@ public class GameFrame extends JFrame implements GameView {
         rollButton.addActionListener(controller);
         footerPanel.add(rollButton);
 
-        JButton pass = new JButton("Pass");
+        JButton pass = new JButton("Next Turn");
         pass.setActionCommand(2 + " ");
         pass.addActionListener(controller);
         footerPanel.add(pass);
 
-        JButton buy = new JButton("Buy");
-        buy.setActionCommand(4 + " ");
-        buy.addActionListener(controller);
-        footerPanel.add(buy);
 
-        JButton nextTurn = new JButton("Next Turn");
-        footerPanel.add(nextTurn);
 
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
         return mainPanel;
@@ -206,8 +208,10 @@ public class GameFrame extends JFrame implements GameView {
         this.model = (GameModel) e.getSource();
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
+
         displayGUI();
-        updatePlayerIcon(model.getActivePlayer());
+        updatePlayerIcon(model.getActivePlayer(),e.getRoll());
+
     }
 
     @Override
@@ -217,6 +221,12 @@ public class GameFrame extends JFrame implements GameView {
         Card card = gameEvent.getCard();
         unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
+        getContentPane().remove(playerPanel);
+        playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
+
+        displayGUI();
+
+
     }
 
     @Override
@@ -233,7 +243,7 @@ public class GameFrame extends JFrame implements GameView {
     public void announcePlayerPass(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         CardController passed = new CardController(model);
-        passed.confirmPass(this, "Confirm that you would like to pass");
+        passed.confirmPass(this, "Confirm that you would like to end your turn");
     }
 
     @Override
@@ -251,54 +261,55 @@ public class GameFrame extends JFrame implements GameView {
         control.winner(this, model.getActivePlayer().getName() + " is the winner!");
     }
 
-    private void updatePlayerIcon(Player activePlayer) {
+    private void updatePlayerIcon(Player activePlayer, int[] roll) {
         int position = activePlayer.getPosition();
         int prev = activePlayer.getPrevPostion();
 
+        if(roll[0] != 0 && roll[1] != 0){
+            if(activePlayer.getName().equals("P1")){
+                //squares.get(position).add(icon);
 
-        if(activePlayer.getName().equals("P1")){
-            //squares.get(position).add(icon);
+                squares.get(prev).remove(icons[0]);
+                squares.get(position).add(icons[0],JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
 
-            squares.get(prev).remove(icon);
-            squares.get(position).add(icon,JLayeredPane.PALETTE_LAYER);
-            squares.get(prev).revalidate();
-            squares.get(prev).repaint();
 
-            //System.out.println(squares.get(position).getComponents().length);;
-        }else if(activePlayer.getName().equals("P2")){
-            //squares.get(position).add(icon2);
-            squares.get(prev).remove(icon2);
-            squares.get(position).add(icon2,JLayeredPane.PALETTE_LAYER);
-            squares.get(prev).revalidate();
-            squares.get(prev).repaint();
+            }else if(activePlayer.getName().equals("P2")){
+                //squares.get(position).add(icon2);
+                squares.get(prev).remove(icons[1]);
+                squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
 
+            }
+            else if (activePlayer.getName().equals("P3")) {
+                //squares.get(position).add(icon3,2);
+                squares.get(prev).remove(icon3);
+                squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
+
+                if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
+                    icon3.setBounds(150,75,50,50);
+                }else icon3.setBounds(150,100, 50,50);
+                icon4.setBounds(1,100, 50,50);
+
+
+
+            }
+            else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1) {
+                squares.get(prev).remove(icon4);
+                squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
+                if (position >botSquares-1 && position<=leftSquares-1){
+                    icon4.setBounds(1,75,50,50);
+                }else icon4.setBounds(1,100, 50,50);
+
+            }
         }
-        else if (activePlayer.getName().equals("P3")) {
-            //squares.get(position).add(icon3,2);
-            squares.get(prev).remove(icon3);
-            squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
-            squares.get(prev).revalidate();
-            squares.get(prev).repaint();
 
-            if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
-                icon3.setBounds(150,75,50,50);
-            }else icon3.setBounds(150,100, 50,50);
-            icon4.setBounds(1,100, 50,50);
-
-
-
-        }
-        else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1) {
-            //squares.get(position).add(icon4,2);
-            squares.get(prev).remove(icon4);
-            squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
-            squares.get(prev).revalidate();
-            squares.get(prev).repaint();
-            if (position >botSquares-1 && position<=leftSquares-1){
-                icon4.setBounds(1,75,50,50);
-            }else icon4.setBounds(1,100, 50,50);
-
-        }
 
     }
 
