@@ -151,6 +151,7 @@ public class GameModel {
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
+
         if (choice == 1){
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
             currentCard = gameBoard.get(activePlayer.getPosition());
@@ -158,12 +159,18 @@ public class GameModel {
             //If player X turn set there position to += the roll amount
 
             for (GameView view : views) {
-                if (result == 0){
-                    view.unownedProperty(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+                if (result == 0) {
+                    view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                } else if (result == 2) {
+                    view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
-                else if(result == 2){
-                    view.ownedProperty(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
-                }
+
+        activePlayer.setPrevPosition(activePlayer.getPosition());
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+        currentCard = gameBoard.get(activePlayer.getPosition());
+
+        //If player X turn set there position to += the roll amount
+
 
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
             }
@@ -183,19 +190,23 @@ public class GameModel {
                 this.numTimesRolledDouble = 0;
             }
         }
-        else if (choice == 2){
+
+        else if (choice == 2) {
             for (GameView view : views) {
-                view.announcePlayerPass(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+                view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
             this.updateStatus();
-            this.changeTurn();
+
+            this.updateStatus();
+            if (dice1 == dice2 && numTimesRolledDouble <= 3) {
+
+                this.numTimesRolledDouble++;
+            } else {
+
+                this.changeTurn();
+            }
+
         }
-
-
-
-
-
-
     }
 
     /**
