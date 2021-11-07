@@ -17,12 +17,6 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
 
-    private GameModel gameModel;
-    private boolean inMenu;
-    private boolean inGame;
-    private GameModel model;
-
-
     /**
      * this is the default constructor
      * We set the amount of players to 4 as the default since we haven't added the ai yet
@@ -36,9 +30,6 @@ public class GameModel {
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
         this.createGameBoard();
-
-        inMenu = true;
-        inGame = false;
     }
 
     /**
@@ -48,9 +39,7 @@ public class GameModel {
      */
     private void addPlayer(String name){
         players.add(new Player(name));
-        if(players.size()==1){
-            activePlayer = players.get(0);
-        }
+        if(players.size()==1) activePlayer = players.get(0);
     }
 
     /**
@@ -108,8 +97,7 @@ public class GameModel {
      */
     public void changeTurn(){
         currTurn++;
-        if (currTurn == players.size())
-            currTurn = 0;
+        if (currTurn == players.size()) currTurn = 0;
         activePlayer = players.get(currTurn);
     }
 
@@ -151,8 +139,8 @@ public class GameModel {
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
-
         if (choice == 1){
+            activePlayer.setPrevPosition(activePlayer.getPosition());
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
             currentCard = gameBoard.get(activePlayer.getPosition());
             int result = currentCard.functionality(activePlayer);
@@ -164,16 +152,9 @@ public class GameModel {
                 } else if (result == 2) {
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
-
-        activePlayer.setPrevPosition(activePlayer.getPosition());
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-        currentCard = gameBoard.get(activePlayer.getPosition());
-
-        //If player X turn set there position to += the roll amount
-
-
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
             }
+
             int gameState = this.updateStatus();
             for(GameView view : views){
                 if(gameState == 1){
@@ -183,29 +164,18 @@ public class GameModel {
                     view.announceWinner(new GameEvent(this, status,currentCard, new int[] {dice1, dice2}));
                 }
             }
-            if(dice1 == dice2 && numTimesRolledDouble<=3){
-                this.numTimesRolledDouble++;
-            }else{
+            if (dice1 == dice2 && numTimesRolledDouble <= 3) this.numTimesRolledDouble++;
+            else {
                 this.changeTurn();
                 this.numTimesRolledDouble = 0;
             }
         }
-
         else if (choice == 2) {
             for (GameView view : views) {
                 view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
             this.updateStatus();
-
-            this.updateStatus();
-            if (dice1 == dice2 && numTimesRolledDouble <= 3) {
-
-                this.numTimesRolledDouble++;
-            } else {
-
-                this.changeTurn();
-            }
-
+            this.changeTurn();
         }
     }
 

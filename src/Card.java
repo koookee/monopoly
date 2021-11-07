@@ -100,7 +100,7 @@ public class Card {
             return 0;
         }
         else{
-            if (this.owner.getName() == p.getName()){
+            if (this.owner.getName().equals(p.getName())){
                 return 1;
             }
             return 2;

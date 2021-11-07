@@ -45,12 +45,9 @@ public class GameFrame extends JFrame implements GameView {
 
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
-
-
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.createSquares();
         this.mainPanel = paintBoard();
-        this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
     }
 
@@ -70,23 +67,15 @@ public class GameFrame extends JFrame implements GameView {
 
             squareTop.add(name);
 
-            if (i > botSquares - 1 && i <= leftSquares - 1 || i > topSquares - 1 && i <= rightSquares - 1) {
-                square.setPreferredSize(new Dimension(290, 150));
-                squareBot.setPreferredSize(new Dimension(290, 25));
-            } else {
-                square.setPreferredSize(new Dimension(100, 150));
-                squareBot.setPreferredSize(new Dimension(100, 25));
-            }
             if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
                 square.setPreferredSize(new Dimension(290,300));
                 squareBot.setPreferredSize(new Dimension(290,25));
 
-            }else{
+            } else{
                 square.setPreferredSize(new Dimension(100,100));
                 squareBot.setPreferredSize(new Dimension(100,25));
-
-
             }
+
             JLabel price = new JLabel("$" + c.getCost());
             if (c.getCost() != 0) {
                 squareBot.add(price);
@@ -94,11 +83,9 @@ public class GameFrame extends JFrame implements GameView {
 
             JPanel squareBody = new JPanel(new GridLayout(1,4));
 
-
             square.add(squareTop);
             square.add(squareBody);
             square.add(squareBot);
-
 
             squares.add(square);
 
@@ -133,23 +120,14 @@ public class GameFrame extends JFrame implements GameView {
         mainPanel.add(right, BorderLayout.LINE_END);
 
         for (int i = 0; i < squares.size(); i++) {
-
             if (i <= botSquares - 1) {
                 bot.add(squares.get(5 - i));
             } else if (i > botSquares - 1 && i <= leftSquares - 1) {
                 left.add(squares.get(i));
             } else if (i > leftSquares - 1 && i <= topSquares - 1) {
-
-                if (i <= botSquares - 1) {
-                    bot.add(squares.get(botSquares - i - 1));
-                } else if (i > botSquares - 1 && i <= leftSquares - 1) {
-                    left.add(squares.get(leftSquares + botSquares - i - 1));
-                } else if (i > leftSquares - 1 && i <= topSquares - 1) {
-
-                    top.add(squares.get(i));
-                } else if (i > topSquares - 1 && i <= rightSquares - 1) {
-                    right.add(squares.get(i));
-                }
+                top.add(squares.get(i));
+            } else if (i > topSquares - 1 && i <= rightSquares - 1) {
+                right.add(squares.get(i));
             }
         }
 
@@ -167,8 +145,7 @@ public class GameFrame extends JFrame implements GameView {
         JLabel playerMoney = new JLabel("Player Money: $" + activePlayer.getMoney() + "\n");
         bodyPanel.add(playerMoney);
         String playerProperties = "";
-        for (Card c :
-                activePlayer.getProperties()) {
+        for (Card c : activePlayer.getProperties()) {
             playerProperties += c.getName() + " \n";
         }
         JLabel playerPropertiesLabel = new JLabel("Player Properties :" + playerProperties);
@@ -210,8 +187,6 @@ public class GameFrame extends JFrame implements GameView {
         this.add(playerPanel, BorderLayout.LINE_END);
         this.add(mainPanel, BorderLayout.CENTER);
 
-
-
         this.revalidate();
         this.setVisible(true);
     }
@@ -223,16 +198,9 @@ public class GameFrame extends JFrame implements GameView {
      */
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
-
-
         this.model = (GameModel) e.getSource();
 
-
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
-
-
-
-        playerPanel = paintPlayerInfo(model.getActivePlayer(),e.getRoll());
 
         displayGUI();
         updatePlayerIcon(model.getActivePlayer());
@@ -317,3 +285,4 @@ public class GameFrame extends JFrame implements GameView {
         gameFrame.displayGUI();
     }
 }
+
