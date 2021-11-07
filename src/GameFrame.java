@@ -178,9 +178,13 @@ public class GameFrame extends JFrame implements GameView {
         footerPanel.add(pass);
 
         JButton buy = new JButton("Buy");
-        JButton nextTurn = new JButton("Next Turn");
+        buy.setActionCommand(4 + " ");
+        buy.addActionListener(controller);
         footerPanel.add(buy);
+
+        JButton nextTurn = new JButton("Next Turn");
         footerPanel.add(nextTurn);
+
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
         return mainPanel;
 
@@ -218,12 +222,8 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController unowned = new CardController(model);
         Card card = gameEvent.getCard();
-        int result = unowned.buyProperty(this,
-                "You landed on " + card.getName() + " cost $" + card.getCost() +
+        unowned.buyProperty(this,"You landed on " + card.getName() + " cost $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
-        if (result == JOptionPane.YES_OPTION){
-            model.buyProperty();
-        }
     }
 
     @Override

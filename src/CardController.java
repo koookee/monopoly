@@ -8,10 +8,11 @@ private GameModel model;
     }
 
 
-    public int buyProperty(GameFrame frame, String message) {
-       int n = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
-       return n;
-
+    public void buyProperty(GameFrame frame, String message) {
+       int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
+        if(confirmed == JOptionPane.YES_OPTION){
+            this.model.play(5);
+        }
     }
 
 

@@ -17,6 +17,9 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
     private boolean hasNotRolled;
+    int dice1;
+    int dice2;
+    int roll;
 
     /**
      * this is the default constructor
@@ -137,25 +140,17 @@ public class GameModel {
      * this method is called to play the game
      */
     public void play(int choice){
-        int dice1 = (int)(Math.random()*6+1);
-        int dice2 = (int)(Math.random()*6+1);
-        int roll = dice1 + dice2;
-
         if (choice == 1 && hasNotRolled && status.name().equals("UNDECIDED")){
+            dice1 = (int)(Math.random()*6+1);
+            dice2 = (int)(Math.random()*6+1);
+            roll = dice1 + dice2;
+
             activePlayer.setPrevPosition(activePlayer.getPosition());
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
             currentCard = gameBoard.get(activePlayer.getPosition());
-            int result = currentCard.functionality(activePlayer);
             //If player X turn set there position to += the roll amount
 
-            for (GameView view : views) {
-                if (result == 0) {
-                    view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                } else if (result == 2) {
-                    view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                }
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
-            }
+            play(4);
 
             int gameState = this.updateStatus();
             for(GameView view : views){
@@ -187,6 +182,21 @@ public class GameModel {
             for (GameView view : views) {
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
             }
+        }
+        else if(choice == 4 && status.name().equals("UNDECIDED")) { // Buying property
+            int result = currentCard.functionality(activePlayer);
+            for (GameView view : views) {
+                if (result == 0) {
+                    view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                } else if (result == 2) {
+                    view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
+                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+            }
+        }
+        else if (choice == 5 && status.name().equals("UNDECIDED")){ // Confirms buying
+            int result = currentCard.functionality(activePlayer);
+            if (result == 0) buyProperty();
         }
     }
 
