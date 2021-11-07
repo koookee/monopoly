@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class GameFrame extends JFrame implements GameView {
     private GameModel model;
-    private Map<Integer, Card> board;
-    private ArrayList<JPanel> squares;
+    private Map<Integer,Card> board;
+    private ArrayList<JLayeredPane> squares;
     private ArrayList<JPanel> squaresCenter;
 
     private final JLabel icon = new JLabel(new ImageIcon("boot.png"));
@@ -18,8 +18,9 @@ public class GameFrame extends JFrame implements GameView {
     private final JLabel icon3 = new JLabel(new ImageIcon("iron.png"));
     private final JLabel icon4 = new JLabel(new ImageIcon("hat.png"));
 
-    private final int botSquares = 6, leftSquares = 12, topSquares = 17, rightSquares = 23;
-    private JPanel mainPanel;
+    private final int botSquares = 6, leftSquares = 12, topSquares =17, rightSquares = 23;
+    private final int botSquareNum = 6, leftSquareNum =6 , topSquareNum =5,rightSquareNum = 6;
+    private  JPanel mainPanel;
     private JPanel playerPanel;
 
     public GameFrame() {
@@ -45,10 +46,11 @@ public class GameFrame extends JFrame implements GameView {
 
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.createSquares();
-        this.mainPanel = paintBoard();
-
+        icon.setName("icon");
+        icon.setBounds(1,25, 50,50);
+        icon2.setBounds(150,25, 50,50);
+        icon3.setBounds(150,100, 50,50);
+        icon4.setBounds(1,100, 50,50);
     }
 
 
@@ -56,56 +58,47 @@ public class GameFrame extends JFrame implements GameView {
         for (int i = 0; i < this.model.getGameBoard().size(); i++) {
 
             Card c = this.model.getGameBoard().get(i);
-            JPanel square = new JPanel(new GridLayout(3,1));
+            JLayeredPane layeredPane = new JLayeredPane();
+            JPanel square = new JPanel(new BorderLayout());
             square.setBorder(new LineBorder(Color.black));
 
             JPanel squareTop = new JPanel();
+            JLabel name;
             squareTop.setBackground(c.getColor());
-            JLabel name = new JLabel(c.getName());
-            JPanel squareBot = new JPanel();
-            squareBot.setBorder(new LineBorder(Color.black));
+            if (c.getCost() != 0)  name= new JLabel(c.getName() + " ($" + c.getCost()+")");
+            else  name = new JLabel(c.getName());
+
 
             squareTop.add(name);
-
-            if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
-                square.setPreferredSize(new Dimension(290,300));
-                squareBot.setPreferredSize(new Dimension(290,25));
-
-            } else{
-                square.setPreferredSize(new Dimension(100,100));
-                squareBot.setPreferredSize(new Dimension(100,25));
+            if(i<=botSquares-1){
+                layeredPane.setPreferredSize(new Dimension(150,150));
+                square.setPreferredSize(new Dimension(100,150));
+                square.setBounds(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize().width/botSquareNum,150));
+            }
+            else if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
+                layeredPane.setPreferredSize(new Dimension(290,150));
+                square.setPreferredSize(new Dimension(290,150));
+                square.setBounds(new Rectangle(290,Toolkit.getDefaultToolkit().getScreenSize().width/leftSquareNum));
+            }else if(i>leftSquares-1 && i<=topSquares-1){
+                layeredPane.setPreferredSize(new Dimension(200,150));
+                square.setPreferredSize(new Dimension(100,150));
+                square.setBounds(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize().width/topSquareNum,150));
             }
 
-            JLabel price = new JLabel("$" + c.getCost());
-            if (c.getCost() != 0) {
-                squareBot.add(price);
+
+            square.add(squareTop, BorderLayout.PAGE_START);
+
+            layeredPane.add(square,JLayeredPane.DEFAULT_LAYER);
+
+            if(i==0){
+                layeredPane.add(icon,JLayeredPane.PALETTE_LAYER);
+                layeredPane.add(icon2,JLayeredPane.PALETTE_LAYER);
+                layeredPane.add(icon3,JLayeredPane.PALETTE_LAYER);
+                layeredPane.add(icon4,JLayeredPane.PALETTE_LAYER);
             }
 
-            JPanel squareBody = new JPanel(new GridLayout(1,4));
-
-            square.add(squareTop);
-            square.add(squareBody);
-            square.add(squareBot);
-
-            squares.add(square);
-
-            squaresCenter.add(squareBody);
+            squares.add(layeredPane);
         }
-
-
-
-
-        squares.get(0).add(icon,1);
-        squares.get(0).add(icon2,1);
-        squares.get(0).add(icon3,1);
-        squares.get(0).add(icon4,1);
-        /*
-        squaresCenter.get(0).add(icon);
-        squaresCenter.get(0).add(icon2);
-        squaresCenter.get(0).add(icon3);
-        squaresCenter.get(0).add(icon4);
-
-         */
 
     }
 
@@ -260,23 +253,51 @@ public class GameFrame extends JFrame implements GameView {
 
     private void updatePlayerIcon(Player activePlayer) {
         int position = activePlayer.getPosition();
+        int prev = activePlayer.getPrevPostion();
 
 
         if(activePlayer.getName().equals("P1")){
-            squares.get(position).add(icon);
-            //squaresCenter.get(position).add(icon);
+            //squares.get(position).add(icon);
+
+            squares.get(prev).remove(icon);
+            squares.get(position).add(icon,JLayeredPane.PALETTE_LAYER);
+            squares.get(prev).revalidate();
+            squares.get(prev).repaint();
+
             //System.out.println(squares.get(position).getComponents().length);;
         }else if(activePlayer.getName().equals("P2")){
-            squares.get(position).add(icon2);
-            //squaresCenter.get(position).add(icon2);
+            //squares.get(position).add(icon2);
+            squares.get(prev).remove(icon2);
+            squares.get(position).add(icon2,JLayeredPane.PALETTE_LAYER);
+            squares.get(prev).revalidate();
+            squares.get(prev).repaint();
+
         }
         else if (activePlayer.getName().equals("P3")) {
-            squares.get(position).add(icon3,2);
-            //squaresCenter.get(position).add(icon3);
+            //squares.get(position).add(icon3,2);
+            squares.get(prev).remove(icon3);
+            squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
+            squares.get(prev).revalidate();
+            squares.get(prev).repaint();
+
+            if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
+                icon3.setBounds(150,75,50,50);
+            }else icon3.setBounds(150,100, 50,50);
+            icon4.setBounds(1,100, 50,50);
+
+
+
         }
-        else if (activePlayer.getName().equals("P4")) {
-            squares.get(position).add(icon4,2);
-            //squaresCenter.get(position).add(icon4);
+        else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1) {
+            //squares.get(position).add(icon4,2);
+            squares.get(prev).remove(icon4);
+            squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
+            squares.get(prev).revalidate();
+            squares.get(prev).repaint();
+            if (position >botSquares-1 && position<=leftSquares-1){
+                icon4.setBounds(1,75,50,50);
+            }else icon4.setBounds(1,100, 50,50);
+
         }
 
     }
