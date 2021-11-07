@@ -138,7 +138,6 @@ public class GameFrame extends JFrame implements GameView {
 
 
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
-
         JPanel mainPanel = new JPanel(new BorderLayout());
         JLabel playerName = new JLabel("Player: " + activePlayer.getName());
         mainPanel.add(playerName, BorderLayout.PAGE_START);
@@ -146,22 +145,21 @@ public class GameFrame extends JFrame implements GameView {
         bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.PAGE_AXIS));
         JLabel playerMoney = new JLabel("Player Money: $" + activePlayer.getMoney() + "\n");
         bodyPanel.add(playerMoney);
-        String playerProperties = "";
-        for (Card c : activePlayer.getProperties()) {
-            playerProperties += c.getName() + " \n";
-        }
-        JLabel playerPropertiesLabel = new JLabel("Player Properties :" + playerProperties);
+        //String playerProperties = "";
+        JLabel playerPropertiesLabel = new JLabel("Player Properties:");
         bodyPanel.add(playerPropertiesLabel);
+        for (Card c : activePlayer.getProperties()) {
+            JLabel propertyLabel = new JLabel("- " + c.getName());
+            bodyPanel.add(propertyLabel);
+        }
 
         JLabel playerPosition = new JLabel("Player Position: " + activePlayer.getPosition());
         bodyPanel.add(playerPosition);
-
-
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
         JLabel playerRoll;
         if (roll[0] == 0 && roll [1] == 0) playerRoll = new JLabel("Player hasn't rolled yet");
         else if(roll[0] == roll[1]) playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
-        else playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1]);
+        else playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
 
         bodyPanel.add(playerRoll);
         mainPanel.add(bodyPanel,BorderLayout.CENTER);
@@ -209,10 +207,9 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
-
+        getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
         displayGUI();
-
         updatePlayerIcon(model.getActivePlayer());
     }
 
@@ -251,7 +248,7 @@ public class GameFrame extends JFrame implements GameView {
     public void announceBankruptcy(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.bankruptcy(this, model.getActivePlayer().getName() + "has gone bankrupt sux 2 suk");
+        control.bankruptcy(this, model.getActivePlayer().getName() + " has gone bankrupt sux 2 suk");
 
     }
 

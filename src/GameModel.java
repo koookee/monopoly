@@ -141,7 +141,7 @@ public class GameModel {
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
-        if (choice == 1 && hasNotRolled){
+        if (choice == 1 && hasNotRolled && status.name().equals("UNDECIDED")){
             activePlayer.setPrevPosition(activePlayer.getPosition());
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
             currentCard = gameBoard.get(activePlayer.getPosition());
@@ -174,12 +174,12 @@ public class GameModel {
                 hasNotRolled = false;
             }
         }
-        else if (choice == 2) { // Ask if they're sure they want to pass
+        else if (choice == 2 && status.name().equals("UNDECIDED")) { // Ask if they're sure they want to pass
             for (GameView view : views) {
                 view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
         }
-        else if (choice == 3){ // Player confirms they want to pass
+        else if (choice == 3 && status.name().equals("UNDECIDED")){ // Player confirms they want to pass
             this.updateStatus();
             this.changeTurn();
             numTimesRolledDouble = 0;
