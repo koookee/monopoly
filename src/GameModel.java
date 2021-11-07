@@ -160,7 +160,7 @@ public class GameModel {
                 if(gameState == 1){
                     view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[] {dice1, dice2}));
                 }
-                else if(result == 2){
+                else if(gameState == 2){
                     view.announceWinner(new GameEvent(this, status,currentCard, new int[] {dice1, dice2}));
                 }
             }

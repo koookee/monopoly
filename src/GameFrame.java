@@ -94,16 +94,18 @@ public class GameFrame extends JFrame implements GameView {
 
 
 
-        /*
+
         squares.get(0).add(icon,1);
         squares.get(0).add(icon2,1);
         squares.get(0).add(icon3,1);
         squares.get(0).add(icon4,1);
-        */
+        /*
         squaresCenter.get(0).add(icon);
         squaresCenter.get(0).add(icon2);
         squaresCenter.get(0).add(icon3);
         squaresCenter.get(0).add(icon4);
+
+         */
 
     }
 
@@ -225,7 +227,7 @@ public class GameFrame extends JFrame implements GameView {
         CardController owned = new CardController(model);
         Card card = gameEvent.getCard();
 
-        owned.payRent(this, "You landed on " + card.getName() + "You must pay $" + card.getRent() + "to " + card.getOwner().getName());
+        owned.payRent(this, "You landed on " + card.getName() + "You must pay $" + card.getRent() + " to " + card.getOwner().getName());
         model.payRent(card.getOwner(), card);
     }
 
@@ -261,20 +263,20 @@ public class GameFrame extends JFrame implements GameView {
 
 
         if(activePlayer.getName().equals("P1")){
-            //squares.get(position).add(icon);
-            squaresCenter.get(position).add(icon);
+            squares.get(position).add(icon);
+            //squaresCenter.get(position).add(icon);
             //System.out.println(squares.get(position).getComponents().length);;
         }else if(activePlayer.getName().equals("P2")){
-            //squares.get(position).add(icon2);
-            squaresCenter.get(position).add(icon2);
+            squares.get(position).add(icon2);
+            //squaresCenter.get(position).add(icon2);
         }
         else if (activePlayer.getName().equals("P3")) {
-            //squares.get(position).add(icon3,2);
-            squaresCenter.get(position).add(icon3);
+            squares.get(position).add(icon3,2);
+            //squaresCenter.get(position).add(icon3);
         }
         else if (activePlayer.getName().equals("P4")) {
-            //squares.get(position).add(icon4,2);
-            squaresCenter.get(position).add(icon4);
+            squares.get(position).add(icon4,2);
+            //squaresCenter.get(position).add(icon4);
         }
 
     }
