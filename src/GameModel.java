@@ -4,38 +4,41 @@
  *
  */
 
+import java.awt.*;
 import java.util.*;
 
 public class GameModel {
     private GameModel.Status status;
-    private GameModel.Turn turn;
     private ArrayList<GameView> views;
     private Map<Integer, Card> gameBoard;
     private ArrayList<Player> players;
+    private int currTurn;
     private Player activePlayer;
     private Card currentCard;
     private int numTimesRolledDouble;
 
-
+    private GameModel gameModel;
+    private boolean inMenu;
+    private boolean inGame;
+    private GameModel model;
 
 
     /**
-     * this is the default contructor
+     * this is the default constructor
      * We set the amount of players to 4 as the default since we haven't added the ai yet
      */
 
     public GameModel() {
+        this.currTurn = 0;
         this.status = GameModel.Status.UNDECIDED;
-        this.turn = GameModel.Turn.P1_TURN;
         this.views = new ArrayList();
         this.gameBoard = new HashMap();
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
-        this.addPlayer("P1");
-        this.addPlayer("P2");
-        this.addPlayer("P3");
-        this.addPlayer("P4");
         this.createGameBoard();
+
+        inMenu = true;
+        inGame = false;
     }
 
     /**
@@ -55,23 +58,24 @@ public class GameModel {
      */
     public void createGameBoard(){
         // As of right now "Go" does not exist
-        String[] streetNames = {"Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
-                "waller Street","bronson Avenue","hurdman Road","Lett Street","lampman Crescent",
+        String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
+                "waller Street","bronson Avenue","Hurdman Road","Lett Street","lampman Crescent",
                 "macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place",
                 "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
                 "rideau Canal", "street 21", "street 22"};
-        int[] costs = {60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
+        int[] costs = {0,60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
 
-
-
-
-        String[] colors = {"brown","brown","light blue","light blue","light blue","pink","pink","pink",
-                "orange","orange","orange", "red","red","red","yellow","yellow", "yellow","green","green",
-                "green","blue","blue"};
+        Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.CYAN,Color.pink,Color.pink,Color.pink,
+                Color.orange,Color.orange,Color.orange, Color.red, Color.red, Color.red,Color.yellow,Color.yellow, Color.yellow,Color.green,Color.green,
+                Color.green,new Color(0,135,225),new Color(0,135,225)};
 
         for (int i = 0; i < streetNames.length; i++) {
             gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
         }
+    }
+
+    public Map<Integer,Card> getGameBoard(){
+        return this.gameBoard;
     }
 
 
@@ -102,41 +106,23 @@ public class GameModel {
     /**
      * this method changes the players turn
      */
-    private void changeTurn(){
-        int index = players.indexOf(activePlayer);
-        index++;
-        index = index % 4;
-        switch (turn) {
-            case P1_TURN:
-                turn = GameModel.Turn.P2_TURN;
-                activePlayer = players.get(index);
-                break;
-            case P2_TURN:
-                turn = GameModel.Turn.P3_TURN;
-                activePlayer = players.get(index);
-                break;
-            case P3_TURN:
-                turn = GameModel.Turn.P4_TURN;
-                activePlayer = players.get(index);
-                break;
-            case P4_TURN:
-                turn = GameModel.Turn.P1_TURN;
-                activePlayer = players.get(index);
-                break;
-        }
+    public void changeTurn(){
+        currTurn++;
+        if (currTurn == players.size())
+            currTurn = 0;
+        activePlayer = players.get(currTurn);
     }
 
     /**
      * this method updates the status of the game
      * to show if a player is in or out
      */
-    private void updateStatus(){
+    private int updateStatus(){
 
         int removePlayer = -1;
 
         for(Player x: players){
             if(x.getMoney()<=0){
-                Game.printBankruptcy(x.getName());
                 removePlayer = players.indexOf(x);
                 x.setPlaying(false);
                 for(Card c : x.getProperties()){
@@ -147,57 +133,67 @@ public class GameModel {
 
         if(removePlayer != -1){
             players.remove(removePlayer);
+            return 1;
         }
-
 
         if(players.size() == 1){
-            switch(players.get(0).getName()){
-                case "P1":
-                    status = Status.P1_WINS;
-                    break;
-
-                case "P2":
-                    status = Status.P2_WINS;
-                    break;
-
-                case "P3":
-                    status = Status.P3_WINS;
-                    break;
-
-                case "P4":
-                    status = Status.P4_WINS;
-                    break;
-            }
+            status = Status.WINNER;
+            return 2;
         }
+        return 0;
     }
 
     /**
      * this method is called to play the game
      */
-    public void play(){
-        this.updateStatus();
-
+    public void play(int choice){
         int dice1 = (int)(Math.random()*6+1);
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
+        if (choice == 1){
+            activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+            currentCard = gameBoard.get(activePlayer.getPosition());
+            int result = currentCard.functionality(activePlayer);
+            //If player X turn set there position to += the roll amount
 
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-        currentCard = gameBoard.get(activePlayer.getPosition());
+            for (GameView view : views) {
+                if (result == 0){
+                    view.unownedProperty(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+                }
+                else if(result == 2){
+                    view.ownedProperty(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+                }
 
-        //If player X turn set there position to += the roll amount
-
-        for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+            }
+            int gameState = this.updateStatus();
+            for(GameView view : views){
+                if(gameState == 1){
+                    view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[] {dice1, dice2}));
+                }
+                else if(result == 2){
+                    view.announceWinner(new GameEvent(this, status,currentCard, new int[] {dice1, dice2}));
+                }
+            }
+            if(dice1 == dice2 && numTimesRolledDouble<=3){
+                this.numTimesRolledDouble++;
+            }else{
+                this.changeTurn();
+                this.numTimesRolledDouble = 0;
+            }
         }
-        this.updateStatus();
-        if(dice1 == dice2 && numTimesRolledDouble<=3){
-            this.play();
-            this.numTimesRolledDouble++;
-        }else{
+        else if (choice == 2){
+            for (GameView view : views) {
+                view.announcePlayerPass(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+            }
+            this.updateStatus();
             this.changeTurn();
-            this.numTimesRolledDouble = 0;
         }
+
+
+
+
 
 
     }
@@ -214,7 +210,7 @@ public class GameModel {
      * @return Returns a Player that is the current player
      */
     public Player getActivePlayer() {
-        return activePlayer;
+        return players.get(currTurn);
     }
 
 
@@ -226,28 +222,23 @@ public class GameModel {
         return currentCard;
     }
 
+    public void addPlayers(int playerNum) {
+        for (int i = 0; i <playerNum; i++){
+            this.players.add(new Player("P"+(i+1)));
+        }
+        activePlayer = players.get(0);
+    }
 
-
-
+    public void payRent(Player owner, Card card) {
+        this.activePlayer.payRent(owner, card);
+    }
+    // ---------------------------------------------------------------------------------
     /**
      * enum that holds the different statuses for the game, certain player winning or undecided
      */
     public static enum Status {
-        P1_WINS,
-        P2_WINS,
-        P3_WINS,
-        P4_WINS,
-        UNDECIDED;
-    }
-
-    /**
-     * enum that holds the different turns of players in monopoly.
-     */
-    public static enum Turn{
-        P1_TURN,
-        P2_TURN,
-        P3_TURN,
-        P4_TURN;
+        WINNER,
+        UNDECIDED,
     }
 
 }

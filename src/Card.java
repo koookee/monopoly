@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * @author Andre, Jack, Cassidy, Hussein
  * This class represents the Cards/Properties in Monopoly
@@ -6,7 +8,7 @@
 public class Card {
     private String name;
     private int cost;
-    private String color;
+    private Color color;
     private boolean isOwned;
     private Player owner;
 
@@ -27,7 +29,7 @@ public class Card {
      * @param cost the cost of the card
      * @param color the color of the card
      */
-    public Card(String name, int cost,String color) {
+    public Card(String name, int cost, Color color) {
         this(name,cost);
         this.color = color;
     }
@@ -89,7 +91,22 @@ public class Card {
         return (int) (cost * 0.1) ;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return this.color;
+    }
+
+    public int functionality(Player p){
+        if (this.owner == null){
+            return 0;
+        }
+        else{
+            if (this.owner.getName() == p.getName()){
+                return 1;
+            }
+            return 2;
+        }
+        // if owner
+        // no owner
+        // is owned
     }
 }

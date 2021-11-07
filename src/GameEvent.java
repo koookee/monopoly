@@ -11,7 +11,7 @@ public class GameEvent extends EventObject {
     private int[] roll;
 
     /**
-     * The GameEvent contructor
+     * The GameEvent constructor
      * @param gameModel the game model of type GameModel
      * @param status the status of type enum
      * @param card the card of type Card for the property
@@ -48,5 +48,15 @@ public class GameEvent extends EventObject {
      */
     public Card getCard() {
         return card;
+    }
+
+
+    @Override
+    public Object getSource() {
+        return super.getSource();
+    }
+
+    public GameModel getModel(){
+        return (GameModel) getSource();
     }
 }
