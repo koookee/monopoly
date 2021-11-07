@@ -72,6 +72,9 @@ public class GameModel {
         return this.gameBoard;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     /**
      * This method adds a view to the model
@@ -186,12 +189,14 @@ public class GameModel {
         else if(choice == 4 && status.name().equals("UNDECIDED")) { // Buying property
             int result = currentCard.functionality(activePlayer);
             for (GameView view : views) {
+                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
                 if (result == 0) {
                     view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 } else if (result == 2) {
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard,new int[] {dice1, dice2 }));
+
+
             }
         }
         else if (choice == 5 && status.name().equals("UNDECIDED")){ // Confirms buying
@@ -224,7 +229,14 @@ public class GameModel {
         return currentCard;
     }
 
+    public void setCurrentCard(int x ){
+        currentCard = getGameBoard().get(x);
+    }
+
     public void addPlayers(int playerNum) {
+        if(playerNum<2 || playerNum>4){
+            return;
+        }
         for (int i = 0; i <playerNum; i++){
             this.players.add(new Player("P"+(i+1)));
         }
