@@ -184,6 +184,9 @@ public class GameModel {
             this.changeTurn();
             numTimesRolledDouble = 0;
             hasNotRolled = true;
+            for (GameView view : views) {
+                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+            }
         }
     }
 

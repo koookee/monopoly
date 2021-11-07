@@ -158,8 +158,11 @@ public class GameFrame extends JFrame implements GameView {
 
 
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
+        JLabel playerRoll;
+        if (roll[0] == 0 && roll [1] == 0) playerRoll = new JLabel("Player hasn't rolled yet");
+        else if(roll[0] == roll[1]) playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
+        else playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1]);
 
-        JLabel playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1]);
         bodyPanel.add(playerRoll);
         mainPanel.add(bodyPanel,BorderLayout.CENTER);
         GameController controller = new GameController(model);
@@ -208,8 +211,8 @@ public class GameFrame extends JFrame implements GameView {
         this.model = (GameModel) e.getSource();
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
-
         displayGUI();
+
         updatePlayerIcon(model.getActivePlayer());
     }
 
