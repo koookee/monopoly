@@ -222,7 +222,7 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController unowned = new CardController(model);
         Card card = gameEvent.getCard();
-        unowned.buyProperty(this,"You landed on " + card.getName() + " cost $" + card.getCost() +
+        unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
     }
 
@@ -232,7 +232,7 @@ public class GameFrame extends JFrame implements GameView {
         CardController owned = new CardController(model);
         Card card = gameEvent.getCard();
 
-        owned.payRent(this, "You landed on " + card.getName() + "You must pay $" + card.getRent() + " to " + card.getOwner().getName());
+        owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
         model.payRent(card.getOwner(), card);
     }
 
@@ -240,7 +240,6 @@ public class GameFrame extends JFrame implements GameView {
     public void announcePlayerPass(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         CardController passed = new CardController(model);
-        Card card = gameEvent.getCard(); // Do we need this?
         passed.confirmPass(this, "Confirm that you would like to pass");
     }
 
@@ -256,7 +255,7 @@ public class GameFrame extends JFrame implements GameView {
     public void announceWinner(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.winner(this, model.getActivePlayer().getName() + "is the winner!");
+        control.winner(this, model.getActivePlayer().getName() + " is the winner!");
     }
 
     private void updatePlayerIcon(Player activePlayer) {
