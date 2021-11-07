@@ -94,4 +94,19 @@ public class Card {
     public Color getColor() {
         return this.color;
     }
+
+    public int functionality(Player p){
+        if (this.owner == null){
+            return 0;
+        }
+        else{
+            if (this.owner.getName() == p.getName()){
+                return 1;
+            }
+            return 2;
+        }
+        // if owner
+        // no owner
+        // is owned
+    }
 }
