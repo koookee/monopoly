@@ -16,6 +16,7 @@ public class GameModel {
     private Player activePlayer;
     private Card currentCard;
     private int numTimesRolledDouble;
+    private boolean hasNotRolled;
 
     /**
      * this is the default constructor
@@ -29,6 +30,7 @@ public class GameModel {
         this.gameBoard = new HashMap();
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
+        this.hasNotRolled = true;
         this.createGameBoard();
     }
 
@@ -139,7 +141,7 @@ public class GameModel {
         int dice2 = (int)(Math.random()*6+1);
         int roll = dice1 + dice2;
 
-        if (choice == 1){
+        if (choice == 1 && hasNotRolled){
             activePlayer.setPrevPosition(activePlayer.getPosition());
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
             currentCard = gameBoard.get(activePlayer.getPosition());
@@ -164,18 +166,24 @@ public class GameModel {
                     view.announceWinner(new GameEvent(this, status,currentCard, new int[] {dice1, dice2}));
                 }
             }
-            if (dice1 == dice2 && numTimesRolledDouble <= 3) this.numTimesRolledDouble++;
+            if (dice1 == dice2 && numTimesRolledDouble <= 3) {
+                this.numTimesRolledDouble++;
+                hasNotRolled = true;
+            }
             else {
-                this.changeTurn();
-                this.numTimesRolledDouble = 0;
+                hasNotRolled = false;
             }
         }
-        else if (choice == 2) {
+        else if (choice == 2) { // Ask if they're sure they want to pass
             for (GameView view : views) {
                 view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
+        }
+        else if (choice == 3){ // Player confirms they want to pass
             this.updateStatus();
             this.changeTurn();
+            numTimesRolledDouble = 0;
+            hasNotRolled = true;
         }
     }
 

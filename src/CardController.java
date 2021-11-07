@@ -19,8 +19,10 @@ private GameModel model;
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }
 
-    public int confirmPass(GameFrame frame, String message) {
+    public void confirmPass(GameFrame frame, String message) {
         int confirmed = JOptionPane.showConfirmDialog(null, message);
-        return confirmed;
+        if(confirmed == JOptionPane.YES_OPTION){
+            this.model.play(3);
+        }
     }
 }

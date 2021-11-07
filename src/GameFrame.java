@@ -162,19 +162,23 @@ public class GameFrame extends JFrame implements GameView {
         JLabel playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1]);
         bodyPanel.add(playerRoll);
         mainPanel.add(bodyPanel,BorderLayout.CENTER);
-
+        GameController controller = new GameController(model);
 
         JPanel footerPanel = new JPanel(new GridLayout(3, 3));
+
         JButton rollButton = new JButton("Roll");
-        GameController controller = new GameController(model);
         rollButton.setActionCommand(1 + " ");
         rollButton.addActionListener(controller);
         footerPanel.add(rollButton);
-        JButton buy = new JButton("Buy");
+
         JButton pass = new JButton("Pass");
+        pass.setActionCommand(2 + " ");
+        pass.addActionListener(controller);
+        footerPanel.add(pass);
+
+        JButton buy = new JButton("Buy");
         JButton nextTurn = new JButton("Next Turn");
         footerPanel.add(buy);
-        footerPanel.add(pass);
         footerPanel.add(nextTurn);
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
         return mainPanel;
@@ -186,6 +190,7 @@ public class GameFrame extends JFrame implements GameView {
 
         this.mainPanel.revalidate();
         this.playerPanel.revalidate();
+
         this.add(playerPanel, BorderLayout.LINE_END);
         this.add(mainPanel, BorderLayout.CENTER);
 
@@ -235,12 +240,8 @@ public class GameFrame extends JFrame implements GameView {
     public void announcePlayerPass(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         CardController passed = new CardController(model);
-        Card card = gameEvent.getCard();
-
-        int confirmedPass = passed.confirmPass(this, "Confirm that you would like to pass");
-        if(confirmedPass == JOptionPane.YES_OPTION){
-            model.changeTurn();
-        }
+        Card card = gameEvent.getCard(); // Do we need this?
+        passed.confirmPass(this, "Confirm that you would like to pass");
     }
 
     @Override
