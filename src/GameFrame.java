@@ -43,7 +43,7 @@ public class GameFrame extends JFrame implements GameView {
         int playerNum = control.getPlayerNumber(this);
         model.addPlayers(playerNum);
 
-        this.playerPanel = paintPlayerInfo(model.getActivePlayer());
+        this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
 
 
@@ -157,10 +157,6 @@ public class GameFrame extends JFrame implements GameView {
     }
 
 
-    private JPanel paintPlayerInfo(Player activePlayer) {
-        return new JPanel(); // We need to implement this ------------------------------------------
-    }
-
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -232,7 +228,7 @@ public class GameFrame extends JFrame implements GameView {
         this.model = (GameModel) e.getSource();
 
 
-        playerPanel = paintPlayerInfo(model.getActivePlayer());
+        playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 
 
 
