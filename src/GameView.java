@@ -1,13 +1,13 @@
 public interface GameView {
     void handleGameStatusUpdate(GameEvent e);
 
-    void unownedProperty(GameEvent gameEvent);
+    void unownedProperty(GameEvent e);
 
-    void ownedProperty(GameEvent gameEvent);
+    void ownedProperty(GameEvent e);
 
-    void announcePlayerPass(GameEvent gameEvent);
+    void announcePlayerPass(GameEvent e);
 
-    void announceBankruptcy(GameEvent gameEvent);
+    void announceBankruptcy(GameEvent e);
 
-    void announceWinner(GameEvent gameEvent);
+    void announceWinner(GameEvent e);
 }
