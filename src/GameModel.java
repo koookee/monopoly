@@ -77,35 +77,11 @@ public class GameModel {
     }
 
     /**
-     * The getter for array list for the players
-     * @return the array list of all the players
-     */
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    /**
      * This method adds a view to the model
      * @param view a view that the model will notify
      */
     public void addGameModelView(GameView view){
         this.views.add(view);
-    }
-
-    /**
-     * this method removes a view from the model
-     * @param view a view that will be removed
-     */
-    public void removeGameModelView(GameView view){
-        this.views.remove(view);
-    }
-
-    /**
-     * A getter for the status
-     * @return the Enum status
-     */
-    public GameModel.Status getStatus(){
-        return this.status;
     }
 
     /**
@@ -257,22 +233,6 @@ public class GameModel {
         }
         return null;
     }
-
-
-    /**
-     * Getter for the current card that the player is on.
-     * @return Returns a Card that is the current card that the player is on.
-     */
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    /*
-    public void setCurrentCard(int x ){
-        currentCard = getGameBoard().get(x);
-    }
-
-     */
 
     /**
      * Adds a number of players to the game
