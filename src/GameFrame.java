@@ -37,7 +37,7 @@ public class GameFrame extends JFrame implements GameView {
         this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(frameSize.width, frameSize.height - 20);
-
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
         model = new GameModel();
@@ -139,6 +139,7 @@ public class GameFrame extends JFrame implements GameView {
 
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
         boolean rollEnabled = true;
+        boolean buyEnabled = false;
         JPanel mainPanel = new JPanel(new BorderLayout());
         JLabel playerName = new JLabel("Player: " + activePlayer.getName());
         mainPanel.add(playerName, BorderLayout.PAGE_START);
@@ -159,10 +160,14 @@ public class GameFrame extends JFrame implements GameView {
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
         JLabel playerRoll;
         if (roll[0] == 0 && roll [1] == 0) playerRoll = new JLabel("Player hasn't rolled yet");
-        else if(roll[0] == roll[1]) playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
+        else if(roll[0] == roll[1]) {
+            playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
+            buyEnabled = true;
+        }
         else{
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
             rollEnabled = false;
+            buyEnabled = true;
         }
 
         bodyPanel.add(playerRoll);
@@ -183,7 +188,11 @@ public class GameFrame extends JFrame implements GameView {
         pass.addActionListener(controller);
         footerPanel.add(pass);
 
-
+        JButton buy = new JButton("Buy");
+        buy.setEnabled(buyEnabled);
+        buy.setActionCommand(4 + " ");
+        buy.addActionListener(controller);
+        footerPanel.add(buy);
 
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
         return mainPanel;
@@ -260,7 +269,6 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
         control.bankruptcy(this, model.getActivePlayer().getName() + " has gone bankrupt sux 2 suk");
-
     }
 
     @Override

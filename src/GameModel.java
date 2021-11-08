@@ -152,7 +152,7 @@ public class GameModel {
      * this method is called to play the game
      */
     public void play(int choice){
-        if(activePlayer.isPlaying()) {
+       // if(activePlayer.isPlaying()) {
             System.out.println(activePlayer.getName());
             if (choice == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
                 dice1 = (int) (Math.random() * 6 + 1);
@@ -170,8 +170,6 @@ public class GameModel {
                 for (GameView view : views) {
                     if (gameState == 1) {
                         view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-
-
                     }
                     if (gameState == 2) {
                         view.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -204,17 +202,12 @@ public class GameModel {
                     } else if (result == 2) {
                         view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                     }
-
-
                 }
             } else if (choice == 5 && status.name().equals("UNDECIDED")) { // Confirms buying
                 int result = currentCard.functionality(activePlayer);
                 if (result == 0) buyProperty();
-
             }
-
-        }
-
+       // }
     }
 
     /**
