@@ -233,6 +233,10 @@ public class GameModel {
         currentCard = getGameBoard().get(x);
     }
 
+    public int getCurrTurn(){
+        return currTurn;
+    }
+
     public void addPlayers(int playerNum) {
         if(playerNum<2 || playerNum>4){
             return;
