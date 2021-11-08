@@ -37,7 +37,8 @@ public class GameFrame extends JFrame implements GameView {
         this.board = model.getGameBoard();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
-        this.setSize(1600, 1024);
+        Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(frameSize.width, frameSize.height - 20);
 
 
 
@@ -139,6 +140,7 @@ public class GameFrame extends JFrame implements GameView {
 
 
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
+        boolean rollEnabled = true;
         JPanel mainPanel = new JPanel(new BorderLayout());
         JLabel playerName = new JLabel("Player: " + activePlayer.getName());
         mainPanel.add(playerName, BorderLayout.PAGE_START);
@@ -160,7 +162,10 @@ public class GameFrame extends JFrame implements GameView {
         JLabel playerRoll;
         if (roll[0] == 0 && roll [1] == 0) playerRoll = new JLabel("Player hasn't rolled yet");
         else if(roll[0] == roll[1]) playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
-        else playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
+        else{
+            playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
+            rollEnabled = false;
+        }
 
         bodyPanel.add(playerRoll);
         mainPanel.add(bodyPanel,BorderLayout.CENTER);
@@ -169,11 +174,13 @@ public class GameFrame extends JFrame implements GameView {
         JPanel footerPanel = new JPanel(new GridLayout(3, 3));
 
         JButton rollButton = new JButton("Roll");
+        rollButton.setEnabled(rollEnabled);
         rollButton.setActionCommand(1 + " ");
         rollButton.addActionListener(controller);
         footerPanel.add(rollButton);
 
         JButton pass = new JButton("Next Turn");
+        pass.setEnabled(!rollEnabled);
         pass.setActionCommand(2 + " ");
         pass.addActionListener(controller);
         footerPanel.add(pass);
