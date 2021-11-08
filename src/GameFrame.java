@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class GameFrame extends JFrame implements GameView {
     private GameModel model;
-    private Map<Integer,Card> board;
+
     private ArrayList<JLayeredPane> squares;
-    private ArrayList<JPanel> squaresCenter;
+
 
     private final JLabel icon = new JLabel(new ImageIcon("boot.png"));
     private final JLabel icon2 = new JLabel(new ImageIcon("pin.png"));
@@ -33,8 +33,6 @@ public class GameFrame extends JFrame implements GameView {
         this.model = new GameModel();
         model.addGameModelView(this);
         this.squares = new ArrayList<>();
-        this.squaresCenter = new ArrayList<>();
-        this.board = model.getGameBoard();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -226,7 +224,7 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController unowned = new CardController(model);
         Card card = gameEvent.getCard();
-        unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+        if(card.getCost() !=0) unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
@@ -244,6 +242,10 @@ public class GameFrame extends JFrame implements GameView {
 
         owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
         model.payRent(card.getOwner(), card);
+        getContentPane().remove(playerPanel);
+        playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
+
+        displayGUI();
     }
 
     @Override
