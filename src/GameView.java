@@ -1,3 +1,7 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussein
+ */
+
 public interface GameView {
     void handleGameStatusUpdate(GameEvent e);
 

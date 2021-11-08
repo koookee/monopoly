@@ -51,11 +51,19 @@ public class GameEvent extends EventObject {
     }
 
 
+    /**
+     * The source of the event
+     * @return the event Object
+     */
     @Override
     public Object getSource() {
         return super.getSource();
     }
 
+    /**
+     * The game model of the source
+     * @return source downcasted to GameModel
+     */
     public GameModel getModel(){
         return (GameModel) getSource();
     }

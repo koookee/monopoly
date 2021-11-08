@@ -22,7 +22,7 @@ public class GameModel {
     int roll;
 
     /**
-     * this is the default constructor
+     * The constructor for the GameModel class
      * We set the amount of players to 4 as the default since we haven't added the ai yet
      */
 
@@ -68,10 +68,18 @@ public class GameModel {
         }
     }
 
+    /**
+     * The getter for the game board
+     * @return the Map<Integer, Card> of the game board
+     */
     public Map<Integer,Card> getGameBoard(){
         return this.gameBoard;
     }
 
+    /**
+     * The getter for array list for the players
+     * @return the array list of all the players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -118,8 +126,11 @@ public class GameModel {
     }
 
     /**
-     * this method updates the status of the game
-     * to show if a player is in or out
+     * This method updates the status of the game
+     * to show if a player is in or out. It also
+     * sets the game state to Winning if there's 1
+     * player left
+     * @return the int of whether a player went bankrupt or not
      */
     private int updateStatus(){
 
@@ -157,8 +168,10 @@ public class GameModel {
         return numToReturn;
     }
 
+
     /**
-     * this method is called to play the game
+     * This method is called to play the game depending on the choice command
+     * @param choice the int that determines the action to take
      */
     public void play(int choice){
         System.out.println(activePlayer.getName());
@@ -223,7 +236,7 @@ public class GameModel {
      * this method is used to buy a property for a player
      */
     public void buyProperty(){
-        this.activePlayer.buyCard(currentCard);
+        if (!currentCard.getName().equals("Go")) this.activePlayer.buyCard(currentCard);
     }
 
     /**
@@ -234,6 +247,10 @@ public class GameModel {
         return players.get(currTurn);
     }
 
+    /**
+     * Gets the only player left in the game
+     * @return the winner of type Player
+     */
     public Player getWinner(){
         for (Player player : players){
             if (player.isPlaying()) return player;
@@ -250,10 +267,17 @@ public class GameModel {
         return currentCard;
     }
 
+    /*
     public void setCurrentCard(int x ){
         currentCard = getGameBoard().get(x);
     }
 
+     */
+
+    /**
+     * Adds a number of players to the game
+     * @param playerNum the int for the number of players to be added
+     */
     public void addPlayers(int playerNum) {
         if(playerNum<2 || playerNum>4){
             return;
@@ -264,6 +288,11 @@ public class GameModel {
         activePlayer = players.get(0);
     }
 
+    /**
+     * Makes a player pay rent to another player
+     * @param owner the player that owns the property and is receiving the money
+     * @param card the card on which the property is on
+     */
     public void payRent(Player owner, Card card) {
         this.activePlayer.payRent(owner, card);
     }

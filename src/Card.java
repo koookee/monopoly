@@ -91,10 +91,19 @@ public class Card {
         return (int) (cost * 0.1) ;
     }
 
+    /**
+     * The getter for color of the card
+     * @return the Color of the card tile
+     */
     public Color getColor() {
         return this.color;
     }
 
+    /**
+     * Checks if the property is owned by a player
+     * @param p the player on the card
+     * @return the int of whether the card has an owner, no owner, or if the owner is p
+     */
     public int functionality(Player p){
         if (this.owner == null){
             return 0;

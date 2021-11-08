@@ -1,3 +1,7 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussein
+ */
+
 import javax.swing.*;
 public class WelcomeController {
     public int getPlayerNumber(JFrame frame){

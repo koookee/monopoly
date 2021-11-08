@@ -1,3 +1,7 @@
+/**
+ * @author Andre, Jack, Cassidy, Hussein
+ */
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -27,7 +31,9 @@ public class GameFrame extends JFrame implements GameView {
     private JPanel playerPanel;
 
 
-
+    /**
+     * Constructor for GameFrame the class
+     */
     public GameFrame() {
         super("Monopoly");
         this.model = new GameModel();
@@ -61,6 +67,9 @@ public class GameFrame extends JFrame implements GameView {
     }
 
 
+    /**
+     * Creates the squares for the tiles
+     */
     private void createSquares() {
         for (int i = 0; i < this.model.getGameBoard().size(); i++) {
 
@@ -109,6 +118,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Creates the panel that has the GUI for the board
+     * @return the JPanel of the monopoly board
+     */
     private JPanel paintBoard() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(new LineBorder(Color.black));
@@ -137,6 +150,12 @@ public class GameFrame extends JFrame implements GameView {
     }
 
 
+    /**
+     * Creates the panel for the player information
+     * @param activePlayer the current active player of type Player
+     * @param roll the int array of what the player rolled
+     * @return the JPanel that has the player information
+     */
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
         boolean rollEnabled = true;
         boolean buyEnabled = false;
@@ -202,6 +221,9 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Displays the GUI of the whole game
+     */
     public void displayGUI() {
         this.setLayout(new BorderLayout());
 
@@ -231,6 +253,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Gives the player information about the property they landed on and the option to buy (if possible)
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void unownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
@@ -246,6 +272,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Gives the player information about the property they and charges them rent
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void ownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
@@ -260,6 +290,10 @@ public class GameFrame extends JFrame implements GameView {
         displayGUI();
     }
 
+    /**
+     * Asks the player if they want to pass their turn
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void announcePlayerPass(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
@@ -267,6 +301,10 @@ public class GameFrame extends JFrame implements GameView {
         passed.confirmPass(this, "Confirm that you would like to end your turn");
     }
 
+    /**
+     * Announces that a player went bankrupt
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void announceBankruptcy(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
@@ -274,6 +312,10 @@ public class GameFrame extends JFrame implements GameView {
         control.bankruptcy(this, "P" + (model.getCurrTurn() + 1) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
     }
 
+    /**
+     * Announces the winner of the game
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void announceWinner(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
@@ -281,6 +323,11 @@ public class GameFrame extends JFrame implements GameView {
         control.winner(this, model.getWinner().getName() + " is the winner!");
     }
 
+    /**
+     * Updates the player icons on the board GUI
+     * @param activePlayer the current active player of type Player
+     * @param roll the int array of what they rolled
+     */
     private void updatePlayerIcon(Player activePlayer, int[] roll) {
         int position = activePlayer.getPosition();
         int prev = activePlayer.getPrevPostion();
@@ -333,7 +380,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
-
+    /**
+     * Main method that runs the program
+     * @param args the arguments passed of type String array
+     */
     public static void main(String[] args) {
         GameFrame gameFrame = new GameFrame();
         gameFrame.displayGUI();

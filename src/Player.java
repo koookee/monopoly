@@ -1,7 +1,6 @@
 /**
  * @author Andre, Jack, Cassidy, Hussein
  * This class represents the players who are playing Monopoly.
- *
  */
 
 
@@ -17,8 +16,8 @@ public class Player {
     private ArrayList<Card> properties;
 
     /**
-     *
-     * @param name
+     * The constructor for the Player class
+     * @param name the name of the player
      */
     public Player(String name){
         this.name = name;
@@ -122,8 +121,20 @@ public class Player {
         this.position = position;
     }
 
+    /**
+     * Gets the previous position of the player
+     * @return the int of the previous position
+     */
     public int getPrevPostion() {
         return prevPostion;
+    }
+
+    /**
+     * Sets the previous position of the player
+     * @param position the int of the previous position
+     */
+    public void setPrevPosition(int position) {
+        this.prevPostion = position;
     }
 
     @Override
@@ -137,9 +148,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, position);
-    }
-
-    public void setPrevPosition(int position) {
-        this.prevPostion = position;
     }
 }
