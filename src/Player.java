@@ -22,7 +22,7 @@ public class Player {
      */
     public Player(String name){
         this.name = name;
-        this.money = 400;
+        this.money = 50;
         this.position = 0;
         this.playing = true;
         properties = new ArrayList<>();

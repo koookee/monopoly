@@ -188,11 +188,14 @@ public class GameFrame extends JFrame implements GameView {
         pass.addActionListener(controller);
         footerPanel.add(pass);
 
+        /*
         JButton buy = new JButton("Buy");
         buy.setEnabled(buyEnabled);
         buy.setActionCommand(4 + " ");
         buy.addActionListener(controller);
         footerPanel.add(buy);
+
+         */
 
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
         return mainPanel;
@@ -268,14 +271,14 @@ public class GameFrame extends JFrame implements GameView {
     public void announceBankruptcy(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.bankruptcy(this, model.getActivePlayer().getName() + " has gone bankrupt sux 2 suk");
+        control.bankruptcy(this, "P" + (model.getCurrTurn() + 1) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
     }
 
     @Override
     public void announceWinner(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.winner(this, model.getActivePlayer().getName() + " is the winner!");
+        control.winner(this, model.getWinner().getName() + " is the winner!");
     }
 
     private void updatePlayerIcon(Player activePlayer, int[] roll) {
