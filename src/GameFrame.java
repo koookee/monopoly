@@ -84,21 +84,24 @@ public class GameFrame extends JFrame implements GameView {
             if (c.getCost() != 0)  name= new JLabel(c.getName() + " ($" + c.getCost()+")");
             else  name = new JLabel(c.getName());
 
+            int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+            int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 
             squareTop.add(name);
             if(i<=botSquares-1){
-                layeredPane.setPreferredSize(new Dimension(150,150));
+                layeredPane.setPreferredSize(new Dimension(width/botSquares,height/leftSquareNum-2));
                 square.setPreferredSize(new Dimension(100,150));
-                square.setBounds(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize().width/botSquareNum,150));
+                square.setBounds(new Rectangle(width/botSquareNum,height/leftSquareNum-2));
             }
             else if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
-                layeredPane.setPreferredSize(new Dimension(290,150));
-                square.setPreferredSize(new Dimension(290,150));
-                square.setBounds(new Rectangle(290,Toolkit.getDefaultToolkit().getScreenSize().width/leftSquareNum));
+                layeredPane.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
+                square.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
+                square.setBounds(new Rectangle(290,height/leftSquareNum-2));
             }else if(i>leftSquares-1 && i<=topSquares-1){
-                layeredPane.setPreferredSize(new Dimension(200,150));
+                layeredPane.setPreferredSize(new Dimension(width/topSquareNum,height/leftSquareNum-2));
                 square.setPreferredSize(new Dimension(100,150));
-                square.setBounds(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize().width/topSquareNum,150));
+                layeredPane.setBorder(new LineBorder(Color.black));
+                square.setBounds(new Rectangle(width/topSquareNum,height/leftSquareNum-2));
             }
 
 
@@ -226,6 +229,7 @@ public class GameFrame extends JFrame implements GameView {
      */
     public void displayGUI() {
         this.setLayout(new BorderLayout());
+        this.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height ));
 
         this.mainPanel.revalidate();
         this.playerPanel.revalidate();
@@ -262,7 +266,7 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController unowned = new CardController(model);
         Card card = gameEvent.getCard();
-        if(card.getCost() !=0) unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()) unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());

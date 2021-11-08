@@ -147,15 +147,15 @@ public class GameModel {
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
                 }
-                //System.out.println("here");
+
             }
         }
 
         int currentPlayers = 0;
-        System.out.println("---");
+
         for (Player p : players) {
             if(p.isPlaying()) currentPlayers++;
-            System.out.println(currentPlayers + " " + p.getName() + " " + p.isPlaying());
+
         }
 
         if(playerLost == 1) {
@@ -174,7 +174,7 @@ public class GameModel {
      * @param choice the int that determines the action to take
      */
     public void play(int choice){
-        System.out.println(activePlayer.getName());
+
         if (choice == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
