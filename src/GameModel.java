@@ -216,6 +216,29 @@ public class GameModel {
     }
 
     /**
+     * Getter for players
+     * @return list of players
+     */
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * Setter for Current Card.
+     */
+    public void setCurrentCard(int i ) {
+        this.currentCard = gameBoard.get(i);
+    }
+
+    /**
+     * Getter for Current Card.
+     * @return Card
+     */
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    /**
      * getter for the activePlayer
      * @return Returns a Player that is the current player
      */
