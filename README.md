@@ -33,7 +33,7 @@ The player has two initial buttons. One button to roll and one button to move on
 
 ## Known Issues
 
-Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. 
+Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. Also, their piece will not disappear from the board even though the player is no longer in the game. 
 
 ## Roadmap Ahead
 
