@@ -21,7 +21,7 @@ public class Player {
      */
     public Player(String name){
         this.name = name;
-        this.money = 200;
+        this.money = 1500;
         this.position = 0;
         this.playing = true;
         properties = new ArrayList<>();
