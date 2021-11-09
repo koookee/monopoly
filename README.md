@@ -29,11 +29,11 @@ The player has two initial buttons. One button to roll and one button to move on
 - The GameFrame class is the view aspect of the MVC design. It creates and displays the gameboard in a JFrame as well as the player pieces, the player stats, and the buttons that the user controls the game with. The GameFrame gets updated frequently depending on the input that it gets from other classes, primarily GameModel.
 - There are multiple controller classes for different aspects of the game. The WelcomeController class deals with the initial pop-up window that appears before the game board does and that allows the user to select the number of players. The CardController class deals with any type of control relating to the gameboard tiles. This class handles the pop-ups for when a player is buying a property, paying rent, or passing their turn. The GameController class handles the buttons that are directly in the game board such as roll. It also handles the display when there are changes in game or player state such as when a player goes bankrupt or when there is a winner. 
 - The Player and Card classes simply hold attributes regarding the player and the board tiles since those are the mian aspects of the game.
-- The GameEvent class simply helps to keep things encapsulated and makes it easier to access certain attributes. 
+- The GameEvent class simply helps to keep things encapsulated and makes it easier to access certain attributes.
 
 ## Known Issues
 
-Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. Also, their piece will not disappear from the board even though the player is no longer in the game. 
+Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. Also, their piece will not disappear from the board even though the player is no longer in the game. Finally, icons are currently implemented as class attributes however this is likely to change in future milestones as this is probably not the best design.
 
 ## Roadmap Ahead
 
