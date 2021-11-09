@@ -4,14 +4,13 @@ by Andre Hazim, Hussein Elmokdad, Jack Mackinnon, and Cassidy Pacada
 
 ## General Information
 
-As of Milestone 1, this program simulates a text-based version of Monopoly for a default number of four players. Not all game features have been implemented yet but a player is able to roll their dice, buy or pass on properties, and pay rent to other players should they land on an owned property. The game ends when all but one player is bankrupt.
+As of Milestone 2, this program simulates a modified version of Monopoly complete with a GUI. Not all game features have been implemented yet but the user is able to choose between 2 to 4 players and each player is able to roll their dice, buy or pass on properties, and pay rent to other players should they land on an owned property. Whenever one of these events occurs in the game, the event announcement is made through a pop-up window. The players stats are shown in the side bar and the board and the player pieces are shown in the central part of the GUI frame. The game ends when all but one player is bankrupt.
 
 ## User Manual
 
-To run the program, the player must have Java JDK 11 installed. Once the executable file is run, the game starts in the console. All four players must be on the same console. Valid commands are prompted and the user can type those commands into the console to play the game.
+To run the program, the player must have Java JDK 11 installed. Once the executable file is run, a window will pop up with a menu asking the user to select the number of players. Once the desired number of players has been selected, the game board will appear with Player 1's stats in the side bar.
 
-To start the game the firsst user must type in start. They will be prompted to roll the dice but they can also quit the game or access the help menu whenever they want to by using the quit or help commands. If they choose to roll, they will be given property information. They may choose to check their player status and then buy or pass on the property. Should they land on  a property that is owned by another player the rent will automatically be deducted. The game ends when all players are bankrupt except for one.
-
+The player has two initial buttons. One button to roll and one button to move on to the next player's turn. At the start of the turn, the only button enabled will be the roll button. The user can presst the button to move their piece. Once they have finished their roll and landed on the tile, they will be promopted with a window on whether to buy the property or to pass if the property is not already owned. They may make their selection using the given buttons. If the property is already owned, they will be notified that they must pay rent to the owner and the rent will automatically be deducted from their balance. Afterwards they may either select the pass button to move on to the next player's turn or, if they hvae rolled doubles, they may roll the dice again.
 
 ## Deliverables
 
@@ -26,20 +25,19 @@ To start the game the firsst user must type in start. They will be prompted to r
 
 #### Class Design Decisions
 
-- To follow the MVC design pattern, we created a GameModel class that handles the general logic behind the main aspects of the game such as dice rolling, updating player status, and creating the board. Most of the logic in dealing with the user inputted commands goes into the Game class which updates variables and displays output depending on which command words the user inputs. This is the view aspect of the MVC as it calls the GameModel class to know how to update the display. The parser class acts as the controller and receives user inputs that it turns into command words for the Game class to use.
-- There is an Interface called GameView in order to properly turn Game into the view to fulfill the V portion of the MVC design pattern.
-
-#### Other Design Decisions
-
-- A hashmap was used to keep track of the card/property that a player is on as this was the easiest way to keep track of all the cards. The cards that affect a player are directly related to their position on the board so using their position as a key to which card to display made the most sense. 
+- To follow the MVC design pattern, we kept the GameModel class from the first milestone. This class deals with the majority of the logic and providese the backbone of the project. Every other class is connected to the GameModel class. 
+- The GameFrame class is the view aspect of the MVC design. It creates and displays the gameboard in a JFrame as well as the player pieces, the player stats, and the buttons that the user controls the game with. The GameFrame gets updated frequently depending on the input that it gets from other classes, primarily GameModel.
+- There are multiple controller classes for different aspects of the game. The WelcomeController class deals with the initial pop-up window that appears before the game board does and that allows the user to select the number of players. The CardController class deals with any type of control relating to the gameboard tiles. This class handles the pop-ups for when a player is buying a property, paying rent, or passing their turn. The GameController class handles the buttons that are directly in the game board such as roll. It also handles the display when there are changes in game or player state such as when a player goes bankrupt or when there is a winner. 
+- The Player and Card classes simply hold attributes regarding the player and the board tiles since those are the mian aspects of the game.
+- The GameEvent class simply helps to keep things encapsulated and makes it easier to access certain attributes. 
 
 ## Known Issues
 
-If a user has rolled and landed on a property that they choose to buy or pass, their turn ends immediately after the command has been inputted rather than giving the user a chance to use the "state" command.
+Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. 
 
 ## Roadmap Ahead
 
-In Milestone 2 the game will transition from text-based to being playable within a GUI such that the user can control their piece's movements using their mouse and various buttons. As well, as each Milestone progresses, additional Monopoly features will be implemented. These include jail, utility tiles, railroad tiles, property add-ons such as houses and hotels, and in game programmed players. Eventually mutiple versions of Monopoly will be created and the player will have the option to save their games and come back to them later. As well, as the project continues, the code and design will continue to be refined and improved.
+In Milestone 3, additional Monopoly features will be implemented. These include jail, utility tiles, railroad tiles, property add-ons such as houses and hotels, and in game programmed players. Eventually mutiple versions of Monopoly will be created and the player will have the option to save their games and come back to them later. As well, as the project continues, the code and design will continue to be refined and improved.
 
 
 
