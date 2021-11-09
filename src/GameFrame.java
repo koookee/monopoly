@@ -314,6 +314,7 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
         control.bankruptcy(this, "P" + (model.getCurrTurn() + 1) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
+        squares.get(model.getActivePlayer().getPosition()).remove(icons[model.getPlayers().indexOf(model.getActivePlayer())]);
     }
 
     /**
@@ -347,7 +348,7 @@ public class GameFrame extends JFrame implements GameView {
 
 
             }else if(activePlayer.getName().equals("P2")){
-                //squares.get(position).add(icon2);
+
                 squares.get(prev).remove(icons[1]);
                 squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
@@ -355,7 +356,7 @@ public class GameFrame extends JFrame implements GameView {
 
             }
             else if (activePlayer.getName().equals("P3")) {
-                //squares.get(position).add(icon3,2);
+
                 squares.get(prev).remove(icon3);
                 squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
@@ -370,12 +371,13 @@ public class GameFrame extends JFrame implements GameView {
 
             }
             else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1) {
+
                 squares.get(prev).remove(icon4);
                 squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
                 if (position >botSquares-1 && position<=leftSquares-1){
-                    icon4.setBounds(1,75,50,50);
+                    icon4.setBounds(1,60,50,50);
                 }else icon4.setBounds(1,100, 50,50);
 
             }
