@@ -25,8 +25,8 @@ public class GameFrame extends JFrame implements GameView {
     private JLabel[] icons;
 
     private int playerNum;
-    private final int botSquares = 8, leftSquares = 14, topSquares =22, rightSquares = 29;
-    private final int botSquareNum = 8, leftSquareNum =6 , topSquareNum =8,rightSquareNum = 7;
+    private final int botSquares = 9, leftSquares = 15, topSquares =24, rightSquares = 31;
+    private final int botSquareNum = 9, leftSquareNum =6 , topSquareNum =9,rightSquareNum = 7;
     private  JPanel mainPanel;
     private JPanel playerPanel;
 
@@ -60,10 +60,10 @@ public class GameFrame extends JFrame implements GameView {
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
 
-        icon.setBounds(1,25, 50,50);
-        icon2.setBounds(150,25, 50,50);
-        icon3.setBounds(150,100, 50,50);
-        icon4.setBounds(1,100, 50,50);
+        icon.setBounds(25,40, 50,50);
+        icon2.setBounds(60,40, 50,50);
+        icon3.setBounds(100,40, 50,50);
+        icon4.setBounds(150,40, 50,50);
     }
 
 
@@ -83,6 +83,7 @@ public class GameFrame extends JFrame implements GameView {
             squareTop.setBackground(c.getColor());
             if (c.getCost() != 0)  name= new JLabel(c.getName() + " ($" + c.getCost()+")");
             else  name = new JLabel(c.getName());
+            if (c.getCardType() == Card.CardType.railroad) name.setForeground(Color.white);
 
             int width = Toolkit.getDefaultToolkit().getScreenSize().width;
             int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -370,10 +371,10 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
 
-                if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
-                    icon3.setBounds(150,75,50,50);
-                }else icon3.setBounds(150,100, 50,50);
-                icon4.setBounds(1,100, 50,50);
+//                if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
+//                    icon3.setBounds(150,75,50,50);
+//                }else icon3.setBounds(150,100, 50,50);
+//                icon4.setBounds(1,100, 50,50);
 
 
 
@@ -384,9 +385,9 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
-                if (position >botSquares-1 && position<=leftSquares-1){
-                    icon4.setBounds(1,60,50,50);
-                }else icon4.setBounds(1,100, 50,50);
+//                if (position >botSquares-1 && position<=leftSquares-1){
+//                    icon4.setBounds(1,60,50,50);
+//                }else icon4.setBounds(1,100, 50,50);
 
             }
         }

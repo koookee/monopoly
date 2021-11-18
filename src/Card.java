@@ -14,6 +14,8 @@ public class Card {
     private CardType cardType;
 
     public static enum CardType {
+        go,
+        jail,
         property,
         railroad,
         ultility
