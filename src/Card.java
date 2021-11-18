@@ -11,6 +11,15 @@ public class Card {
     private Color color;
     private boolean isOwned;
     private Player owner;
+    private CardType cardType;
+
+    public static enum CardType {
+        go,
+        jail,
+        property,
+        railroad,
+        ultility
+    }
 
     /**
      * The constructor for the Card class
@@ -21,6 +30,8 @@ public class Card {
         this.isOwned = false;
         this.name = name;
         this.cost = cost;
+
+
     }
 
     /**
@@ -32,6 +43,10 @@ public class Card {
     public Card(String name, int cost, Color color) {
         this(name,cost);
         this.color = color;
+    }
+    public Card(String name, int cost, Color color, CardType cardType) {
+        this(name,cost,color);
+        this.cardType = cardType;
     }
 
     /**
@@ -88,7 +103,34 @@ public class Card {
      * @return an int amount of the rent
      */
     public int getRent() {
-        return (int) (cost * 0.1) ;
+        if (cardType == CardType.property) return (int) (cost * 0.1);
+        else if (cardType == CardType.railroad){
+            int rent = 25;
+            if (this.getOwner() != null){
+                for (Card card : this.getOwner().getProperties()) {
+                    if (card.cardType == CardType.railroad){
+                        rent = rent*2;
+                    }
+                }
+                return rent/2;
+            }
+            else return rent;
+        }
+        else{
+            if(this.getOwner() == null){
+                return 0;
+            }
+            else if(this.getOwner().getNumUtils() == 1){
+                return (this.getOwner().getPosition() - this.getOwner().getPrevPostion())*4;
+            }else{
+                return (this.getOwner().getPosition() - this.getOwner().getPrevPostion())*10;
+            }
+
+        }
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 
     /**
