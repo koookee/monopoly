@@ -25,8 +25,8 @@ public class GameFrame extends JFrame implements GameView {
     private JLabel[] icons;
 
     private int playerNum;
-    private final int botSquares = 6, leftSquares = 12, topSquares =17, rightSquares = 23;
-    private final int botSquareNum = 6, leftSquareNum =6 , topSquareNum =5,rightSquareNum = 6;
+    private final int botSquares = 8, leftSquares = 14, topSquares =22, rightSquares = 29;
+    private final int botSquareNum = 8, leftSquareNum =6 , topSquareNum =8,rightSquareNum = 7;
     private  JPanel mainPanel;
     private JPanel playerPanel;
 
@@ -128,10 +128,10 @@ public class GameFrame extends JFrame implements GameView {
     private JPanel paintBoard() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(new LineBorder(Color.black));
-        JPanel bot = new JPanel(new GridLayout(1, 6));
-        JPanel left = new JPanel(new GridLayout(6, 1));
-        JPanel top = new JPanel(new GridLayout(1, 5));
-        JPanel right = new JPanel(new GridLayout(6, 1));
+        JPanel bot = new JPanel(new GridLayout(1, botSquareNum));
+        JPanel left = new JPanel(new GridLayout(leftSquareNum, 1));
+        JPanel top = new JPanel(new GridLayout(1, topSquareNum));
+        JPanel right = new JPanel(new GridLayout(rightSquareNum, 1));
         mainPanel.add(bot, BorderLayout.PAGE_END);
         mainPanel.add(left, BorderLayout.LINE_START);
         mainPanel.add(top, BorderLayout.PAGE_START);
@@ -266,8 +266,16 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController unowned = new CardController(model);
         Card card = gameEvent.getCard();
-        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()) unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+
+        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()){
+            if (card.getCardType() == Card.CardType.ultility){
+                unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+                        "\nRent is dependent on your roll"+ "\nWould you like to purchase?");
+            }else {
+                unowned.buyProperty(this, "You landed on " + card.getName() + ". Cost is $" + card.getCost() +
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
+            }
+        }
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 

@@ -52,19 +52,26 @@ public class GameModel {
      */
     public void createGameBoard(){
         // As of right now "Go" does not exist
-        String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
-                "waller Street","bronson Avenue","Hurdman Road","Lett Street","lampman Crescent",
-                "macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place",
-                "perly Drive","morrison Street","keefer Street","mcLeod Street","parliament Hill",
-                "rideau Canal", "street 21", "street 22"};
-        int[] costs = {0,60,60,100,100,120,180,180,200,220,220,240,260,260,280,300,300,320,350,400,420,450,500};
+        String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue","Bytown&Prescott Railway",
+                "waller Street","bronson Avenue","Hurdman Road","Lett Street","Canadian Pacific Railway","lampman Crescent",
+                "macKay Street","slater Street","thompson Street","Canadian National Railway","sweetLand Avenue","sloper Place",
+                "Water Works", "perly Drive","New York Central Railway","morrison Street","keefer Street","mcLeod Street","parliament Hill",
+                "Electric Company","rideau Canal", "street 21", "street 22"};
+        int[] costs = {0,60,60,100,100,200,120,180,180,200,200,220,220,240,260,200,260,280,100,300,200,300,320,350,400,200,420,450,500};
 
-        Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.CYAN,Color.pink,Color.pink,Color.pink,
-                Color.orange,Color.orange,Color.orange, Color.red, Color.red, Color.red,Color.yellow,Color.yellow, Color.yellow,Color.green,Color.green,
-                Color.green,new Color(0,135,225),new Color(0,135,225)};
+        Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.black,Color.CYAN,Color.pink,Color.pink,Color.pink,
+                Color.black,Color.orange,Color.orange,Color.orange, Color.red, Color.black,Color.red, Color.red,Color.white,Color.yellow, Color.black,Color.yellow,Color.yellow,Color.green,
+                Color.green,Color.white, Color.green,new Color(0,135,225),new Color(0,135,225)};
 
         for (int i = 0; i < streetNames.length; i++) {
-            gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i]));
+            if (i%5==0 && i<21 && i>1){
+                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.railroad));
+            }else if(i== 18 || i == 25){
+                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.ultility));
+            }
+            else{
+                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.property));
+            }
         }
     }
 
@@ -286,6 +293,14 @@ public class GameModel {
     public static enum Status {
         WINNER,
         UNDECIDED,
+    }
+
+    public static void main(String[] args) {
+        GameModel gameModel = new GameModel();
+        for (Card c :
+                gameModel.getGameBoard().values()) {
+            System.out.println(c.getCardType());
+        }
     }
 
 }
