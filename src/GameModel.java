@@ -166,7 +166,13 @@ public class GameModel {
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
 
-            if(getActivePlayer().getIsInJail() != 0){
+            if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
+                this.activePlayer.setMoney(200);
+            }
+
+
+
+            if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
                 if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
                     getActivePlayer().setIsInJail(0);
                 }
