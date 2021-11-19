@@ -221,15 +221,32 @@ public class GameModel {
     /**
      * this method is used to buy a house for a player
      */
-    public void buyHouse(){
+    public void buyHouse(){ // Check if player has enough funds before calling this method
+        int housePrice = 100; // temporary
         boolean ownsAllTiles = true;
+        ArrayList<Card> cards = new ArrayList<>();
         Color color = currentCard.getColor();
+
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
-            if (color == card.getColor() && card.getOwner() != activePlayer) ownsAllTiles = false;
+            if (color == card.getColor()){
+                cards.add(card);
+                if(card.getOwner() != activePlayer) ownsAllTiles = false;
+            }
         }
+
+        // Checks if all other cards have enough houses
+        boolean allowedToBuyHouse = true;
         if (ownsAllTiles){
-            // Check for other houses
+            for (Card card : cards){
+                if (currentCard.getHouses() - card.getHouses() > 0 || currentCard.getHouses() == 4) allowedToBuyHouse = false;
+            }
+        }
+        if (allowedToBuyHouse && numOfHouses > 0) {
+            numOfHouses--;
+            currentCard.setHouses(currentCard.getHouses() + 1);
+            currentCard.setCost(currentCard.getCost() + housePrice);
+            activePlayer.setMoney(activePlayer.getMoney() - housePrice);
         }
     }
 

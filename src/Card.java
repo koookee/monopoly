@@ -11,6 +11,8 @@ public class Card {
     private Color color;
     private boolean isOwned;
     private Player owner;
+    private int houses;
+    private int hotels;
 
     /**
      * The constructor for the Card class
@@ -92,11 +94,52 @@ public class Card {
     }
 
     /**
+     * returns the number of hotels
+     * @return the int number of hotels
+     */
+    public int getHotels() {
+        return hotels;
+    }
+
+    /**
+     * returns the number of houses
+     * @return the int number of houses
+     */
+    public int getHouses() {
+        return houses;
+    }
+
+    /**
      * The getter for color of the card
      * @return the Color of the card tile
      */
     public Color getColor() {
         return this.color;
+    }
+
+
+    /**
+     * Setter for the houses
+     * @param houses the int of the number of house
+     */
+    public void setHouses(int houses) {
+        this.houses = houses;
+    }
+
+    /**
+     * Setter for the hotels
+     * @param hotels the int for the number of hotels
+     */
+    public void setHotels(int hotels) {
+        this.hotels = hotels;
+    }
+
+    /**
+     * Setter for the value of the tile
+     * @param cost the int for the price of the tile
+     */
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     /**
