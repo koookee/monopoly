@@ -17,6 +17,8 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
     private boolean hasNotRolled;
+    private int numOfHouses;
+    private int numOfHotels;
     int dice1;
     int dice2;
     int roll;
@@ -34,6 +36,8 @@ public class GameModel {
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
         this.hasNotRolled = true;
+        this.numOfHouses = 32;
+        this.numOfHotels = 12;
         this.createGameBoard();
     }
 
@@ -51,7 +55,6 @@ public class GameModel {
      * This method creates the gameboard for the players
      */
     public void createGameBoard(){
-        // As of right now "Go" does not exist
         String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue",
                 "waller Street","bronson Avenue","Hurdman Road","Lett Street","lampman Crescent",
                 "macKay Street","slater Street","thompson Street","sweetLand Avenue","sloper Place",
@@ -213,6 +216,28 @@ public class GameModel {
      */
     public void buyProperty(){
         if (!currentCard.getName().equals("Go")) this.activePlayer.buyCard(currentCard);
+    }
+
+    /**
+     * this method is used to buy a house for a player
+     */
+    public void buyHouse(){
+        boolean ownsAllTiles = true;
+        Color color = currentCard.getColor();
+        for (Integer integer : gameBoard.keySet()){
+            Card card = gameBoard.get(integer);
+            if (color == card.getColor() && card.getOwner() != activePlayer) ownsAllTiles = false;
+        }
+        if (ownsAllTiles){
+            // Check for other houses
+        }
+    }
+
+    /**
+     * converts the 4 houses into a hotel
+     */
+    public void convertToHotel(){
+        //
     }
 
     /**
