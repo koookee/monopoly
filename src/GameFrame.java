@@ -337,6 +337,16 @@ public class GameFrame extends JFrame implements GameView {
         control.winner(this, model.getWinner().getName() + " is the winner!");
     }
 
+    @Override
+    public void announceToJail(GameEvent gameEvent) {
+        GameModel model = gameEvent.getModel();
+        CardController control = new CardController(model);
+        control.announceToJail(this, "You've Been Sent To Jail!");
+
+
+    }
+
+
     /**
      * Updates the player icons on the board GUI
      * @param activePlayer the current active player of type Player
