@@ -75,9 +75,9 @@ public class GameModel {
         for (int i = 0; i < streetNames.length; i++) {
             if (i%5==0 && i<21 && i>1){
                 gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
-            }else if(i== 18 || i == 25) {
+            }else if(i== 19 || i == 27) {
                 gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
-            }else if(i == 7 || i == 22){
+            }else if(i == 8 || i == 23){
                 gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
             else{
@@ -168,11 +168,27 @@ public class GameModel {
      * @param state the int that determines the action to take
      */
     public void play(int state){
-
         if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
+
+            if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
+                this.activePlayer.setMoney(200);
+            }
+
+
+
+            if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
+                if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
+                    getActivePlayer().setIsInJail(0);
+                }
+                else{
+                    int current = this.activePlayer.getIsInJail();
+                    this.activePlayer.setIsInJail(current += 1 );
+                    play(3);
+                }
+            }
 
             activePlayer.setPrevPosition(activePlayer.getPosition());
             activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
@@ -220,14 +236,18 @@ public class GameModel {
                 }
                 else if (result == 2) { // Has to pay rent
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                } else if (result == 3){
+                    view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
         } else if (state == 5 && status.name().equals("UNDECIDED")) { // Confirms buying property
             int result = currentCard.functionality(activePlayer);
             if (result == 0) buyProperty();
-        }
-        else if (state == 6 && status.name().equals("UNDECIDED")) { // Confirms buying house
+        } else if (state == 6 && status.name().equals("UNDECIDED")) { // Confirms buying house
             buyHouse();
+        } else if( state == 7 && status.name().equals("UNDECIDED")) { // Goes to jail
+            this.activePlayer.setPosition(8);
+            this.activePlayer.setIsInJail(1);
         }
 
     }

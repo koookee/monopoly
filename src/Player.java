@@ -15,6 +15,7 @@ public class Player {
     private boolean playing;
     private ArrayList<Card> properties;
     private int numUtils;
+    private int isInJail;
 
     /**
      * The constructor for the Player class
@@ -28,6 +29,7 @@ public class Player {
         properties = new ArrayList<>();
         this.prevPostion = 0;
         this.numUtils = 0;
+        this.isInJail = 0;
     }
 
     /**
@@ -142,6 +144,13 @@ public class Player {
      */
     public void setPrevPosition(int position) {
         this.prevPostion = position;
+    }
+
+    public int getIsInJail(){
+        return this.isInJail;
+    }
+    public void setIsInJail(int jailTime){
+        this.isInJail = jailTime;
     }
 
     @Override

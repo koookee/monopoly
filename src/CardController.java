@@ -59,4 +59,8 @@ private GameModel model;
             this.model.play(3);
         }
     }
+
+    public void announceToJail(GameFrame frame, String message){
+        JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
+    }
 }

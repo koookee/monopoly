@@ -16,4 +16,6 @@ public interface GameView {
     void announceBankruptcy(GameEvent e);
 
     void announceWinner(GameEvent e);
+
+    void announceToJail(GameEvent e);
 }

@@ -221,6 +221,9 @@ public class Card {
             if (this.owner.getName().equals(p.getName())){
                 return 1;
             }
+            else if (this.owner.getName().equals("warden")){
+                return 3;
+            }
             return 2;
         }
         // if owner
