@@ -14,6 +14,7 @@ public class Player {
     private int position;
     private boolean playing;
     private ArrayList<Card> properties;
+    private int numUtils;
 
     /**
      * The constructor for the Player class
@@ -26,6 +27,7 @@ public class Player {
         this.playing = true;
         properties = new ArrayList<>();
         this.prevPostion = 0;
+        this.numUtils = 0;
     }
 
     /**
@@ -85,6 +87,7 @@ public class Player {
     public void buyCard(Card currentCard){
         this.money -= currentCard.getCost();
         this.properties.add(currentCard);
+        if (currentCard.getCardType() == Card.CardType.ultility) this.numUtils++;
         currentCard.setOwned(this);
     }
 
@@ -102,6 +105,10 @@ public class Player {
      */
     public void setPlaying(boolean playing) {
         this.playing = playing;
+    }
+
+    public int getNumUtils() {
+        return numUtils;
     }
 
     /**

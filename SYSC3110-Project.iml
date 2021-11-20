@@ -34,6 +34,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+<<<<<<< HEAD
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit5.4">
         <CLASSES>
@@ -66,6 +67,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+=======
+>>>>>>> 20558cfd3b66079bfaf6d23a7b1423a68dd6ad74
     <orderEntry type="module-library">
       <library>
         <CLASSES>
