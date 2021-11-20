@@ -9,6 +9,8 @@ public interface GameView {
 
     void ownedProperty(GameEvent e);
 
+    void askToBuyHouse(GameEvent e);
+
     void announcePlayerPass(GameEvent e);
 
     void announceBankruptcy(GameEvent e);

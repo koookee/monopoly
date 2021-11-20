@@ -62,20 +62,26 @@ public class GameModel {
                 "Electric Company","rideau Canal", "street 21", "street 22"};
         int[] costs = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
 
+        // TODO we have to update the values
+        int[] houseCosts = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
+
+        // TODO we have to update the values
+        int[] hotelCosts = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
+
         Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.black,Color.CYAN,Color.pink,Color.blue,Color.pink,Color.black,
                 Color.pink,Color.orange,Color.orange,Color.orange, Color.black, Color.red,Color.red, Color.red,Color.white,Color.black, Color.yellow,Color.yellow,Color.blue,Color.yellow,Color.green,
                 Color.green,Color.white, Color.green,new Color(0,135,225),new Color(0,135,225)};
 
         for (int i = 0; i < streetNames.length; i++) {
             if (i%5==0 && i<21 && i>1){
-                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.railroad));
+                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
             }else if(i== 18 || i == 25) {
-                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.ultility));
+                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
             }else if(i == 7 || i == 22){
-                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.jail));
+                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
             else{
-                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.property));
+                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.property, houseCosts[i], hotelCosts[i]));
             }
         }
     }
@@ -207,15 +213,21 @@ public class GameModel {
             int result = currentCard.functionality(activePlayer);
             for (GameView view : views) {
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                if (result == 0) {
+                if (result == 0) { // No owners
                     view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                } else if (result == 2) {
+                } else if (result == 1 && checkIfCanBuyHouse()) { // Owns property
+                    view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
+                else if (result == 2) { // Has to pay rent
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
-        } else if (state == 5 && status.name().equals("UNDECIDED")) { // Confirms buying
+        } else if (state == 5 && status.name().equals("UNDECIDED")) { // Confirms buying property
             int result = currentCard.functionality(activePlayer);
             if (result == 0) buyProperty();
+        }
+        else if (state == 6 && status.name().equals("UNDECIDED")) { // Confirms buying house
+            buyHouse();
         }
 
     }
@@ -224,14 +236,14 @@ public class GameModel {
      * this method is used to buy a property for a player
      */
     public void buyProperty(){
-        if (!currentCard.getName().equals("Go")) this.activePlayer.buyCard(currentCard);
+        this.activePlayer.buyCard(currentCard);
     }
 
     /**
      * this method is used to buy a house for a player
+     * @return the boolean of whether the player can buy a house or not
      */
-    public void buyHouse(){ // Check if player has enough funds before calling this method
-        int housePrice = 100; // temporary
+    private boolean checkIfCanBuyHouse(){ // Check if player has enough funds before calling this method
         boolean ownsAllTiles = true;
         ArrayList<Card> cards = new ArrayList<>();
         Color color = currentCard.getColor();
@@ -251,12 +263,20 @@ public class GameModel {
                 if (currentCard.getHouses() - card.getHouses() > 0 || currentCard.getHouses() == 4) allowedToBuyHouse = false;
             }
         }
-        if (allowedToBuyHouse && numOfHouses > 0) {
-            numOfHouses--;
-            currentCard.setHouses(currentCard.getHouses() + 1);
-            currentCard.setCost(currentCard.getCost() + housePrice);
-            activePlayer.setMoney(activePlayer.getMoney() - housePrice);
-        }
+
+        if (numOfHouses == 0 || !ownsAllTiles || activePlayer.getMoney() < currentCard.getHouseCost()) allowedToBuyHouse = false;
+
+        return allowedToBuyHouse;
+    }
+
+    /**
+     * Buys the house
+     */
+    private void buyHouse(){
+        numOfHouses--;
+        currentCard.setHouses(currentCard.getHouses() + 1);
+        currentCard.setCost(currentCard.getCost() + currentCard.getHouseCost());
+        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHouseCost());
     }
 
     /**

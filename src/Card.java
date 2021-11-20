@@ -15,6 +15,9 @@ public class Card {
     private int houses;
     private int hotels;
 
+    private int houseCost;
+    private int hotelCost;
+
     private CardType cardType;
 
     public static enum CardType {
@@ -49,9 +52,11 @@ public class Card {
         this(name,cost);
         this.color = color;
     }
-    public Card(String name, int cost, Color color, CardType cardType) {
+    public Card(String name, int cost, Color color, CardType cardType, int houseCost, int hotelCost) {
         this(name,cost,color);
         this.cardType = cardType;
+        this.houseCost = houseCost;
+        this.hotelCost = hotelCost;
     }
 
     /**
@@ -139,7 +144,7 @@ public class Card {
     }
 
     /**
-     * returns the number of hotels
+     * getter for the number of hotels
      * @return the int number of hotels
      */
     public int getHotels() {
@@ -147,11 +152,27 @@ public class Card {
     }
 
     /**
-     * returns the number of houses
+     * getter for the number of houses
      * @return the int number of houses
      */
     public int getHouses() {
         return houses;
+    }
+
+    /**
+     * getter for the house cost
+     * @return the int house cost
+     */
+    public int getHouseCost() {
+        return houseCost;
+    }
+
+    /**
+     * getter for the hotel host
+     * @return the int hotel cost
+     */
+    public int getHotelCost() {
+        return hotelCost;
     }
 
     /**

@@ -301,6 +301,20 @@ public class GameFrame extends JFrame implements GameView {
         displayGUI();
     }
 
+    @Override
+    public void askToBuyHouse(GameEvent gameEvent) {
+        GameModel model = gameEvent.getModel();
+        CardController controller = new CardController(model);
+        Card card = gameEvent.getCard();
+
+        controller.buyHouse(this, "Would you like to buy a house for $" + card.getHouseCost() + "?");
+
+        getContentPane().remove(playerPanel);
+        playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
+
+        displayGUI();
+    }
+
     /**
      * Asks the player if they want to pass their turn
      * @param gameEvent is a game event that holds useful information

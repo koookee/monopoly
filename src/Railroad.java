@@ -4,7 +4,7 @@ public class Railroad extends Card{
 
 
     public Railroad(String name, int cost, Color color, CardType cardType) {
-        super(name, cost, color, cardType);
+        super(name, cost, color, cardType, 0, 0);
     }
 
     @Override

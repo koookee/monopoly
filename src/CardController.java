@@ -28,6 +28,18 @@ private GameModel model;
     }
 
     /**
+     * Gives the player the option to buy a house
+     * @param frame the game frame it's displayed on
+     * @param message the String message inside the popup
+     */
+    public void buyHouse(GameFrame frame, String message){
+        int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
+        if(confirmed == JOptionPane.YES_OPTION){
+            this.model.play(6);
+        }
+    }
+
+    /**
      * Tells the player that they have to pay rent
      * @param frame the game frame it's displayed on
      * @param message the String message inside the popup
