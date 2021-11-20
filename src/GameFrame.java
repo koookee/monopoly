@@ -272,12 +272,10 @@ public class GameFrame extends JFrame implements GameView {
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 
         displayGUI();
-
-
     }
 
     /**
-     * Gives the player information about the property they and charges them rent
+     * Gives the player information about the property they landed on and charges them rent
      * @param gameEvent is a game event that holds useful information
      */
     @Override

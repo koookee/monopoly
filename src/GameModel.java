@@ -150,11 +150,11 @@ public class GameModel {
 
     /**
      * This method is called to play the game depending on the choice command
-     * @param choice the int that determines the action to take
+     * @param state the int that determines the action to take
      */
-    public void play(int choice){
+    public void play(int state){
 
-        if (choice == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
+        if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
@@ -182,11 +182,11 @@ public class GameModel {
                     view.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
-        } else if (choice == 2 && status.name().equals("UNDECIDED")) { // Ask if they're sure they want to pass
+        } else if (state == 2 && status.name().equals("UNDECIDED")) { // Ask if they're sure they want to pass
             for (GameView view : views) {
                 view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
-        } else if (choice == 3 && status.name().equals("UNDECIDED")) { // Player confirms they want to pass
+        } else if (state == 3 && status.name().equals("UNDECIDED")) { // Player confirms they want to pass
             this.updateStatus();
             this.changeTurn();
             numTimesRolledDouble = 0;
@@ -194,7 +194,7 @@ public class GameModel {
             for (GameView view : views) {
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
             }
-        } else if (choice == 4 && status.name().equals("UNDECIDED")) { // Buying property
+        } else if (state == 4 && status.name().equals("UNDECIDED")) { // Buying property
             int result = currentCard.functionality(activePlayer);
             for (GameView view : views) {
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -204,7 +204,7 @@ public class GameModel {
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
-        } else if (choice == 5 && status.name().equals("UNDECIDED")) { // Confirms buying
+        } else if (state == 5 && status.name().equals("UNDECIDED")) { // Confirms buying
             int result = currentCard.functionality(activePlayer);
             if (result == 0) buyProperty();
         }
