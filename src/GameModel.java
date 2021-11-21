@@ -174,10 +174,8 @@ public class GameModel {
             roll = dice1 + dice2;
 
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
-                this.activePlayer.setMoney(200);
+                this.activePlayer.setMoney(activePlayer.getMoney() + 200);
             }
-
-
 
             if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
                 if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
