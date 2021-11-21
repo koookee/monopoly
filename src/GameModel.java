@@ -167,7 +167,8 @@ public class GameModel {
             roll = dice1 + dice2;
 
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
-                this.activePlayer.setMoney(200);
+                int currentMoney = this.activePlayer.getMoney();
+                this.activePlayer.setMoney(currentMoney + 200);
             }
 
 
