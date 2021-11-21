@@ -171,14 +171,15 @@ public class GameModel {
      */
     public void play(int state){
         if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
-
+/*
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
 
+ */
 
 
-            /* For debugging purposes (can make players move to specific tiles)
+            // For debugging purposes (can make players move to specific tiles)
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter roll 1");
             int num = scanner.nextInt();
@@ -188,20 +189,16 @@ public class GameModel {
             dice2 = num;
             roll = dice1 + dice2;
 
-             */
-
-
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
-                this.activePlayer.setMoney(activePlayer.getMoney() + 200);
+                activePlayer.setMoney(activePlayer.getMoney() + 200);
             }
 
             if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
                 if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
-                    getActivePlayer().setIsInJail(0);
+                    activePlayer.setIsInJail(0);
                 }
                 else{
-                    int current = this.activePlayer.getIsInJail();
-                    this.activePlayer.setIsInJail(current += 1 );
+                    activePlayer.setIsInJail(activePlayer.getIsInJail() + 1);
                     play(3);
                 }
             }
@@ -220,9 +217,12 @@ public class GameModel {
                     play(3);
                 }
                 else if (dice1 == dice2 && numTimesRolledDouble <= 3) {
-                    this.numTimesRolledDouble++;
+                    numTimesRolledDouble++;
                     hasNotRolled = true;
-                } else {
+                } else if (numTimesRolledDouble == 4){
+                    play(3); // forces player to pass
+                }
+                else {
                     hasNotRolled = false;
                 }
                 if (status.name().equals("WINNER")) {
@@ -247,8 +247,9 @@ public class GameModel {
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 if (result == 0) { // No owners
                     view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                } else if (result == 1 && checkIfCanBuyHouse()) { // Owns property
-                    view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                } else if (result == 1) { // Owns property
+                    if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse()) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                    else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel()) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
                 else if (result == 2) { // Has to pay rent
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -261,7 +262,9 @@ public class GameModel {
             if (result == 0) buyProperty();
         } else if (state == 6 && status.name().equals("UNDECIDED")) { // Confirms buying house
             buyHouse();
-        } else if( state == 7 && status.name().equals("UNDECIDED")) { // Goes to jail
+        } else if (state == 7 && status.name().equals("UNDECIDED")) { // Confirms buying hotel
+            buyHotel();
+        } else if( state == 8 && status.name().equals("UNDECIDED")) { // Goes to jail
             this.activePlayer.setPosition(8);
             this.activePlayer.setIsInJail(1);
         }
@@ -315,11 +318,36 @@ public class GameModel {
         activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHouseCost());
     }
 
+    private boolean checkIfCanBuyHotel(){
+        boolean canBuy = true;
+        ArrayList<Card> cards = new ArrayList<>();
+        Color color = currentCard.getColor();
+
+        for (Integer integer : gameBoard.keySet()){
+            Card card = gameBoard.get(integer);
+            if (color.getRGB() == card.getColor().getRGB()){
+                cards.add(card);
+            }
+        }
+
+        for (Card card : cards){ // We don't need to check if they own all tiles of the same color since having a house means they do
+            if (card.getHouses() != 4 && card.getHotels() == 0) canBuy = false;
+        }
+
+        if (activePlayer.getMoney() < currentCard.getHotelCost() || numOfHotels == 0) canBuy = false;
+        return canBuy;
+    }
+
     /**
      * converts the 4 houses into a hotel
      */
-    public void convertToHotel(){
-        //
+    private void buyHotel(){
+        numOfHouses += 4;
+        numOfHotels--;
+        currentCard.setHouses(0);
+        currentCard.setHotels(1);
+        currentCard.setCost(currentCard.getCost() + currentCard.getHotelCost());
+        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHotelCost());
     }
 
     /**

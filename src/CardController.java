@@ -32,10 +32,22 @@ private GameModel model;
      * @param frame the game frame it's displayed on
      * @param message the String message inside the popup
      */
-    public void buyHouse(GameFrame frame, String message){
+    public void askToBuyHouse(GameFrame frame, String message){
         int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
         if(confirmed == JOptionPane.YES_OPTION){
             this.model.play(6);
+        }
+    }
+
+    /**
+     * Gives the player the option to buy a hotel
+     * @param frame the game frame it's displayed on
+     * @param message the String message inside the popup
+     */
+    public void askToBuyHotel(GameFrame frame, String message){
+        int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
+        if(confirmed == JOptionPane.YES_OPTION){
+            this.model.play(7);
         }
     }
 
