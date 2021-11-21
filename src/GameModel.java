@@ -169,9 +169,23 @@ public class GameModel {
      */
     public void play(int state){
         if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
+            /*
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
+
+             */
+
+            //For debugging purposes (can make players move to specific tiles)
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter roll 1");
+            int num = scanner.nextInt();
+            dice1 = num;
+            System.out.println("Enter roll 2");
+            num = scanner.nextInt();
+            dice2 = num;
+            roll = dice1 + dice2;
+
 
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
                 this.activePlayer.setMoney(activePlayer.getMoney() + 200);
@@ -268,7 +282,7 @@ public class GameModel {
 
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
-            if (color == card.getColor()){
+            if (color.getRGB() == card.getColor().getRGB()){
                 cards.add(card);
                 if(card.getOwner() != activePlayer) ownsAllTiles = false;
             }
