@@ -29,6 +29,7 @@ public class GameFrame extends JFrame implements GameView {
     private final int botSquareNum = 9, leftSquareNum =6 , topSquareNum =9,rightSquareNum = 7;
     private  JPanel mainPanel;
     private JPanel playerPanel;
+    private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
 
 
     /**
@@ -37,8 +38,8 @@ public class GameFrame extends JFrame implements GameView {
     public GameFrame() {
         super("Monopoly");
         this.model = new GameModel();
-        model.addGameModelView(this);
         this.squares = new ArrayList<>();
+        this.squareBottomArr = new ArrayList<>();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -79,6 +80,7 @@ public class GameFrame extends JFrame implements GameView {
             square.setBorder(new LineBorder(Color.black));
 
             JPanel squareTop = new JPanel();
+            JPanel squareBottom = new JPanel(new GridLayout(1, 5)); // 1 column for player 4 columns for potential houses
             JLabel name;
             squareTop.setBackground(c.getColor());
             if (c.getCost() != 0)  name= new JLabel(c.getName() + " ($" + c.getCost()+")");
@@ -106,8 +108,9 @@ public class GameFrame extends JFrame implements GameView {
             }
 
 
-            square.add(squareTop, BorderLayout.PAGE_START);
 
+            square.add(squareTop, BorderLayout.PAGE_START);
+            square.add(squareBottom, BorderLayout.PAGE_END);
             layeredPane.add(square,JLayeredPane.DEFAULT_LAYER);
 
             if(i==0){
@@ -117,6 +120,7 @@ public class GameFrame extends JFrame implements GameView {
 
             }
 
+            squareBottomArr.add(squareBottom);
             squares.add(layeredPane);
         }
 
@@ -225,18 +229,37 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    public void updateCardGUI(Card card){
+        JPanel gridPanel = squareBottomArr.get(card.getPosition());
+        int num = gridPanel.getComponentCount(); // First component is the player label. Next 4 are potentially the houses (or hotel)
+        for (int i = 0; i < num; i++) gridPanel.remove(0);
+        if (card.getOwner() != null) gridPanel.add(new JLabel(card.getOwner().getName()));
+        if (card.getHouses() > 0) {
+            for (int i = 0; i < card.getHouses(); i++){
+                gridPanel.add(new JLabel(new ImageIcon("house.png")));
+            }
+        }
+        else if (card.getHotels() == 1){
+            gridPanel.add(new JLabel(new ImageIcon("hotel.png")));
+        }
+    }
+
     /**
      * Displays the GUI of the whole game
      */
     public void displayGUI() {
         this.setLayout(new BorderLayout());
-        this.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height ));
+        //this.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height ));
 
         this.mainPanel.revalidate();
         this.playerPanel.revalidate();
 
         this.add(playerPanel, BorderLayout.LINE_END);
         this.add(mainPanel, BorderLayout.CENTER);
+
+        for (Integer key : model.getGameBoard().keySet()){
+            updateCardGUI(model.getGameBoard().get(key));
+        }
 
         this.revalidate();
         this.setVisible(true);

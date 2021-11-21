@@ -55,6 +55,7 @@ public class GameModel {
      * This method creates the gameboard for the players
      */
     public void createGameBoard(){
+        int position = 0;
         String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue","Bytown&Prescott Railway",
                 "waller Street","bronson Avenue","Jail","Hurdman Road","Canadian Pacific Railway","Lett Street","lampman Crescent",
                 "macKay Street","slater Street","Canadian National Railway","thompson Street","sweetLand Avenue","sloper Place",
@@ -74,15 +75,16 @@ public class GameModel {
 
         for (int i = 0; i < streetNames.length; i++) {
             if (i%5==0 && i<21 && i>1){
-                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
             }else if(i== 19 || i == 27) {
-                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
             }else if(i == 8 || i == 23){
-                gameBoard.put(i, new Card(streetNames[i], costs[i], colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
             else{
-                gameBoard.put(i,new Card(streetNames[i],costs[i],colors[i], Card.CardType.property, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.property, houseCosts[i], hotelCosts[i]));
             }
+            position++;
         }
     }
 
@@ -169,14 +171,14 @@ public class GameModel {
      */
     public void play(int state){
         if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
-            /*
+
             dice1 = (int) (Math.random() * 6 + 1);
             dice2 = (int) (Math.random() * 6 + 1);
             roll = dice1 + dice2;
 
-             */
 
-            //For debugging purposes (can make players move to specific tiles)
+
+            /* For debugging purposes (can make players move to specific tiles)
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter roll 1");
             int num = scanner.nextInt();
@@ -185,6 +187,8 @@ public class GameModel {
             num = scanner.nextInt();
             dice2 = num;
             roll = dice1 + dice2;
+
+             */
 
 
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO

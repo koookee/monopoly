@@ -3,8 +3,8 @@ import java.awt.*;
 public class Railroad extends Card{
 
 
-    public Railroad(String name, int cost, Color color, CardType cardType) {
-        super(name, cost, color, cardType, 0, 0);
+    public Railroad(String name, int cost, int position, Color color, CardType cardType) {
+        super(name, cost, position, color, cardType, 0, 0);
     }
 
     @Override

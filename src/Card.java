@@ -11,6 +11,7 @@ public class Card {
     private Color color;
     private boolean isOwned;
     private Player owner;
+    private int position;
 
     private int houses;
     private int hotels;
@@ -34,12 +35,8 @@ public class Card {
      * @param name the String for the name of the card
      * @param cost the int for the cost of the property
      */
-    public Card(String name, int cost) {
-        this.isOwned = false;
-        this.name = name;
-        this.cost = cost;
-
-
+    public Card(String name, int cost, int position) {
+        this(name, cost, position, null, null, 0, 0);
     }
 
     /**
@@ -48,15 +45,18 @@ public class Card {
      * @param cost the cost of the card
      * @param color the color of the card
      */
-    public Card(String name, int cost, Color color) {
-        this(name,cost);
-        this.color = color;
+    public Card(String name, int cost, int position, Color color) {
+        this(name,cost, position, color, null, 0, 0);
     }
-    public Card(String name, int cost, Color color, CardType cardType, int houseCost, int hotelCost) {
-        this(name,cost,color);
+    public Card(String name, int cost, int position, Color color, CardType cardType, int houseCost, int hotelCost) {
+        this.name = name;
+        this.cost = cost;
+        this.position = position;
+        this.color = color;
         this.cardType = cardType;
         this.houseCost = houseCost;
         this.hotelCost = hotelCost;
+        this.isOwned = false;
     }
 
     /**
@@ -106,6 +106,14 @@ public class Card {
      */
     public int getCost() {
         return cost;
+    }
+
+    /**
+     * getter for the position of the card
+     * @return the int position of the card
+     */
+    public int getPosition() {
+        return position;
     }
 
     /**
