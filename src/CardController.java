@@ -73,6 +73,12 @@ private GameModel model;
     }
 
     public void announceToJail(GameFrame frame, String message){
+        System.out.println("CARD CONTROLLER");
+        JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void announceJailTime(GameFrame frame, String message){
+        System.out.println("JAILTIME CONTROLLER");
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }
 }

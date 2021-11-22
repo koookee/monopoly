@@ -222,15 +222,16 @@ public class Card {
      * @return the int of whether the card has an owner, no owner, or if the owner is p
      */
     public int functionality(Player p){
+        if(getCardType().equals(CardType.jail)){
+            System.out.println("Function 3");
+            return 3;
+        }
         if (this.owner == null){
             return 0;
         }
         else{
             if (this.owner.getName().equals(p.getName())){
                 return 1;
-            }
-            else if (this.owner.getName().equals("warden")){
-                return 3;
             }
             return 2;
         }
