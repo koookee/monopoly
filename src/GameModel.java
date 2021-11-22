@@ -179,109 +179,112 @@ public class GameModel {
      * @param state the int that determines the action to take
      */
     public void play(int state){
-        if (state == 1 && hasNotRolled && status.name().equals("UNDECIDED")) {
+        if (status.name().equals("UNDECIDED")){
+            if (state == 1 && hasNotRolled) {
 /*
-            dice1 = (int) (Math.random() * 6 + 1);
-            dice2 = (int) (Math.random() * 6 + 1);
-            roll = dice1 + dice2;
+                dice1 = (int) (Math.random() * 6 + 1);
+                dice2 = (int) (Math.random() * 6 + 1);
+                roll = dice1 + dice2;
 
  */
+                // For debugging purposes (can make players move to specific tiles)
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Enter roll 1");
+                int num = scanner.nextInt();
+                dice1 = num;
+                System.out.println("Enter roll 2");
+                num = scanner.nextInt();
+                dice2 = num;
+                roll = dice1 + dice2;
 
 
+                if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
+                    activePlayer.setMoney(activePlayer.getMoney() + 200);
+                }
 
-            // For debugging purposes (can make players move to specific tiles)
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter roll 1");
-            int num = scanner.nextInt();
-            dice1 = num;
-            System.out.println("Enter roll 2");
-            num = scanner.nextInt();
-            dice2 = num;
-            roll = dice1 + dice2;
+                if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
+                    if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
+                        activePlayer.setIsInJail(0);
+                    }
+                    else{
+                        activePlayer.setIsInJail(activePlayer.getIsInJail() + 1);
+                        play(3);
+                    }
+                }
 
+                activePlayer.setPrevPosition(activePlayer.getPosition());
+                activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+                currentCard = gameBoard.get(activePlayer.getPosition());
+                //If player X turn set there position to += the roll amount
 
+                play(4);
 
-
-            if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
-                activePlayer.setMoney(activePlayer.getMoney() + 200);
+                int gameState = this.updateStatus();
+                for (GameView view : views) {
+                    if (gameState == 1) {
+                        view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                        play(3);
+                    }
+                    else if (dice1 == dice2 && numTimesRolledDouble <= 3) {
+                        numTimesRolledDouble++;
+                        hasNotRolled = true;
+                    } else if (numTimesRolledDouble == 4){
+                        play(3); // forces player to pass
+                    }
+                    else {
+                        hasNotRolled = false;
+                    }
+                    if (status.name().equals("WINNER")) {
+                        view.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                    }
+                }
+            } else if (state == 2) { // Ask if they're sure they want to pass
+                for (GameView view : views) {
+                    view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
+            } else if (state == 3) { // Player confirms they want to pass
+                this.updateStatus();
+                this.changeTurn();
+                numTimesRolledDouble = 0;
+                hasNotRolled = true;
+                for (GameView view : views) {
+                    view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+                }
+            } else if (state == 4) { // Landed on a card
+                landedOnCard();
+            } else if (state == 5) { // Confirms buying property
+                int result = currentCard.functionality(activePlayer);
+                if (result == 0) buyProperty();
+            } else if (state == 6) { // Confirms buying house
+                buyHouse();
+            } else if (state == 7) { // Confirms buying hotel
+                buyHotel();
+            } else if( state == 8) { // Goes to jail
+                this.activePlayer.setPosition(8);
+                this.activePlayer.setIsInJail(1);
             }
-
-            if(getActivePlayer().getIsInJail() != 0){       // JAIL TIME
-                if(dice1 == dice2 || getActivePlayer().getIsInJail() > 3 ){
-                    activePlayer.setIsInJail(0);
-                }
-                else{
-                    activePlayer.setIsInJail(activePlayer.getIsInJail() + 1);
-                    play(3);
-                }
-            }
-
-            activePlayer.setPrevPosition(activePlayer.getPosition());
-            activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-            currentCard = gameBoard.get(activePlayer.getPosition());
-            //If player X turn set there position to += the roll amount
-
-            play(4);
-
-            int gameState = this.updateStatus();
-            for (GameView view : views) {
-                if (gameState == 1) {
-                    view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                    play(3);
-                }
-                else if (dice1 == dice2 && numTimesRolledDouble <= 3) {
-                    numTimesRolledDouble++;
-                    hasNotRolled = true;
-                } else if (numTimesRolledDouble == 4){
-                    play(3); // forces player to pass
-                }
-                else {
-                    hasNotRolled = false;
-                }
-                if (status.name().equals("WINNER")) {
-                    view.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                }
-            }
-        } else if (state == 2 && status.name().equals("UNDECIDED")) { // Ask if they're sure they want to pass
-            for (GameView view : views) {
-                view.announcePlayerPass(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            }
-        } else if (state == 3 && status.name().equals("UNDECIDED")) { // Player confirms they want to pass
-            this.updateStatus();
-            this.changeTurn();
-            numTimesRolledDouble = 0;
-            hasNotRolled = true;
-            for (GameView view : views) {
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
-            }
-        } else if (state == 4 && status.name().equals("UNDECIDED")) { // Buying property
-            int result = currentCard.functionality(activePlayer);
-            for (GameView view : views) {
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                if (result == 0) { // No owners
-                    view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                } else if (result == 1) { // Owns property
-                    if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse()) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                    else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel()) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                }
-                else if (result == 2) { // Has to pay rent
-                    view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                } else if (result == 3){
-                    view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                }
-            }
-        } else if (state == 5 && status.name().equals("UNDECIDED")) { // Confirms buying property
-            int result = currentCard.functionality(activePlayer);
-            if (result == 0) buyProperty();
-        } else if (state == 6 && status.name().equals("UNDECIDED")) { // Confirms buying house
-            buyHouse();
-        } else if (state == 7 && status.name().equals("UNDECIDED")) { // Confirms buying hotel
-            buyHotel();
-        } else if( state == 8 && status.name().equals("UNDECIDED")) { // Goes to jail
-            this.activePlayer.setPosition(8);
-            this.activePlayer.setIsInJail(1);
         }
+    }
 
+    /**
+     * Determines what to do when a player lands on a card
+     */
+    private void landedOnCard(){
+        int result = currentCard.functionality(activePlayer);
+        for (GameView view : views) {
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            if (result == 0) { // No owners
+                view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            } else if (result == 1) { // Owns property
+                if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse()) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel()) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            }
+            else if (result == 2) { // Has to pay rent
+                view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            } else if (result == 3){
+                view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            }
+        }
     }
 
     /**
