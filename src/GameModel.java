@@ -262,7 +262,8 @@ public class GameModel {
                 else if (result == 2) { // Has to pay rent
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 } else if (result == 3){
-                    
+                    putInJail();
+                    view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                     view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
