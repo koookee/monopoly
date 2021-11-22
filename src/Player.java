@@ -109,6 +109,10 @@ public class Player {
         this.playing = playing;
     }
 
+    /**
+     * getter for the number of utilities
+     * @return the int of the number of utilities
+     */
     public int getNumUtils() {
         return numUtils;
     }
@@ -146,9 +150,18 @@ public class Player {
         this.prevPostion = position;
     }
 
+    /**
+     * getter for if the player is in jail
+     * @return the int of whether the player is in jail or not
+     */
     public int getIsInJail(){
         return this.isInJail;
     }
+
+    /**
+     * setter for the jail time
+     * @param jailTime the int time
+     */
     public void setIsInJail(int jailTime){
         this.isInJail = jailTime;
     }

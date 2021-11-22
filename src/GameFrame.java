@@ -97,9 +97,9 @@ public class GameFrame extends JFrame implements GameView {
                 square.setBounds(new Rectangle(width/botSquareNum,height/leftSquareNum-2));
             }
             else if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
-                layeredPane.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
-                square.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
-                square.setBounds(new Rectangle(290,height/leftSquareNum-2));
+                layeredPane.setPreferredSize(new Dimension(290,height/leftSquareNum-3));
+                square.setPreferredSize(new Dimension(290,height/leftSquareNum-3));
+                square.setBounds(new Rectangle(290,height/leftSquareNum-3));
             }else if(i>leftSquares-1 && i<=topSquares-1){
                 layeredPane.setPreferredSize(new Dimension(width/topSquareNum,height/leftSquareNum-2));
                 square.setPreferredSize(new Dimension(100,150));
@@ -229,6 +229,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Updates the GUI of each card on the board
+     * @param card the Card that gets updated
+     */
     public void updateCardGUI(Card card){
         JPanel gridPanel = squareBottomArr.get(card.getPosition());
         int num = gridPanel.getComponentCount(); // First component is the player label. Next 4 are potentially the houses (or hotel)
@@ -394,6 +398,10 @@ public class GameFrame extends JFrame implements GameView {
         control.winner(this, model.getWinner().getName() + " is the winner!");
     }
 
+    /**
+     * Announces that the player is sent to jail
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void announceToJail(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();

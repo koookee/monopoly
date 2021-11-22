@@ -72,6 +72,11 @@ private GameModel model;
         }
     }
 
+    /**
+     * Announces that the player is going to jail
+     * @param frame the game frame it's displayed on
+     * @param message the String message inside the popup
+     */
     public void announceToJail(GameFrame frame, String message){
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }

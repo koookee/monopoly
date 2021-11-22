@@ -63,11 +63,9 @@ public class GameModel {
                 "Electric Company","rideau Canal", "street 21", "street 22"};
         int[] costs = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
 
-        // TODO we have to update the values
-        int[] houseCosts = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
+        int[] houseCosts = {0,50,50,50,50,50,50,50,0,100,100,100,100,100,100,150,150,150,150,150,150,150,150,0,200,200,200,200,200,200,200};
 
-        // TODO we have to update the values
-        int[] hotelCosts = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
+        int[] hotelCosts = {0,50,50,50,50,50,50,50,0,100,100,100,100,100,100,150,150,150,150,150,150,150,150,0,200,200,200,200,200,200,200};
 
         Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.black,Color.CYAN,Color.pink,Color.blue,Color.pink,Color.black,
                 Color.pink,Color.orange,Color.orange,Color.orange, Color.black, Color.red,Color.red, Color.red,Color.white,Color.black, Color.yellow,Color.yellow,Color.blue,Color.yellow,Color.green,
@@ -167,6 +165,17 @@ public class GameModel {
 
     /**
      * This method is called to play the game depending on the choice command
+     * State 1 is the default state and it's what determines the player's
+     * roll and checks for bankruptcy, winners, and how many times the
+     * player rolled
+     * State 2 asks the player if they want to pass
+     * State 3 confirms the player pass
+     * State 4 checks whether the player has to pay rent, can buy a property,
+     * a house, or a hotel
+     * State 5 confirms the player's decision of buying a property
+     * State 6 confirms the player's decision of buying a house
+     * State 7 confirms the player's decision of buying a hotel
+     * State 8 sends the player to jail
      * @param state the int that determines the action to take
      */
     public void play(int state){
@@ -179,6 +188,7 @@ public class GameModel {
  */
 
 
+
             // For debugging purposes (can make players move to specific tiles)
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter roll 1");
@@ -188,6 +198,9 @@ public class GameModel {
             num = scanner.nextInt();
             dice2 = num;
             roll = dice1 + dice2;
+
+
+
 
             if(this.activePlayer.getPosition() + roll > 30){ // PASSING GO
                 activePlayer.setMoney(activePlayer.getMoney() + 200);
@@ -318,6 +331,10 @@ public class GameModel {
         activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHouseCost());
     }
 
+    /**
+     * this method is used to buy a hotel for a player
+     * @return the boolean of whether the player can buy a hotel or not
+     */
     private boolean checkIfCanBuyHotel(){
         boolean canBuy = true;
         ArrayList<Card> cards = new ArrayList<>();
@@ -423,6 +440,7 @@ public class GameModel {
         UNDECIDED,
     }
 
+    /*
     public static void main(String[] args) {
         GameModel gameModel = new GameModel();
         for (Card c :
@@ -430,5 +448,7 @@ public class GameModel {
             System.out.println(c.getCardType());
         }
     }
+
+     */
 
 }
