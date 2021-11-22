@@ -96,10 +96,16 @@ public class GameFrame extends JFrame implements GameView {
                 square.setPreferredSize(new Dimension(100,150));
                 square.setBounds(new Rectangle(width/botSquareNum,height/leftSquareNum-2));
             }
-            else if (i>botSquares-1 && i<=leftSquares-1 ||i>topSquares-1 && i<=rightSquares-1  ){
-                layeredPane.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
-                square.setPreferredSize(new Dimension(290,height/leftSquareNum-2));
-                square.setBounds(new Rectangle(290,height/leftSquareNum-2));
+            else if (i>botSquares-1 && i<=leftSquares-1 ) {
+                System.out.println((height - (width / topSquareNum)) / (8));
+                layeredPane.setPreferredSize(new Dimension(290, (height - (width / topSquareNum)) / (8)));
+                square.setPreferredSize(new Dimension(290, (height - (width / topSquareNum)) / 8));
+                square.setBounds(new Rectangle(290, (height - (width / topSquareNum)) / (8)));
+            }
+            else if(i>topSquares-1 && i<=rightSquares-1 ){
+                    layeredPane.setPreferredSize(new Dimension(290,(height- (width/topSquareNum))/(9)));
+                    square.setPreferredSize(new Dimension(290,(height- (width/topSquareNum))/9));
+                    square.setBounds(new Rectangle(290,(height- (width/topSquareNum))/(9)));
             }else if(i>leftSquares-1 && i<=topSquares-1){
                 layeredPane.setPreferredSize(new Dimension(width/topSquareNum,height/leftSquareNum-2));
                 square.setPreferredSize(new Dimension(100,150));
