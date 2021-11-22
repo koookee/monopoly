@@ -405,14 +405,27 @@ public class GameFrame extends JFrame implements GameView {
     /**
      * Announces that the player is sent to jail
      * @param gameEvent is a game event that holds useful information
-     */
-    @Override
+     */    @Override
     public void announceToJail(GameEvent gameEvent) {
+        System.out.println("GAMEFRAME");
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         control.announceToJail(this, "You've Been Sent To Jail!");
 
+    }
 
+    @Override
+    public void announceJailTime(GameEvent gameEvent){
+        System.out.println("JailTime");
+        GameModel model = gameEvent.getModel();
+        CardController control = new CardController(model);
+        if(model.getActivePlayer().getIsInJail() >= 3 || gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
+            control.announceJailTime(this, "You are out of Jail!\nYou Rolled: " + (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+        } else {
+            control.announceJailTime(this, "You did not roll a double! \n Time in Jail: "
+                    + model.getActivePlayer().getIsInJail()
+                    + "\nPassing Turn...");
+        }
     }
 
 

@@ -19,5 +19,7 @@ public interface GameView {
 
     void announceToJail(GameEvent e);
 
+    void announceJailTime(GameEvent e);
+
     void askToBuyHotel(GameEvent gameEvent);
 }
