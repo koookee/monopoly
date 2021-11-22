@@ -344,7 +344,6 @@ public class GameFrame extends JFrame implements GameView {
         CardController control = new CardController(model);
         control.announceToJail(this, "You've Been Sent To Jail!");
 
-
     }
 
     @Override

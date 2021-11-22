@@ -238,8 +238,8 @@ public class GameModel {
                     view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 } else if (result == 3){
                     putInJail();
-                    view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                     view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+                    view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
             }
         } else if (choice == 5 && status.name().equals("UNDECIDED")) { // Confirms buying
