@@ -16,4 +16,6 @@ public interface GameView {
     void announceWinner(GameEvent e);
 
     void announceToJail(GameEvent e);
+
+    void announceJailTime(GameEvent e);
 }

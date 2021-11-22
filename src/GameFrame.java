@@ -339,11 +339,27 @@ public class GameFrame extends JFrame implements GameView {
 
     @Override
     public void announceToJail(GameEvent gameEvent) {
+        System.out.println("GAMEFRAME");
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         control.announceToJail(this, "You've Been Sent To Jail!");
 
 
+    }
+
+    @Override
+    public void announceJailTime(GameEvent gameEvent){
+        System.out.println("JailTime");
+        GameModel model = gameEvent.getModel();
+
+        CardController control = new CardController(model);
+        if(model.getActivePlayer().getIsInJail() >= 3){
+            control.announceJailTime(this, "You are out of Jail!");
+        } else {
+            control.announceJailTime(this, "You did not roll a double! \n Time in Jail: "
+                    + model.getActivePlayer().getIsInJail()
+                    + "\nPassing Turn...");
+        }
     }
 
 
@@ -404,6 +420,7 @@ public class GameFrame extends JFrame implements GameView {
 
 
     }
+
 
     /**
      * Main method that runs the program
