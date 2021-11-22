@@ -2,7 +2,6 @@ import java.awt.*;
 
 public class Railroad extends Card{
 
-
     public Railroad(String name, int cost, int position, Color color, CardType cardType) {
         super(name, cost, position, color, cardType, 0, 0);
     }

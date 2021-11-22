@@ -139,9 +139,9 @@ public class Card {
                 return 0;
             }
             else if(this.getOwner().getNumUtils() == 1){
-                return (this.getOwner().getPosition() - this.getOwner().getPrevPostion())*4;
+                return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*4;
             }else{
-                return (this.getOwner().getPosition() - this.getOwner().getPrevPostion())*10;
+                return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*10;
             }
 
         }

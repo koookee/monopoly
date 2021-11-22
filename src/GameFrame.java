@@ -50,10 +50,8 @@ public class GameFrame extends JFrame implements GameView {
         model = new GameModel();
         model.addGameModelView(this);
 
-        WelcomeController control = new WelcomeController();
+        WelcomeController control = new WelcomeController(model);
         this.playerNum = control.getPlayerNumber(this);
-
-        model.addPlayers(playerNum);
 
         this.createSquares();
         this.mainPanel = paintBoard();
@@ -182,6 +180,7 @@ public class GameFrame extends JFrame implements GameView {
             bodyPanel.add(propertyLabel);
         }
 
+
         JLabel playerPosition = new JLabel("Player Position: " + activePlayer.getPosition());
         bodyPanel.add(playerPosition);
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
@@ -204,16 +203,25 @@ public class GameFrame extends JFrame implements GameView {
         JPanel footerPanel = new JPanel(new GridLayout(3, 3));
 
         JButton rollButton = new JButton("Roll");
-        rollButton.setEnabled(rollEnabled);
-        rollButton.setActionCommand(1 + " ");
-        rollButton.addActionListener(controller);
         footerPanel.add(rollButton);
 
         JButton pass = new JButton("Next Turn");
-        pass.setEnabled(!rollEnabled);
-        pass.setActionCommand(2 + " ");
-        pass.addActionListener(controller);
         footerPanel.add(pass);
+
+        if(activePlayer.getIsBot()){
+            rollButton.setEnabled(false);
+            pass.setEnabled(false);
+            this.model.botPlay();
+        }
+        else{
+            rollButton.setEnabled(rollEnabled);
+            rollButton.setActionCommand(1 + " ");
+            rollButton.addActionListener(controller);
+
+            pass.setEnabled(!rollEnabled);
+            pass.setActionCommand(2 + " ");
+            pass.addActionListener(controller);
+        }
 
         /*
         JButton buy = new JButton("Buy");
@@ -389,7 +397,7 @@ public class GameFrame extends JFrame implements GameView {
      */
     private void updatePlayerIcon(Player activePlayer, int[] roll) {
         int position = activePlayer.getPosition();
-        int prev = activePlayer.getPrevPostion();
+        int prev = activePlayer.getPrevPosition();
 
         if(roll[0] != 0 && roll[1] != 0){
             if(activePlayer.getName().equals("P1")){

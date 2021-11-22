@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
-    private int prevPostion;
+    private int prevPosition;
     private String name;
     private int money;
     private int position;
@@ -16,18 +16,20 @@ public class Player {
     private ArrayList<Card> properties;
     private int numUtils;
     private int isInJail;
+    private boolean isBot;
 
     /**
      * The constructor for the Player class
      * @param name the name of the player
      */
-    public Player(String name){
+    public Player(String name, boolean isBot){
         this.name = name;
+        this.isBot = isBot;
         this.money = 1500;
         this.position = 0;
         this.playing = true;
         properties = new ArrayList<>();
-        this.prevPostion = 0;
+        this.prevPosition = 0;
         this.numUtils = 0;
         this.isInJail = 0;
     }
@@ -56,6 +58,10 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    public boolean getIsBot(){
+        return isBot;
     }
 
     /**
@@ -134,8 +140,8 @@ public class Player {
      * Gets the previous position of the player
      * @return the int of the previous position
      */
-    public int getPrevPostion() {
-        return prevPostion;
+    public int getPrevPosition() {
+        return prevPosition;
     }
 
     /**
@@ -143,7 +149,7 @@ public class Player {
      * @param position the int of the previous position
      */
     public void setPrevPosition(int position) {
-        this.prevPostion = position;
+        this.prevPosition = position;
     }
 
     public int getIsInJail(){

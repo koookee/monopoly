@@ -47,7 +47,8 @@ public class GameModel {
      * @param name is the String of the name the player wants
      */
     private void addPlayer(String name){
-        players.add(new Player(name));
+        players.add(new Player(name, false));
+        players.add(new AutoPlayer(name, true));
         if(players.size()==1) activePlayer = players.get(0);
     }
 
@@ -268,6 +269,79 @@ public class GameModel {
 
     }
 
+    public void botPlay(){
+        if (hasNotRolled && status.name().equals("UNDECIDED")) {
+
+            dice1 = (int) (Math.random() * 6 + 1);
+            dice2 = (int) (Math.random() * 6 + 1);
+            roll = dice1 + dice2;
+
+
+
+            /* For debugging purposes (can make players move to specific tiles)
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter roll 1");
+            int num = scanner.nextInt();
+            dice1 = num;
+            System.out.println("Enter roll 2");
+            num = scanner.nextInt();
+            dice2 = num;
+            roll = dice1 + dice2;
+
+             */
+
+
+            if (this.activePlayer.getPosition() + roll > 30) { // PASSING GO
+                this.activePlayer.setMoney(activePlayer.getMoney() + 200);
+            }
+
+            if (getActivePlayer().getIsInJail() != 0) {       // JAIL TIME
+                if (dice1 == dice2 || getActivePlayer().getIsInJail() > 3) {
+                    getActivePlayer().setIsInJail(0);
+                } else {
+                    int current = this.activePlayer.getIsInJail();
+                    this.activePlayer.setIsInJail(current += 1);
+                    this.updateStatus();
+                    this.changeTurn();
+                    numTimesRolledDouble = 0;
+                    hasNotRolled = true;
+                    for (GameView view : views) {
+                        view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+                    }
+                }
+            } else {
+                if(activePlayer.getPosition() + roll > 21){
+                    activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
+                    currentCard = gameBoard.get(activePlayer.getPosition());
+
+
+
+                }else{
+                    activePlayer.setPosition(activePlayer.getPosition() + roll);
+                    currentCard = gameBoard.get(activePlayer.get
+
+                this.changeTurn();
+            }
+                for (GameView view : views) {
+                    view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+                }
+
+            }
+
+
+            activePlayer.setPrevPosition(activePlayer.getPosition());
+            activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+            currentCard = gameBoard.get(activePlayer.getPosition());
+            //If player X turn set there position to += the roll amount
+
+        }
+
+
+
+
+
+    }
+
     /**
      * this method is used to buy a property for a player
      */
@@ -368,12 +442,15 @@ public class GameModel {
      * Adds a number of players to the game
      * @param playerNum the int for the number of players to be added
      */
-    public void addPlayers(int playerNum) {
-        if(playerNum<2 || playerNum>4){
+    public void addPlayers(int playerNum, int botNum) {
+        if(playerNum + botNum > 4 || (playerNum == 1 && botNum == 0)){
             return;
         }
         for (int i = 0; i <playerNum; i++){
-            this.players.add(new Player("P"+(i+1)));
+            this.players.add(new Player("P"+(i+1), false));
+        }
+        for(int j = 0; j < botNum; j++){
+            this.players.add(new AutoPlayer("Bot"+ (j+1),  true));
         }
         activePlayer = players.get(0);
     }

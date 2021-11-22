@@ -9,7 +9,7 @@ public class GameModelTest extends TestCase {
     GameModel gm = new GameModel();
 
     protected void setUp(){
-        gm.addPlayers(4);
+        gm.addPlayers(3, 1);
 
     }
 
