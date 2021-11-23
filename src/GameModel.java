@@ -196,9 +196,10 @@ public class GameModel {
                 dice1 = (int) (Math.random() * 6 + 1);
                 dice2 = (int) (Math.random() * 6 + 1);
                 roll = dice1 + dice2;
+*/
 
 
-                /*
+
                 // For debugging purposes (can make players move to specific tiles)
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Enter roll 1");
@@ -209,7 +210,6 @@ public class GameModel {
                 dice2 = num;
                 roll = dice1 + dice2;
 
-                 */
 
                 if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){       // JAIL TIME
                     for(GameView view : views){
@@ -329,8 +329,8 @@ public class GameModel {
     }
 
     public void botPlay() {
-        dice1 = 1; //(int) (Math.random() * 6 + 1);
-        dice2 = 1;//(int) (Math.random() * 6 + 1);
+        dice1 = (int) (Math.random() * 6 + 1);
+        dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
 
         activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -396,11 +396,12 @@ public class GameModel {
             botPlay();
         }
 
-        else {
-
-            changeTurn();
-            hasNotRolled = true;
+        else if( numTimesRolledDouble == 3 ){
+            this.updateStatus();
+            this.changeTurn();
             numTimesRolledDouble = 0;
+            hasNotRolled = true;
+
         }
 
         this.updateStatus();
