@@ -59,10 +59,10 @@ public class GameFrame extends JFrame implements GameView {
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
 
 
-        icon.setBounds(25,40, 50,50);
-        icon2.setBounds(60,40, 50,50);
-        icon3.setBounds(100,40, 50,50);
-        icon4.setBounds(150,40, 50,50);
+        icon.setBounds(10,40, 50,50);
+        icon2.setBounds(50,40, 50,50);
+        icon3.setBounds(90,40, 50,50);
+        icon4.setBounds(130,40, 50,50);
     }
 
 
@@ -95,7 +95,7 @@ public class GameFrame extends JFrame implements GameView {
                 square.setBounds(new Rectangle(width/botSquareNum,height/leftSquareNum-2));
             }
             else if (i>botSquares-1 && i<=leftSquares-1 ) {
-                System.out.println((height - (width / topSquareNum)) / (8));
+
                 layeredPane.setPreferredSize(new Dimension(290, (height - (width / topSquareNum)) / (8)));
                 square.setPreferredSize(new Dimension(290, (height - (width / topSquareNum)) / 8));
                 square.setBounds(new Rectangle(290, (height - (width / topSquareNum)) / (8)));
@@ -206,6 +206,7 @@ public class GameFrame extends JFrame implements GameView {
 
         JPanel footerPanel = new JPanel(new GridLayout(3, 3));
 
+
         JButton rollButton = new JButton("Roll");
         footerPanel.add(rollButton);
 
@@ -214,20 +215,16 @@ public class GameFrame extends JFrame implements GameView {
         
 
 
-        if(activePlayer.getIsBot()){
-            rollButton.setEnabled(false);
-            pass.setEnabled(false);
-            this.model.botPlay();
-        }
-        else{
-            rollButton.setEnabled(rollEnabled);
-            rollButton.setActionCommand(1 + " ");
-            rollButton.addActionListener(controller);
 
-            pass.setEnabled(!rollEnabled);
-            pass.setActionCommand(2 + " ");
-            pass.addActionListener(controller);
-        }
+        rollButton.setEnabled(rollEnabled);
+        rollButton.setActionCommand(1 + " ");
+        rollButton.addActionListener(controller);
+
+        pass.setEnabled(!rollEnabled);
+        pass.setActionCommand(2 + " ");
+        pass.addActionListener(controller);
+
+
 
         /*
         JButton buy = new JButton("Buy");
@@ -291,13 +288,36 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
+        System.out.println(model.getActivePlayer().getName());
         getContentPane().remove(playerPanel);
+
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 
+
         displayGUI();
-        updatePlayerIcon(model.getActivePlayer(),e.getRoll());
+
+        updatePlayerIcon(model.getActivePlayer(), e.getRoll());
+        System.out.println("updating icon");
 
     }
+    @Override
+    public void handleBot(GameEvent e){
+
+    }
+
+    @Override
+    public void announceBoughtBotProperty(GameEvent gameEvent) {
+        Player player = gameEvent.getModel().getActivePlayer();
+        Card card = gameEvent.getCard();
+        JOptionPane.showMessageDialog(this,player.getName() + " has bought " + card.getName() , null, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void announcePaidBotRent(GameEvent gameEvent) {
+        Player player = gameEvent.getModel().getActivePlayer();
+        Card card = gameEvent.getCard();
+        JOptionPane.showMessageDialog(this,player.getName() + " has paid rent to " + card.getOwner().getName() + " for " + card.getName(), null, JOptionPane.PLAIN_MESSAGE);
+    }
+
 
     /**
      * Gives the player information about the property they landed on and the option to buy (if possible)
@@ -421,7 +441,7 @@ public class GameFrame extends JFrame implements GameView {
         System.out.println("GAMEFRAME");
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
-        control.announceToJail(this, "You've Been Sent To Jail!");
+        control.announceToJail(this, gameEvent.getModel().getActivePlayer().getName()+" has been Sent To Jail!");
 
     }
 
@@ -431,9 +451,10 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         if(model.getActivePlayer().getIsInJail() >= 3 || gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
-            control.announceJailTime(this, "You are out of Jail!\nYou Rolled: " + (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+            control.announceJailTime(this, gameEvent.getModel().getActivePlayer().getName()+ " you are out of Jail!\nYou Rolled: " +
+                    (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
         } else {
-            control.announceJailTime(this, "You did not roll a double! \n Time in Jail: "
+            control.announceJailTime(this, gameEvent.getModel().getActivePlayer().getName()+ "you did not roll a double! \n Time in Jail: "
                     + model.getActivePlayer().getIsInJail()
                     + "\nPassing Turn...");
         }
@@ -459,7 +480,7 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(prev).repaint();
 
 
-            }else if(activePlayer.getName().equals("P2")){
+            }else if(activePlayer.getName().equals("P2") ||activePlayer.getName().equals("Bot1")){
 
                 squares.get(prev).remove(icons[1]);
                 squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
@@ -467,7 +488,7 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(prev).repaint();
 
             }
-            else if (activePlayer.getName().equals("P3")) {
+            else if (activePlayer.getName().equals("P3")||activePlayer.getName().equals("Bot2")) {
 
                 squares.get(prev).remove(icon3);
                 squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
@@ -482,7 +503,8 @@ public class GameFrame extends JFrame implements GameView {
 
 
             }
-            else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1) {
+            else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1
+                    ||activePlayer.getName().equals("Bot3")) {
 
                 squares.get(prev).remove(icon4);
                 squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);

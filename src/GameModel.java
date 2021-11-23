@@ -183,14 +183,15 @@ public class GameModel {
      * @param state the int that determines the action to take
      */
     public void play(int state){
-        if (status.name().equals("UNDECIDED")){
+        if (status.name().equals("UNDECIDED") && !getActivePlayer().getIsBot()){
             if (state == 1 && hasNotRolled) {
-/*
+
                 dice1 = (int) (Math.random() * 6 + 1);
                 dice2 = (int) (Math.random() * 6 + 1);
                 roll = dice1 + dice2;
 
- */
+
+                /*
                 // For debugging purposes (can make players move to specific tiles)
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Enter roll 1");
@@ -200,6 +201,8 @@ public class GameModel {
                 num = scanner.nextInt();
                 dice2 = num;
                 roll = dice1 + dice2;
+
+                 */
 
                 if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){       // JAIL TIME
                     for(GameView view : views){
@@ -277,6 +280,8 @@ public class GameModel {
                 this.activePlayer.setIsInJail(1);
             }
         }
+
+
     }
 
     /**
@@ -302,78 +307,86 @@ public class GameModel {
         }
     }
 
-    public void botPlay(){
-        if (hasNotRolled && status.name().equals("UNDECIDED")) {
+    public void botPlay() {
+        dice1 = 1; //(int) (Math.random() * 6 + 1);
+        dice2 = 1;//(int) (Math.random() * 6 + 1);
+        roll = dice1 + dice2;
 
-            dice1 = (int) (Math.random() * 6 + 1);
-            dice2 = (int) (Math.random() * 6 + 1);
-            roll = dice1 + dice2;
-
-
-
-            /* For debugging purposes (can make players move to specific tiles)
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter roll 1");
-            int num = scanner.nextInt();
-            dice1 = num;
-            System.out.println("Enter roll 2");
-            num = scanner.nextInt();
-            dice2 = num;
-            roll = dice1 + dice2;
-
-             */
+        activePlayer.setPrevPosition(activePlayer.getPosition());
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+        currentCard = gameBoard.get(activePlayer.getPosition());
 
 
-            if (this.activePlayer.getPosition() + roll > 30) { // PASSING GO
-                this.activePlayer.setMoney(activePlayer.getMoney() + 200);
+        if(currentCard.getCardType() == Card.CardType.jail){
+            this.activePlayer.setPosition(8);
+            this.activePlayer.setIsInJail(1);
+        }
+
+        if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
+            for(GameView view: views){
+                view.announceJailTime(new GameEvent(this,status,currentCard, new int[]{dice1,dice2}));
             }
-
-            if (getActivePlayer().getIsInJail() != 0) {       // JAIL TIME
-                if (dice1 == dice2 || getActivePlayer().getIsInJail() > 3) {
-                    getActivePlayer().setIsInJail(0);
-                } else {
-                    int current = this.activePlayer.getIsInJail();
-                    this.activePlayer.setIsInJail(current += 1);
-                    this.updateStatus();
-                    this.changeTurn();
-                    numTimesRolledDouble = 0;
-                    hasNotRolled = true;
-                    for (GameView view : views) {
-                        view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
-                    }
+            int current = this.activePlayer.getIsInJail();
+            this.activePlayer.setIsInJail(current += 1);
+            play(3);
+        }
+        else{
+            if(activePlayer.getIsInJail() >= 3 || (dice1==dice2 && activePlayer.getIsInJail() != 0)){
+                for(GameView view: views){
+                    view.announceJailTime(new GameEvent(this,status,currentCard, new int[]{dice1,dice2}));
                 }
-            } else {
-                if(activePlayer.getPosition() + roll > 21){
-                    activePlayer.setPosition((activePlayer.getPosition() + roll) - 21);
-                    currentCard = gameBoard.get(activePlayer.getPosition());
-
-
-
-                }else{
-                    activePlayer.setPosition(activePlayer.getPosition() + roll);
-                    currentCard = gameBoard.get(activePlayer.get
-
-                this.changeTurn();
+                activePlayer.setIsInJail(0);
             }
-                for (GameView view : views) {
-                    view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+            if(this.activePlayer.getPosition() + roll > 30){
+                activePlayer.setIsInJail(activePlayer.getMoney() + 200);
+            }
+
+        }
+
+        if(currentCard.isOwned()){
+            activePlayer.payRent(currentCard.getOwner(),currentCard);
+            for(GameView view: views){
+                view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+            }
+
+        }
+        else{
+            if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
+                activePlayer.buyCard(currentCard);
+                for(GameView view: views){
+                    view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
                 }
 
             }
-
-
-            activePlayer.setPrevPosition(activePlayer.getPosition());
-            activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-            currentCard = gameBoard.get(activePlayer.getPosition());
-            //If player X turn set there position to += the roll amount
-
         }
 
 
 
 
+        this.updateStatus();
+
+        for (GameView view :
+                views) {
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        }
+        if (dice1 == dice2 && numTimesRolledDouble < 3) {
+            numTimesRolledDouble++;
+            System.out.println("The number of times " +activePlayer.getName()  + " rolled double is " + numTimesRolledDouble);
+            botPlay();
+        }
+
+        else {
+
+            changeTurn();
+            hasNotRolled = true;
+            numTimesRolledDouble = 0;
+        }
+
+        this.updateStatus();
+        changeTurn();
 
     }
+
 
     /**
      * this method is used to buy a property for a player
