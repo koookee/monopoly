@@ -24,4 +24,10 @@ public interface GameView {
     void payJailFee(GameEvent e);
 
     void askToBuyHotel(GameEvent gameEvent);
+
+    void handleBot(GameEvent e);
+
+    void announceBoughtBotProperty(GameEvent gameEvent);
+
+    void announcePaidBotRent(GameEvent gameEvent);
 }
