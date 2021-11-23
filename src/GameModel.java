@@ -308,8 +308,8 @@ public class GameModel {
     }
 
     public void botPlay() {
-        dice1 = 1; //(int) (Math.random() * 6 + 1);
-        dice2 = 1;//(int) (Math.random() * 6 + 1);
+        dice1 = (int) (Math.random() * 6 + 1);
+        dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
 
         activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -373,13 +373,13 @@ public class GameModel {
             numTimesRolledDouble++;
             System.out.println("The number of times " +activePlayer.getName()  + " rolled double is " + numTimesRolledDouble);
             botPlay();
-        }
-
-        else {
-
-            changeTurn();
-            hasNotRolled = true;
+        }else if(numTimesRolledDouble == 3) {
+            this.updateStatus();
+            this.changeTurn();
             numTimesRolledDouble = 0;
+            hasNotRolled = true;
+
+
         }
 
         this.updateStatus();
