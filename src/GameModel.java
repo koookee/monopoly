@@ -76,7 +76,7 @@ public class GameModel {
                 gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
             }else if(i== 19 || i == 27) {
                 gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
-            }else if(i == 8 || i == 23){
+            }else if(+i == 23){
                 gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
             else{
@@ -100,6 +100,10 @@ public class GameModel {
      */
     public void addGameModelView(GameView view){
         this.views.add(view);
+    }
+
+    public ArrayList<GameView> getViews(){
+        return views;
     }
 
     /**
@@ -305,7 +309,7 @@ public class GameModel {
         this.activePlayer.buyCard(currentCard);
     }
 
-    public void putInJail(){
+    private void putInJail(){
         activePlayer.setPosition(8);
         activePlayer.setIsInJail(1);
     }

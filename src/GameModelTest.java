@@ -10,7 +10,6 @@ public class GameModelTest extends TestCase {
 
     protected void setUp(){
         gm.addPlayers(4);
-
     }
 
     /**
@@ -25,30 +24,23 @@ public class GameModelTest extends TestCase {
     }
 
     /**
-     * testActivePlayer tests to see if ActivePlayer is working correctly.
-     */
-    public void testActivePlayer(){
-        assertEquals("P1", gm.getPlayers().get(0).getName());
-    }
-
-    /**
-     * testPayRent tests that when a player pays another.
-     */
-    public void testPayRent(){
-        gm.setCurrentCard(1);
-        gm.getCurrentCard().setOwned(gm.getPlayers().get(1));
-        gm.payRent(gm.getPlayers().get(1), gm.getCurrentCard());
-
-        assertEquals(1494, gm.getActivePlayer().getMoney());
-    }
-
-    /**
      * testCreateGameBoard tests to see if a game board is created when called to.
      */
     public void testCreateGameBoard(){
         gm.createGameBoard();
         assertNotNull(gm.getGameBoard());
     }
+
+
+    /**
+     * testActivePlayer tests to see if ActivePlayer is working correctly.
+     */
+    public void testActivePlayer(){
+        assertEquals("P1", gm.getPlayers().get(0).getName());
+    }
+
+
+
 
     /**
      * testChangeTurn tests to see if when called that the turn changes to the next player.
@@ -68,6 +60,7 @@ public class GameModelTest extends TestCase {
         assertEquals(1, gm.getActivePlayer().getProperties().size());
         assertEquals(1440, gm.getActivePlayer().getMoney());
     }
+
 
     /**
      * testUnDecided tests to see that the game's status is "UNDECIDED" when the game starts.
@@ -93,5 +86,41 @@ public class GameModelTest extends TestCase {
         assertEquals(1, gm.getActivePlayer().getProperties().size());
     }
 
+    /**
+     * testPlayChoice6 tests to see that when play(6) is called that the currentCard buys a house.
+     */
+    public void testPlayChoice6(){
+        gm.setCurrentCard(1);
+        gm.play(6);
+        assertEquals(1,gm.getCurrentCard().getHouses());
+    }
+
+    /**
+     * testPlayChoice7 tests to see that when play(7) is called that the currentCard buys a hotel.
+     */
+    public void testPlayChoice7(){
+        gm.setCurrentCard(1);
+        gm.play(7);
+        assertEquals(1, gm.getCurrentCard().getHotels());
+    }
+
+    /**
+     * testPlayChoice8 test to see that when play(8) is called that the activePlayer gets moved to 8.
+     */
+    public void testPlayChoice8(){
+        gm.setCurrentCard(1);
+        gm.play(8);
+        assertEquals(8,gm.getActivePlayer().getPosition());
+    }
+    /**
+     * testPayRent tests that when a player pays another.
+     */
+    public void testPayRent(){
+        gm.setCurrentCard(1);
+        gm.getCurrentCard().setOwned(gm.getPlayers().get(1));
+        gm.payRent(gm.getPlayers().get(1), gm.getCurrentCard());
+
+        assertEquals(1494, gm.getActivePlayer().getMoney());
+    }
 
 }
