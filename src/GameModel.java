@@ -163,6 +163,7 @@ public class GameModel {
         if(currentPlayers == 1){
             status = Status.WINNER;
         }
+
         return numToReturn;
     }
 
@@ -184,8 +185,14 @@ public class GameModel {
      */
     public void play(int state){
         if (status.name().equals("UNDECIDED")){
+            if(state ==1 && hasNotRolled) {
+                if (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && activePlayer.getMoney() >= 50) {
+                    play(8);
+                }
+            }
             if (state == 1 && hasNotRolled) {
-/*
+
+                /*
                 dice1 = (int) (Math.random() * 6 + 1);
                 dice2 = (int) (Math.random() * 6 + 1);
                 roll = dice1 + dice2;
@@ -200,8 +207,7 @@ public class GameModel {
                 num = scanner.nextInt();
                 dice2 = num;
                 roll = dice1 + dice2;
-
-                if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){       // JAIL TIME
+                if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
                     for(GameView view : views){
                         view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
                     }
@@ -215,11 +221,20 @@ public class GameModel {
                         for(GameView view : views){
                             view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
                         }
+                        if(activePlayer.getIsInJail() >= 3){
+                            activePlayer.setMoney(activePlayer.getMoney() - 50);
+
+                        }
                         activePlayer.setIsInJail(0);
+
                     }
 
                     if(this.activePlayer.getPosition() + roll > 30) { // PASSING GO
                         activePlayer.setMoney(activePlayer.getMoney() + 200);
+                    }
+                    if(activePlayer.getExconvict()){
+                        numTimesRolledDouble = 4;
+                        activePlayer.setExconvict(false);
                     }
 
                     activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -227,9 +242,12 @@ public class GameModel {
                     currentCard = gameBoard.get(activePlayer.getPosition());
                     //If player X turn set there position to += the roll amount
 
+
+
                     play(4);
 
                     int gameState = this.updateStatus();
+
                     for (GameView view : views) {
                         if (gameState == 1) {
                             view.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -249,6 +267,7 @@ public class GameModel {
                         }
                     }
                 }
+
 
 
             } else if (state == 2) { // Ask if they're sure they want to pass
@@ -272,9 +291,10 @@ public class GameModel {
                 buyHouse();
             } else if (state == 7) { // Confirms buying hotel
                 buyHotel();
-            } else if( state == 8) { // Goes to jail
-                this.activePlayer.setPosition(8);
-                this.activePlayer.setIsInJail(1);
+            } else if( state == 8) {
+                for (GameView view : views) {
+                    view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0})); // Player didn't roll yet
+                }
             }
         }
     }

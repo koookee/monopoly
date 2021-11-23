@@ -419,13 +419,24 @@ public class GameFrame extends JFrame implements GameView {
         System.out.println("JailTime");
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
-        if(model.getActivePlayer().getIsInJail() >= 3 || gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
-            control.announceJailTime(this, "You are out of Jail!\nYou Rolled: " + (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
-        } else {
+        if(gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
+            control.announceDouble(this, "You are out of Jail!\nYou Rolled: " + (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+        } else if(model.getActivePlayer().getIsInJail() >= 3){
+            control.announceJailTime(this, "You have served your sentence and have been fined $50\nYou Rolled: "+ (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+        }
+        else {
             control.announceJailTime(this, "You did not roll a double! \n Time in Jail: "
                     + model.getActivePlayer().getIsInJail()
                     + "\nPassing Turn...");
         }
+    }
+
+    @Override
+    public void payJailFee(GameEvent gameEvent) {
+        GameModel model = gameEvent.getModel();
+        CardController jailFee = new CardController(model);
+        jailFee.payJailFee(this, "Would you like to pay 50$ to get out of Jail?");
+
     }
 
 

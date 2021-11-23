@@ -16,6 +16,7 @@ public class Player {
     private ArrayList<Card> properties;
     private int numUtils;
     private int isInJail;
+    private boolean exconvict;
 
     /**
      * The constructor for the Player class
@@ -30,8 +31,14 @@ public class Player {
         this.prevPostion = 0;
         this.numUtils = 0;
         this.isInJail = 0;
+        this.exconvict = false;
     }
-
+    public boolean getExconvict(){
+        return exconvict;
+    }
+    public void setExconvict(boolean bool){
+        exconvict = bool;
+    }
     /**
      * This method is used for a player to pay another player's rent for their property
      * @param player Player they are paying

@@ -21,5 +21,7 @@ public interface GameView {
 
     void announceJailTime(GameEvent e);
 
+    void payJailFee(GameEvent e);
+
     void askToBuyHotel(GameEvent gameEvent);
 }

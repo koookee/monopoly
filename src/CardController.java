@@ -72,6 +72,15 @@ private GameModel model;
         }
     }
 
+    public void payJailFee(GameFrame frame, String message){
+        int confirm = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
+        if(confirm == JOptionPane.YES_OPTION){
+            model.getActivePlayer().setIsInJail(0);
+            model.getActivePlayer().setMoney(model.getActivePlayer().getMoney() - 50);
+            model.getActivePlayer().setExconvict(true);
+        }
+    }
+
     /**
      * Announces that the player is going to jail
      * @param frame the game frame it's displayed on
@@ -82,6 +91,11 @@ private GameModel model;
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }
 
+    public void announceDouble(GameFrame frame, String message){
+        model.getActivePlayer().setExconvict(true);
+        JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
+
+    }
     public void announceJailTime(GameFrame frame, String message){
         System.out.println("JAILTIME CONTROLLER");
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
