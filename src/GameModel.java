@@ -77,7 +77,7 @@ public class GameModel {
                 gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
             }else if(i== 19 || i == 27) {
                 gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
-            }else if(i == 8 || i == 23){
+            }else if(i == 23){
                 gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
             else{
@@ -110,6 +110,9 @@ public class GameModel {
         currTurn = (currTurn + 1) % players.size();
         while (!players.get(currTurn).isPlaying()) currTurn = (currTurn + 1) % players.size(); // Skips the players that are bankrupt
         activePlayer = players.get(currTurn);
+        if(activePlayer instanceof AutoPlayer){
+            botPlay();
+        }
     }
 
     /**

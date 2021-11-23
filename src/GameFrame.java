@@ -211,6 +211,8 @@ public class GameFrame extends JFrame implements GameView {
 
         JButton pass = new JButton("Next Turn");
         footerPanel.add(pass);
+        
+
 
         if(activePlayer.getIsBot()){
             rollButton.setEnabled(false);
@@ -316,6 +318,7 @@ public class GameFrame extends JFrame implements GameView {
                         "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
             }
         }
+
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 
