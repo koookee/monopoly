@@ -24,7 +24,9 @@ public class GameFrame extends JFrame implements GameView {
 
     private JLabel[] icons;
 
-    private boolean rollEnables;
+    private boolean enableRoll;
+
+    private boolean enableBuy;
 
     private int playerNum;
     private final int botSquares = 9, leftSquares = 15, topSquares =24, rightSquares = 31;
@@ -32,6 +34,8 @@ public class GameFrame extends JFrame implements GameView {
     private  JPanel mainPanel;
     private JPanel playerPanel;
     private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
+
+    private JButton buyButton;
 
 
     /**
@@ -47,6 +51,7 @@ public class GameFrame extends JFrame implements GameView {
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 
         model = new GameModel();
@@ -65,7 +70,8 @@ public class GameFrame extends JFrame implements GameView {
         icon2.setBounds(50,40, 50,50);
         icon3.setBounds(90,40, 50,50);
         icon4.setBounds(130,40, 50,50);
-        rollEnables = true;
+        enableRoll = true;
+        enableBuy = false;
     }
 
 
@@ -171,7 +177,7 @@ public class GameFrame extends JFrame implements GameView {
      */
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
 
-        boolean buyEnabled = false;
+        
         JPanel mainPanel = new JPanel(new BorderLayout());
         JLabel playerName = new JLabel("Player: " + activePlayer.getName());
         mainPanel.add(playerName, BorderLayout.PAGE_START);
@@ -194,7 +200,7 @@ public class GameFrame extends JFrame implements GameView {
         JLabel playerRoll;
         if (roll[0] == 0 && roll [1] == 0) {
             playerRoll = new JLabel("Player hasn't rolled yet");
-            rollEnables = true;
+            enableRoll = true;
         }
         else if(roll[0] == roll[1]) {
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
@@ -215,18 +221,25 @@ public class GameFrame extends JFrame implements GameView {
         JButton rollButton = new JButton("Roll");
         footerPanel.add(rollButton);
 
+        buyButton = new JButton("Buy");
+        footerPanel.add(buyButton);
+
         JButton pass = new JButton("Next Turn");
         footerPanel.add(pass);
         
 
 
 
-        rollButton.setEnabled(rollEnables);
+        rollButton.setEnabled(enableRoll);
         rollButton.setActionCommand("roll"); //TODO fix the action command so its not a string
         rollButton.addActionListener(controller);
 
-        pass.setEnabled(!rollEnables);
-        pass.setActionCommand(2 + " ");
+        buyButton.setEnabled(enableBuy);
+        buyButton.setActionCommand("buy");
+        buyButton.addActionListener(controller);
+
+        pass.setEnabled(!enableRoll);
+        pass.setActionCommand("next turn");
         pass.addActionListener(controller);
 
 
@@ -293,18 +306,20 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
-        System.out.println(model.getActivePlayer().getName());
+
         getContentPane().remove(playerPanel);
-        System.out.println(e.getRoll()[0] + " " + e.getRoll()[1]);
-        rollEnables = e.getRoll()[0] == e.getRoll()[1];
+
+        enableRoll = e.getRoll()[0] == e.getRoll()[1];
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 
 
         displayGUI();
 
+
         updatePlayerIcon(model.getActivePlayer(), e.getRoll());
-        System.out.println("updating icon");
+
+
 
     }
     @Override
@@ -325,6 +340,19 @@ public class GameFrame extends JFrame implements GameView {
         JOptionPane.showMessageDialog(this,player.getName() + " has paid rent to " + card.getOwner().getName() + " for " + card.getName(), null, JOptionPane.PLAIN_MESSAGE);
     }
 
+    @Override
+    public void enableBuyButton() {
+        enableBuy = true;
+        buyButton.setEnabled(true);
+
+    }
+    @Override
+    public void disableBuyButton() {
+        enableBuy = false;
+        buyButton.setEnabled(false);
+
+    }
+
 
     /**
      * Gives the player information about the property they landed on and the option to buy (if possible)
@@ -333,19 +361,19 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void unownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-        CardController unowned = new CardController(model);
-        Card card = gameEvent.getCard();
-
-        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()){
-            if (card.getCardType() == Card.CardType.ultility){
-                unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-                        "\nRent is dependent on your roll"+ "\nWould you like to purchase?");
-            }else {
-                unowned.buyProperty(this, "You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-                        "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
-            }
-        }
-
+//        CardController unowned = new CardController(model);
+//        Card card = gameEvent.getCard();
+//
+//        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()){
+//            if (card.getCardType() == Card.CardType.ultility){
+//                unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+//                        "\nRent is dependent on your roll"+ "\nWould you like to purchase?");
+//            }else {
+//                unowned.buyProperty(this, "You landed on " + card.getName() + ". Cost is $" + card.getCost() +
+//                        "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
+//            }
+//        }
+//
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 
@@ -445,7 +473,7 @@ public class GameFrame extends JFrame implements GameView {
      * @param gameEvent is a game event that holds useful information
      */    @Override
     public void announceToJail(GameEvent gameEvent) {
-        System.out.println("GAMEFRAME");
+
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         control.announceToJail(this, gameEvent.getModel().getActivePlayer().getName()+" has been Sent To Jail!");
@@ -454,7 +482,7 @@ public class GameFrame extends JFrame implements GameView {
 
     @Override
     public void announceJailTime(GameEvent gameEvent){
-        System.out.println("JailTime");
+
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         if(gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){

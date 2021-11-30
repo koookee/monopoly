@@ -30,4 +30,8 @@ public interface GameView {
     void announceBoughtBotProperty(GameEvent gameEvent);
 
     void announcePaidBotRent(GameEvent gameEvent);
+
+    void enableBuyButton();
+
+    void disableBuyButton();
 }

@@ -135,29 +135,7 @@ public class Card {
      */
     public int getRent() {
         if (cardType == CardType.property) return (int) (cost * 0.1);
-        else if (cardType == CardType.railroad){
-            int rent = 25;
-            if (this.getOwner() != null){
-                for (Card card : this.getOwner().getProperties()) {
-                    if (card.cardType == CardType.railroad){
-                        rent = rent*2;
-                    }
-                }
-                return rent/2;
-            }
-            else return rent;
-        }
-        else{
-            if(this.getOwner() == null){
-                return 0;
-            }
-            else if(this.getOwner().getNumUtils() == 1){
-                return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*4;
-            }else{
-                return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*10;
-            }
-
-        }
+        return 0;
     }
 
     /**

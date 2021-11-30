@@ -1,7 +1,6 @@
 import java.awt.*;
 
-public class Railroad extends Card{
-
+public class Utilities extends Card{
     /**
      * the constructor for the card Class
      * @param name the name of that card
@@ -10,25 +9,22 @@ public class Railroad extends Card{
      * @param color the color of the card
      * @param cardType the card type of the card
      */
-    public Railroad(String name, int cost, int position, Color color, CardType cardType) {
+    public Utilities(String name, int cost, int position, Color color, CardType cardType) {
         super(name, cost, position, color, cardType, 0, 0);
     }
-
     /**
      * returns the rent of the card
      * @return an int amount of the rent
      */
     @Override
     public int getRent() {
-        int rent = 25;
-        if (this.getOwner() != null){
-            for (Card card : this.getOwner().getProperties()) {
-                if (card instanceof Railroad){
-                    rent = rent*2;
-                }
-            }
-            return rent/2;
+        if(this.getOwner() == null){
+            return 0;
         }
-        else return rent;
+        else if(this.getOwner().getNumUtils() == 1){
+            return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*4;
+        }else{
+            return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*10;
+        }
     }
 }

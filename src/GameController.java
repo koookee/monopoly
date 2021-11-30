@@ -27,9 +27,11 @@ public class GameController implements ActionListener {
         if (e.getActionCommand().equals("roll")){
             this.model.roll();
         }
-        else{
-            String[] input = e.getActionCommand().split(" ");
-            this.model.play(Integer.parseInt(input[0]));
+        else if(e.getActionCommand().equals("buy")){
+            this.model.buy();
+        }
+        else if(e.getActionCommand().equals("next turn")){
+            this.model.nextTurn();
         }
 
     }

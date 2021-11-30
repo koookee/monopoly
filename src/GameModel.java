@@ -74,9 +74,9 @@ public class GameModel {
 
         for (int i = 0; i < streetNames.length; i++) {
             if (i%5==0 && i<21 && i>1){
-                gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i,new Railroad(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad));
             }else if(i== 19 || i == 27) {
-                gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i, new Utilities(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility));
             }else if(i == 23){
                 gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
             }
@@ -167,30 +167,57 @@ public class GameModel {
         return numToReturn;
     }
 
-    private void updateViews(){
+    private void updateViews(int numDice1, int numDice2){
         for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{numDice1, numDice2}));
+        }
+    }
+    public void enableBuyButton(){
+        for(GameView view : views){
+            view.enableBuyButton();
+        }
+    }
+    public void disableBuyButton(){
+        for(GameView view : views){
+            view.disableBuyButton();
         }
     }
 
+
     public void roll(){
-        dice1 = (int) (Math.random() * 6 + 1);
-        dice2 = (int) (Math.random() * 6 + 1);
-        roll = dice1 + dice2;
+        rollDice();
 
-        activePlayer.setPrevPosition(activePlayer.getPosition());
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-        currentCard = gameBoard.get(activePlayer.getPosition());
+        if (dice1 == dice2){
+            if (activePlayer.getNumTimeRolledDouble() == 3){
+                //TODO put player in jail
+            }
+            activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);
+        }
+        else activePlayer.setNumTimeRolledDouble(0);
+
+        if (currentCard.isOwned()) {
+            payRent(currentCard.getOwner(),currentCard);
+            disableBuyButton();
+
+        }
+        else enableBuyButton();
+        updateViews(dice1,dice2);
 
 
 
-        updateViews();
+    }
 
+    public void buy(){
+        activePlayer.buyCard(currentCard);
+        views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        disableBuyButton();
+    }
 
-
-
-
-
+    public void nextTurn(){
+        this.updateStatus();
+        this.changeTurn();
+        activePlayer.setNumTimeRolledDouble(0);
+        updateViews(0,0);
 
     }
 
@@ -358,8 +385,29 @@ public class GameModel {
     }
 
     public void botPlay() {
-        dice1 = (int) (Math.random() * 6 + 1);
-        dice2 = (int) (Math.random() * 6 + 1);
+        rollDice();
+
+
+        updateViews(dice1,dice2);
+
+        this.updateStatus();
+        changeTurn();
+
+    }
+
+    private void rollDice() {
+//        dice1 = (int) (Math.random() * 6 + 1);
+//        dice2 = (int) (Math.random() * 6 + 1);
+//        roll = dice1 + dice2;
+
+        // For debugging purposes (can make players move to specific tiles)
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter roll 1");
+        int num = scanner.nextInt();
+        dice1 = num;
+        System.out.println("Enter roll 2");
+        num = scanner.nextInt();
+        dice2 = num;
         roll = dice1 + dice2;
 
         activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -367,74 +415,6 @@ public class GameModel {
         currentCard = gameBoard.get(activePlayer.getPosition());
 
 
-        if(currentCard.getCardType() == Card.CardType.jail){
-            this.activePlayer.setPosition(8);
-            this.activePlayer.setIsInJail(1);
-        }
-
-        if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
-            for(GameView view: views){
-                view.announceJailTime(new GameEvent(this,status,currentCard, new int[]{dice1,dice2}));
-            }
-            int current = this.activePlayer.getIsInJail();
-            this.activePlayer.setIsInJail(current += 1);
-            play(3);
-        }
-        else{
-            if(activePlayer.getIsInJail() >= 3 || (dice1==dice2 && activePlayer.getIsInJail() != 0)){
-                for(GameView view: views){
-                    view.announceJailTime(new GameEvent(this,status,currentCard, new int[]{dice1,dice2}));
-                }
-                activePlayer.setIsInJail(0);
-            }
-            if(this.activePlayer.getPosition() + roll > 30){
-                activePlayer.setIsInJail(activePlayer.getMoney() + 200);
-            }
-
-        }
-
-        if(currentCard.isOwned()){
-            activePlayer.payRent(currentCard.getOwner(),currentCard);
-            for(GameView view: views){
-                view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
-            }
-
-        }
-        else{
-            if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
-                activePlayer.buyCard(currentCard);
-                for(GameView view: views){
-                    view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
-                }
-
-            }
-        }
-
-
-
-
-        this.updateStatus();
-
-        for (GameView view :
-                views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-        }
-        if (dice1 == dice2 && numTimesRolledDouble < 3) {
-            numTimesRolledDouble++;
-            System.out.println("The number of times " +activePlayer.getName()  + " rolled double is " + numTimesRolledDouble);
-            botPlay();
-        }
-
-        else if( numTimesRolledDouble == 3 ){
-            this.updateStatus();
-            this.changeTurn();
-            numTimesRolledDouble = 0;
-            hasNotRolled = true;
-
-        }
-
-        this.updateStatus();
-        changeTurn();
 
     }
 
