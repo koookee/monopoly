@@ -21,6 +21,7 @@ public class GameFrame extends JFrame implements GameView {
     private final JLabel icon2 = new JLabel(new ImageIcon("pin.png"));
     private final JLabel icon3 = new JLabel(new ImageIcon("iron.png"));
     private final JLabel icon4 = new JLabel(new ImageIcon("hat.png"));
+    private JButton rollButton;
 
     private JLabel[] icons;
 
@@ -51,8 +52,9 @@ public class GameFrame extends JFrame implements GameView {
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-
+        enableRoll = true;
+        rollButton = new JButton("Roll");
+        rollButton.setEnabled(true);
 
         model = new GameModel();
         model.addGameModelView(this);
@@ -70,7 +72,7 @@ public class GameFrame extends JFrame implements GameView {
         icon2.setBounds(50,40, 50,50);
         icon3.setBounds(90,40, 50,50);
         icon4.setBounds(130,40, 50,50);
-        enableRoll = true;
+
         enableBuy = false;
     }
 
@@ -198,10 +200,12 @@ public class GameFrame extends JFrame implements GameView {
         bodyPanel.add(playerPosition);
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
         JLabel playerRoll;
+
         if (roll[0] == 0 && roll [1] == 0) {
             playerRoll = new JLabel("Player hasn't rolled yet");
-            enableRoll = true;
+
         }
+
         else if(roll[0] == roll[1]) {
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
 
@@ -226,10 +230,9 @@ public class GameFrame extends JFrame implements GameView {
 
         JButton pass = new JButton("Next Turn");
         footerPanel.add(pass);
-        
 
 
-
+        System.out.println(enableRoll);
         rollButton.setEnabled(enableRoll);
         rollButton.setActionCommand("roll"); //TODO fix the action command so its not a string
         rollButton.addActionListener(controller);
@@ -308,6 +311,20 @@ public class GameFrame extends JFrame implements GameView {
         this.model = (GameModel) e.getSource();
 
         getContentPane().remove(playerPanel);
+
+        /*
+        if(!model.getActivePlayer().getExconvict() &&  model.getActivePlayer().getIsInJail() == 0){
+            System.out.println("PLAYER IS CONVICT: " + !model.getActivePlayer().getExconvict());
+            System.out.println("TIME IN JAIL: " + model.getActivePlayer().getIsInJail());
+            System.out.println("ROLLS: " + e.getRoll()[0] + " " + e.getRoll()[1]);
+            enableRoll = e.getRoll()[0] == e.getRoll()[1];
+            System.out.println("ENABLE ROLL: " + enableRoll);
+        }
+        else{
+            System.out.println("ELSE SET TO FALSE");
+            enableRoll = false;
+        }
+        */
 
         enableRoll = e.getRoll()[0] == e.getRoll()[1];
 
@@ -473,11 +490,10 @@ public class GameFrame extends JFrame implements GameView {
      * @param gameEvent is a game event that holds useful information
      */    @Override
     public void announceToJail(GameEvent gameEvent) {
-
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
-        control.announceToJail(this, gameEvent.getModel().getActivePlayer().getName()+" has been Sent To Jail!");
-
+        control.announceToJail(this, gameEvent.getModel().getActivePlayer().getName()
+                +" has been Sent To Jail!");
     }
 
     @Override
@@ -486,14 +502,13 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController control = new CardController(model);
         if(gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
-            control.announceDouble(this, "You are out of Jail!\nYou Rolled: " + (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+            control.announceDouble(this, "You are out of Jail!\nYou Rolled: " + gameEvent.getRoll()[0] +" " + gameEvent.getRoll()[1]);
         } else if(model.getActivePlayer().getIsInJail() >= 3){
             control.announceJailTime(this, "You have served your sentence and have been fined $50\nYou Rolled: "+ (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
         }
         else {
-            control.announceJailTime(this, "You did not roll a double! \n Time in Jail: "
-                    + model.getActivePlayer().getIsInJail()
-                    + "\nPassing Turn...");
+            control.announceJailTime(this, "You did not roll a double! \nTime in Jail: "
+                    + model.getActivePlayer().getIsInJail());
         }
     }
 

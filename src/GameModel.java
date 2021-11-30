@@ -5,6 +5,7 @@
  */
 
 import java.awt.*;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class GameModel {
@@ -78,7 +79,7 @@ public class GameModel {
             }else if(i== 19 || i == 27) {
                 gameBoard.put(i, new Utilities(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility));
             }else if(i == 23){
-                gameBoard.put(i, new Card(streetNames[i], costs[i],position, colors[i], Card.CardType.jail, houseCosts[i], hotelCosts[i]));
+                gameBoard.put(i, new Jail(streetNames[i], costs[i],position, colors[i], Card.CardType.jail));
             }
             else{
                 gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.property, houseCosts[i], hotelCosts[i]));
@@ -113,6 +114,13 @@ public class GameModel {
         if(activePlayer instanceof AutoPlayer){
             botPlay();
         }
+        activePlayer.setExconvict(false);
+        if (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && activePlayer.getMoney() >= 50) {
+            for (GameView view : views) {
+                view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
+            }
+        }
+
     }
 
     /**
@@ -187,23 +195,53 @@ public class GameModel {
     public void roll(){
         rollDice();
 
+        if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
+            announceJailTime();
+            int current = this.activePlayer.getIsInJail();
+            current += 1;
+            this.activePlayer.setIsInJail(current);
+            System.out.println(activePlayer.getIsInJail());
+        }
+        else{
+            activePlayer.setPrevPosition(activePlayer.getPosition());
+            activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+            currentCard = gameBoard.get(activePlayer.getPosition());
+        }
+
         if (dice1 == dice2){
-            if (activePlayer.getNumTimeRolledDouble() == 3){
-                //TODO put player in jail
+            if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
+                announceJailTime();
             }
-            activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);
+            else {
+                if (activePlayer.getNumTimeRolledDouble() == 3){
+                    activePlayer.goToJail();
+                    announceJail();
+                    activePlayer.setNumTimeRolledDouble(-1);
+                }
+                activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);
+            }
         }
         else activePlayer.setNumTimeRolledDouble(0);
 
-        if (currentCard.isOwned()) {
+        if(currentCard instanceof Jail){
+            ((Jail) currentCard).putInJail(activePlayer);
+            announceJail();
+        }
+        else if (currentCard.isOwned()) {
             payRent(currentCard.getOwner(),currentCard);
             disableBuyButton();
-
+        }
+        else if (currentCard.getCost()==0){
+            disableBuyButton();
         }
         else enableBuyButton();
+
+        if(activePlayer.getIsInJail() > 1){
+            dice1 = 0;
+            dice2 = 0;
+        }
+
         updateViews(dice1,dice2);
-
-
 
     }
 
@@ -219,6 +257,17 @@ public class GameModel {
         activePlayer.setNumTimeRolledDouble(0);
         updateViews(0,0);
 
+    }
+    public void announceJailTime(){
+        for(GameView view : views){
+            view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        }
+    }
+
+    public void announceJail(){
+        for(GameView view : views){
+            view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        }
     }
 
 
@@ -377,7 +426,7 @@ public class GameModel {
             else if (result == 2) { // Has to pay rent
                 view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             } else if (result == 3){
-                putInJail();
+                activePlayer.goToJail();
                 view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
@@ -409,13 +458,6 @@ public class GameModel {
         num = scanner.nextInt();
         dice2 = num;
         roll = dice1 + dice2;
-
-        activePlayer.setPrevPosition(activePlayer.getPosition());
-        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-        currentCard = gameBoard.get(activePlayer.getPosition());
-
-
-
     }
 
 
@@ -424,11 +466,6 @@ public class GameModel {
      */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
-    }
-
-    public void putInJail(){
-        activePlayer.setPosition(8);
-        activePlayer.setIsInJail(1);
     }
 
     /**

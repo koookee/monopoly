@@ -190,6 +190,12 @@ public class Player {
         this.isInJail = jailTime;
     }
 
+    public void goToJail(){
+        this.setPosition(8);
+        this.setIsInJail(1);
+        this.setIsInJail(1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

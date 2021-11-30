@@ -21,6 +21,8 @@ public class Card {
 
     private CardType cardType;
 
+
+
     public static enum CardType {
         go,
         jail,
@@ -234,4 +236,5 @@ public class Card {
         // no owner
         // is owned
     }
+
 }

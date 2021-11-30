@@ -77,7 +77,6 @@ private GameModel model;
         if(confirm == JOptionPane.YES_OPTION){
             model.getActivePlayer().setIsInJail(0);
             model.getActivePlayer().setMoney(model.getActivePlayer().getMoney() - 50);
-            model.getActivePlayer().setExconvict(true);
         }
     }
 
@@ -92,6 +91,7 @@ private GameModel model;
     }
 
     public void announceDouble(GameFrame frame, String message){
+        model.getActivePlayer().setIsInJail(0);
         model.getActivePlayer().setExconvict(true);
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
 
