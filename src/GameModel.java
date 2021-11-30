@@ -167,6 +167,33 @@ public class GameModel {
         return numToReturn;
     }
 
+    private void updateViews(){
+        for (GameView view : views) {
+            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        }
+    }
+
+    public void roll(){
+        dice1 = (int) (Math.random() * 6 + 1);
+        dice2 = (int) (Math.random() * 6 + 1);
+        roll = dice1 + dice2;
+
+        activePlayer.setPrevPosition(activePlayer.getPosition());
+        activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+        currentCard = gameBoard.get(activePlayer.getPosition());
+
+
+
+        updateViews();
+
+
+
+
+
+
+
+    }
+
 
     /**
      * This method is called to play the game depending on the choice command

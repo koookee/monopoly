@@ -24,6 +24,8 @@ public class GameFrame extends JFrame implements GameView {
 
     private JLabel[] icons;
 
+    private boolean rollEnables;
+
     private int playerNum;
     private final int botSquares = 9, leftSquares = 15, topSquares =24, rightSquares = 31;
     private final int botSquareNum = 9, leftSquareNum =6 , topSquareNum =9,rightSquareNum = 7;
@@ -63,6 +65,7 @@ public class GameFrame extends JFrame implements GameView {
         icon2.setBounds(50,40, 50,50);
         icon3.setBounds(90,40, 50,50);
         icon4.setBounds(130,40, 50,50);
+        rollEnables = true;
     }
 
 
@@ -167,7 +170,7 @@ public class GameFrame extends JFrame implements GameView {
      * @return the JPanel that has the player information
      */
     private JPanel paintPlayerInfo(Player activePlayer, int[] roll){
-        boolean rollEnabled = true;
+
         boolean buyEnabled = false;
         JPanel mainPanel = new JPanel(new BorderLayout());
         JLabel playerName = new JLabel("Player: " + activePlayer.getName());
@@ -189,15 +192,17 @@ public class GameFrame extends JFrame implements GameView {
         bodyPanel.add(playerPosition);
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
         JLabel playerRoll;
-        if (roll[0] == 0 && roll [1] == 0) playerRoll = new JLabel("Player hasn't rolled yet");
+        if (roll[0] == 0 && roll [1] == 0) {
+            playerRoll = new JLabel("Player hasn't rolled yet");
+            rollEnables = true;
+        }
         else if(roll[0] == roll[1]) {
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
-            buyEnabled = true;
+
         }
         else{
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
-            rollEnabled = false;
-            buyEnabled = true;
+
         }
 
         bodyPanel.add(playerRoll);
@@ -216,11 +221,11 @@ public class GameFrame extends JFrame implements GameView {
 
 
 
-        rollButton.setEnabled(rollEnabled);
-        rollButton.setActionCommand(1 + " ");
+        rollButton.setEnabled(rollEnables);
+        rollButton.setActionCommand("roll"); //TODO fix the action command so its not a string
         rollButton.addActionListener(controller);
 
-        pass.setEnabled(!rollEnabled);
+        pass.setEnabled(!rollEnables);
         pass.setActionCommand(2 + " ");
         pass.addActionListener(controller);
 
@@ -290,6 +295,8 @@ public class GameFrame extends JFrame implements GameView {
         this.model = (GameModel) e.getSource();
         System.out.println(model.getActivePlayer().getName());
         getContentPane().remove(playerPanel);
+        System.out.println(e.getRoll()[0] + " " + e.getRoll()[1]);
+        rollEnables = e.getRoll()[0] == e.getRoll()[1];
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 

@@ -18,6 +18,7 @@ public class Player {
     private int isInJail;
     private boolean exconvict;
     private boolean isBot;
+    private int numTimeRolledDouble;
 
     /**
      * The constructor for the Player class
@@ -34,7 +35,17 @@ public class Player {
         this.numUtils = 0;
         this.isInJail = 0;
         this.exconvict = false;
+        this.numTimeRolledDouble =0;
     }
+
+    public int getNumTimeRolledDouble() {
+        return numTimeRolledDouble;
+    }
+
+    public void setNumTimeRolledDouble(int numTimeRolledDouble) {
+        this.numTimeRolledDouble = numTimeRolledDouble;
+    }
+
     public boolean getExconvict(){
         return exconvict;
     }

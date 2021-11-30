@@ -24,8 +24,14 @@ public class GameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // System.out.println("Working");
-        String[] input = e.getActionCommand().split(" ");
-        this.model.play(Integer.parseInt(input[0]));
+        if (e.getActionCommand().equals("roll")){
+            this.model.roll();
+        }
+        else{
+            String[] input = e.getActionCommand().split(" ");
+            this.model.play(Integer.parseInt(input[0]));
+        }
+
     }
 
     /**
