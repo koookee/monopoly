@@ -15,30 +15,30 @@ The player has two initial buttons. One button to roll and one button to move on
 ## Deliverables
 
 ##### Monopoly Source Files and Jar File
- - This includes the executable file to actually run the game as well as the code that was written for this milestone.
+- This includes the executable file to actually run the game as well as the code that was written for this milestone.
 ##### UML Class Diagrams
- - These diagrams depict how each of the classes interact with each other as well as their attributes.
+- These diagrams depict how each of the classes interact with each other as well as their attributes.
 ##### Sequence Diagrams
- - These diagrams depict the logic behind certain events that occur during the program. The sequence diagrams in this program demonstrate what happens when a player rolls the dice, buys a property, pays rent, wins the game, or goes bankrupt.
+- These diagrams depict the logic behind certain events that occur during the program. The sequence diagrams in this program demonstrate what happens when a player rolls the dice, buys a property, pays rent, wins the game, or goes bankrupt.
 
 ## Design Decisions
 
 #### Class Design Decisions
 
-- To follow the MVC design pattern, we kept the GameModel class from the first milestone. This class deals with the majority of the logic and providese the backbone of the project. Every other class is connected to the GameModel class. 
+- We have chosen to make an enum for our cards to determine what type of property they are which helps us reduce the number of classes we need.
+- To follow the MVC design pattern, we kept the GameModel class from the first milestone. This class deals with the majority of the logic and providese the backbone of the project. Every other class is connected to the GameModel class.
 - The GameFrame class is the view aspect of the MVC design. It creates and displays the gameboard in a JFrame as well as the player pieces, the player stats, and the buttons that the user controls the game with. The GameFrame gets updated frequently depending on the input that it gets from other classes, primarily GameModel.
-- There are multiple controller classes for different aspects of the game. The WelcomeController class deals with the initial pop-up window that appears before the game board does and that allows the user to select the number of players. The CardController class deals with any type of control relating to the gameboard tiles. This class handles the pop-ups for when a player is buying a property, paying rent, or passing their turn. The GameController class handles the buttons that are directly in the game board such as roll. It also handles the display when there are changes in game or player state such as when a player goes bankrupt or when there is a winner. 
+- There are multiple controller classes for different aspects of the game. The WelcomeController class deals with the initial pop-up window that appears before the game board does and that allows the user to select the number of players. The CardController class deals with any type of control relating to the gameboard tiles. This class handles the pop-ups for when a player is buying a property, paying rent, or passing their turn. The GameController class handles the buttons that are directly in the game board such as roll. It also handles the display when there are changes in game or player state such as when a player goes bankrupt or when there is a winner.
 - The Player and Card classes simply hold attributes regarding the player and the board tiles since those are the mian aspects of the game.
 - The GameEvent class simply helps to keep things encapsulated and makes it easier to access certain attributes.
 
 ## Known Issues
 
-Occasionally, the icons will disappear for certain, but not all, people running the program. This may be due to screen size but we were unable to confirm if this was the actual cause. Additionally, if a user lands on a property and must pay rent but does not have sufficient funds, they simply go into debt. This does not really affect the gameplay as they will still go bankrupt. Also, their piece will not disappear from the board even though the player is no longer in the game. Finally, icons are currently implemented as class attributes however this is likely to change in future milestones as this is probably not the best design.
+There is an issue with the ai that they can roll as many doubles as they want to we are trying to get that fixed in the nexted iterations. After the player gets out of jail their turn will automatically go to the next player after they get prompted to buy the property. The update player icon method can be fixed to not have stings but enums to determine what player they are.
 
 ## Roadmap Ahead
 
-In Milestone 3, additional Monopoly features will be implemented. These include jail, utility tiles, railroad tiles, property add-ons such as houses and hotels, and in game programmed players. Eventually mutiple versions of Monopoly will be created and the player will have the option to save their games and come back to them later. As well, as the project continues, the code and design will continue to be refined and improved.
-
+In Milestone 4 we will have to implement a save and load feature to the monopoly game. As well as add custom street names and currencies to our game.
 
 
 

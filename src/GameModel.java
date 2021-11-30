@@ -192,14 +192,14 @@ public class GameModel {
             }
             if (state == 1 && hasNotRolled) {
 
-                /*
+
                 dice1 = (int) (Math.random() * 6 + 1);
                 dice2 = (int) (Math.random() * 6 + 1);
                 roll = dice1 + dice2;
-*/
 
 
 
+                /**
                 // For debugging purposes (can make players move to specific tiles)
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Enter roll 1");
@@ -209,6 +209,8 @@ public class GameModel {
                 num = scanner.nextInt();
                 dice2 = num;
                 roll = dice1 + dice2;
+
+                 **/
 
 
                 if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){       // JAIL TIME
