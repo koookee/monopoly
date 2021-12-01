@@ -207,6 +207,7 @@ public class GameModel {
         rollDice();
 
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
+            currentCard = gameBoard.get(8);
             setEnableRoll(false);
             announceJailTime();
             int current = this.activePlayer.getIsInJail();
@@ -223,10 +224,6 @@ public class GameModel {
         if (dice1 == dice2){
             if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
                 announceJailTime();
-                activePlayer.setIsInJail(0);
-                activePlayer.setPrevPosition(activePlayer.getPosition());
-                activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
-                currentCard = gameBoard.get(activePlayer.getPosition());
                 setEnableRoll(false);
             }
             else {
