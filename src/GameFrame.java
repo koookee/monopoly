@@ -220,7 +220,7 @@ public class GameFrame extends JFrame implements GameView {
         mainPanel.add(bodyPanel,BorderLayout.CENTER);
         GameController controller = new GameController(model);
 
-        JPanel footerPanel = new JPanel(new GridLayout(3, 3));
+        JPanel footerPanel = new JPanel(new GridLayout(5, 3));
 
 
         rollButton = new JButton("Roll");
@@ -231,6 +231,12 @@ public class GameFrame extends JFrame implements GameView {
 
         pass = new JButton("Next Turn");
         footerPanel.add(pass);
+
+        JButton save = new JButton("save");
+        footerPanel.add(save);
+
+        save.setActionCommand("save");
+        save.addActionListener(controller);
 
 
         rollButton.setEnabled(enableRoll);
@@ -244,6 +250,7 @@ public class GameFrame extends JFrame implements GameView {
         pass.setEnabled(!enableRoll);
         pass.setActionCommand("next turn");
         pass.addActionListener(controller);
+
 
 
 

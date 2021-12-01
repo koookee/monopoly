@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="11.0.13" class="java.beans.XMLDecoder">
- <object class="Player">
+ <object class="AutoPlayer">
+  <void property="bot">
+   <boolean>true</boolean>
+  </void>
   <void property="money">
    <int>1500</int>
   </void>
   <void property="name">
-   <string>Joe</string>
+   <string>Bot1</string>
   </void>
   <void property="playing">
    <boolean>true</boolean>

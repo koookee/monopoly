@@ -678,6 +678,13 @@ public class GameModel {
         WINNER,
         UNDECIDED,
     }
+    
+    public void save(){
+        for (Player p :
+                players) {
+            p.serializeToXML("xml folder\\"+p.getName() +".xml");
+        }
+    }
 
     /*
     public static void main(String[] args) {
