@@ -34,4 +34,6 @@ public interface GameView {
     void enableBuyButton();
 
     void disableBuyButton();
+
+    void setRollEnable(boolean b);
 }

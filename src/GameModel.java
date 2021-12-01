@@ -190,13 +190,21 @@ public class GameModel {
             view.disableBuyButton();
         }
     }
+    public void setEnableRoll(boolean b){
+        for(GameView view : views){
+            view.setRollEnable(b);
+        }
+    }
 
 
     public void roll(){
         rollDice();
 
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
+
+            setEnableRoll(false);
             announceJailTime();
+
             int current = this.activePlayer.getIsInJail();
             current += 1;
             this.activePlayer.setIsInJail(current);
@@ -210,9 +218,11 @@ public class GameModel {
 
         if (dice1 == dice2){
             if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
+
                 announceJailTime();
             }
             else {
+                setEnableRoll(true);
                 if (activePlayer.getNumTimeRolledDouble() == 3){
                     activePlayer.goToJail();
                     announceJail();
@@ -221,10 +231,14 @@ public class GameModel {
                 activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);
             }
         }
-        else activePlayer.setNumTimeRolledDouble(0);
+        else{
+            setEnableRoll(false);
+            activePlayer.setNumTimeRolledDouble(0);
+        }
 
         if(currentCard instanceof Jail){
             ((Jail) currentCard).putInJail(activePlayer);
+            if (dice1 == dice2) setEnableRoll(false);
             announceJail();
         }
         else if (currentCard.isOwned()) {
@@ -255,6 +269,7 @@ public class GameModel {
         this.updateStatus();
         this.changeTurn();
         activePlayer.setNumTimeRolledDouble(0);
+        setEnableRoll(true);
         updateViews(0,0);
 
     }
@@ -319,6 +334,7 @@ public class GameModel {
                 if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){       // JAIL TIME
                     for(GameView view : views){
                         view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+
                     }
                     int current = this.activePlayer.getIsInJail();
                     this.activePlayer.setIsInJail(current += 1 );

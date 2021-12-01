@@ -37,6 +37,7 @@ public class GameFrame extends JFrame implements GameView {
     private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
 
     private JButton buyButton;
+    private JButton pass;
 
 
     /**
@@ -53,8 +54,8 @@ public class GameFrame extends JFrame implements GameView {
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
-        rollButton = new JButton("Roll");
-        rollButton.setEnabled(true);
+
+
 
         model = new GameModel();
         model.addGameModelView(this);
@@ -222,17 +223,16 @@ public class GameFrame extends JFrame implements GameView {
         JPanel footerPanel = new JPanel(new GridLayout(3, 3));
 
 
-        JButton rollButton = new JButton("Roll");
+        rollButton = new JButton("Roll");
         footerPanel.add(rollButton);
 
         buyButton = new JButton("Buy");
         footerPanel.add(buyButton);
 
-        JButton pass = new JButton("Next Turn");
+        pass = new JButton("Next Turn");
         footerPanel.add(pass);
 
 
-        System.out.println(enableRoll);
         rollButton.setEnabled(enableRoll);
         rollButton.setActionCommand("roll"); //TODO fix the action command so its not a string
         rollButton.addActionListener(controller);
@@ -312,21 +312,21 @@ public class GameFrame extends JFrame implements GameView {
 
         getContentPane().remove(playerPanel);
 
-        /*
+
         if(!model.getActivePlayer().getExconvict() &&  model.getActivePlayer().getIsInJail() == 0){
             System.out.println("PLAYER IS CONVICT: " + !model.getActivePlayer().getExconvict());
             System.out.println("TIME IN JAIL: " + model.getActivePlayer().getIsInJail());
             System.out.println("ROLLS: " + e.getRoll()[0] + " " + e.getRoll()[1]);
-            enableRoll = e.getRoll()[0] == e.getRoll()[1];
+
             System.out.println("ENABLE ROLL: " + enableRoll);
         }
         else{
             System.out.println("ELSE SET TO FALSE");
-            enableRoll = false;
-        }
-        */
 
-        enableRoll = e.getRoll()[0] == e.getRoll()[1];
+        }
+
+
+
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 
@@ -367,6 +367,15 @@ public class GameFrame extends JFrame implements GameView {
     public void disableBuyButton() {
         enableBuy = false;
         buyButton.setEnabled(false);
+
+    }
+
+    @Override
+    public void setRollEnable(boolean b) {
+
+        enableRoll = b;
+        rollButton.setEnabled(b);
+        pass.setEnabled(!b);
 
     }
 
