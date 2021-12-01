@@ -111,11 +111,11 @@ public class GameModel {
         currTurn = (currTurn + 1) % players.size();
         while (!players.get(currTurn).isPlaying()) currTurn = (currTurn + 1) % players.size(); // Skips the players that are bankrupt
         activePlayer = players.get(currTurn);
-        if(activePlayer instanceof AutoPlayer){
-            botPlay();
-        }
         activePlayer.setExconvict(false);
-        if (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && activePlayer.getMoney() >= 50) {
+        if(activePlayer instanceof AutoPlayer) {
+            botPlay();
+
+        }else if (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && activePlayer.getMoney() >= 50) {
             for (GameView view : views) {
                 view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
             }
@@ -202,10 +202,12 @@ public class GameModel {
         }
     }
 
-
-    public void roll(){
-        rollDice();
-
+    private void checkJailRoll(){
+        if (activePlayer.getIsBot() && (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3)){
+            activePlayer.setIsInJail(0);
+            activePlayer.setMoney(activePlayer.getMoney() - 50);
+            System.out.println(activePlayer.getMoney());
+        }
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
             currentCard = gameBoard.get(8);
             setEnableRoll(false);
@@ -242,6 +244,13 @@ public class GameModel {
             setEnableRoll(false);
             activePlayer.setNumTimeRolledDouble(0);
         }
+    }
+
+    public void roll(){
+        rollDice();
+
+        checkJailRoll();
+
 
         if(currentCard instanceof Jail){
             ((Jail) currentCard).putInJail(activePlayer);
@@ -277,7 +286,9 @@ public class GameModel {
         this.changeTurn();
         activePlayer.setNumTimeRolledDouble(0);
         setEnableRoll(true);
+        disableBuyButton();
         updateViews(0,0);
+
 
     }
     public void announceJailTime(){
@@ -457,13 +468,21 @@ public class GameModel {
     }
 
     public void botPlay() {
-        rollDice();
+//        rollDice();
+//        checkJailRoll();
+//
+//
+//        updateViews(dice1,dice2);
+        roll();
+        if(currentCard.isOwned()){
+            payRent(currentCard.getOwner(),currentCard);
+        }else if(currentCard.getCost() != 0){
+            buyProperty();
+        }
 
 
-        updateViews(dice1,dice2);
+        nextTurn();
 
-        this.updateStatus();
-        changeTurn();
 
     }
 

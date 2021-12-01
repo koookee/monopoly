@@ -533,7 +533,8 @@ public class GameFrame extends JFrame implements GameView {
 
 
             }else if(activePlayer.getName().equals("P2") ||activePlayer.getName().equals("Bot1")){
-
+                System.out.println(prev);
+                System.out.println(position);
                 squares.get(prev).remove(icons[1]);
                 squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
