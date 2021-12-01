@@ -4,6 +4,13 @@
  */
 
 
+import java.beans.ExceptionListener;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -19,6 +26,8 @@ public class Player {
     private boolean exconvict;
     private boolean isBot;
     private int numTimeRolledDouble;
+
+    public Player(){}
 
     /**
      * The constructor for the Player class
@@ -36,6 +45,30 @@ public class Player {
         this.isInJail = 0;
         this.exconvict = false;
         this.numTimeRolledDouble =0;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setProperties(ArrayList<Card> properties) {
+        this.properties = properties;
+    }
+
+    public void setNumUtils(int numUtils) {
+        this.numUtils = numUtils;
+    }
+
+    public boolean isExconvict() {
+        return exconvict;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 
     public int getNumTimeRolledDouble() {
@@ -207,5 +240,62 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, position);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "prevPosition=" + prevPosition +
+                ", name='" + name + '\'' +
+                ", money=" + money +
+                ", position=" + position +
+                ", playing=" + playing +
+                ", properties=" + properties +
+                ", numUtils=" + numUtils +
+                ", isInJail=" + isInJail +
+                ", exconvict=" + exconvict +
+                ", isBot=" + isBot +
+                ", numTimeRolledDouble=" + numTimeRolledDouble +
+                '}';
+    }
+
+    public void serializeToXML (String filename)
+    {
+        try{
+            FileOutputStream fos = new FileOutputStream(filename);
+            XMLEncoder encoder = new XMLEncoder(fos);
+
+            encoder.writeObject(this);
+            encoder.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static Player deserializeFromXML(String filename) {
+        Player playerToReturn = null;
+        try{
+            FileInputStream fis = new FileInputStream(filename);
+            XMLDecoder decoder = new XMLDecoder(fis);
+            Player decoded = (Player) decoder.readObject();
+            decoder.close();
+            fis.close();
+            playerToReturn =  decoded;
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return playerToReturn;
+    }
+
+    public static void main(String[] args) {
+        Player player = new Player("Joe", false);
+        player.serializeToXML("player.xml");
+
+        Player player1 = Player.deserializeFromXML("player.xml");
+        System.out.println(player1);
     }
 }

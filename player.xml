@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.13" class="java.beans.XMLDecoder">
+ <object class="Player">
+  <void property="money">
+   <int>1500</int>
+  </void>
+  <void property="name">
+   <string>Joe</string>
+  </void>
+  <void property="playing">
+   <boolean>true</boolean>
+  </void>
+  <void property="properties">
+   <object class="java.util.ArrayList"/>
+  </void>
+ </object>
+</java>
