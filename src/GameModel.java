@@ -120,6 +120,11 @@ public class GameModel {
                 view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
             }
         }
+        if(activePlayer.getIsInJail() == 3 ){
+            announceJailTime();
+            activePlayer.setIsInJail(0);
+            activePlayer.setMoney(activePlayer.getMoney() - 50);
+        }
 
     }
 
@@ -225,7 +230,7 @@ public class GameModel {
                 setEnableRoll(true);
                 if (activePlayer.getNumTimeRolledDouble() == 3){
                     activePlayer.goToJail();
-                    announceJail();
+                    setCurrentCard(23);
                     activePlayer.setNumTimeRolledDouble(-1);
                 }
                 activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);

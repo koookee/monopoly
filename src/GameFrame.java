@@ -313,17 +313,6 @@ public class GameFrame extends JFrame implements GameView {
         getContentPane().remove(playerPanel);
 
 
-        if(!model.getActivePlayer().getExconvict() &&  model.getActivePlayer().getIsInJail() == 0){
-            System.out.println("PLAYER IS CONVICT: " + !model.getActivePlayer().getExconvict());
-            System.out.println("TIME IN JAIL: " + model.getActivePlayer().getIsInJail());
-            System.out.println("ROLLS: " + e.getRoll()[0] + " " + e.getRoll()[1]);
-
-            System.out.println("ENABLE ROLL: " + enableRoll);
-        }
-        else{
-            System.out.println("ELSE SET TO FALSE");
-
-        }
 
 
 
@@ -513,7 +502,7 @@ public class GameFrame extends JFrame implements GameView {
         if(gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
             control.announceDouble(this, "You are out of Jail!\nYou Rolled: " + gameEvent.getRoll()[0] +" " + gameEvent.getRoll()[1]);
         } else if(model.getActivePlayer().getIsInJail() >= 3){
-            control.announceJailTime(this, "You have served your sentence and have been fined $50\nYou Rolled: "+ (gameEvent.getRoll()[0] + gameEvent.getRoll()[1]));
+            control.announceJailTime(this, "You have served your sentence and have been fined $50");
         }
         else {
             control.announceJailTime(this, "You did not roll a double! \nTime in Jail: "
