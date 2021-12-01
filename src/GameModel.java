@@ -467,39 +467,56 @@ public class GameModel {
         }
     }
 
-    public void botPlay() {
-//        rollDice();
-//        checkJailRoll();
-//
-//
-//        updateViews(dice1,dice2);
-        roll();
+    private void botLandOnProperty() {
         if(currentCard.isOwned()){
-            payRent(currentCard.getOwner(),currentCard);
-        }else if(currentCard.getCost() != 0){
-            buyProperty();
+            activePlayer.payRent(currentCard.getOwner(),currentCard);
+            for(GameView view: views){
+                view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+            }
+
         }
+        else{
+            if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
+                activePlayer.buyCard(currentCard);
+                for(GameView view: views){
+                    view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+                }
+
+            }
+        }
+    }
+
+    public void botPlay() {
 
 
-        nextTurn();
+
+
+        roll();
+
+        botLandOnProperty();
+        if (dice1 == dice2){
+            botPlay();
+            
+        }
+        else nextTurn();
 
 
     }
 
     private void rollDice() {
-//        dice1 = (int) (Math.random() * 6 + 1);
-//        dice2 = (int) (Math.random() * 6 + 1);
-//        roll = dice1 + dice2;
-
-        // For debugging purposes (can make players move to specific tiles)
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter roll 1");
-        int num = scanner.nextInt();
-        dice1 = num;
-        System.out.println("Enter roll 2");
-        num = scanner.nextInt();
-        dice2 = num;
+        dice1 = (int) (Math.random() * 6 + 1);
+        dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
+
+//        // For debugging purposes (can make players move to specific tiles)
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter roll 1");
+//        int num = scanner.nextInt();
+//        dice1 = num;
+//        System.out.println("Enter roll 2");
+//        num = scanner.nextInt();
+//        dice2 = num;
+//        roll = dice1 + dice2;
     }
 
 
