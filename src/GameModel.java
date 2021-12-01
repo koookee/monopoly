@@ -119,6 +119,7 @@ public class GameModel {
             for (GameView view : views) {
                 view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
             }
+
         }
         if(activePlayer.getIsInJail() == 3 ){
             announceJailTime();
@@ -206,10 +207,8 @@ public class GameModel {
         rollDice();
 
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
-
             setEnableRoll(false);
             announceJailTime();
-
             int current = this.activePlayer.getIsInJail();
             current += 1;
             this.activePlayer.setIsInJail(current);
@@ -223,15 +222,21 @@ public class GameModel {
 
         if (dice1 == dice2){
             if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
-
                 announceJailTime();
+                activePlayer.setIsInJail(0);
+                activePlayer.setPrevPosition(activePlayer.getPosition());
+                activePlayer.setPosition((activePlayer.getPosition() + roll) % gameBoard.size());
+                currentCard = gameBoard.get(activePlayer.getPosition());
+                setEnableRoll(false);
             }
             else {
                 setEnableRoll(true);
                 if (activePlayer.getNumTimeRolledDouble() == 3){
+                    announceJail();
+                    setCurrentCard(21);
                     activePlayer.goToJail();
-                    setCurrentCard(23);
                     activePlayer.setNumTimeRolledDouble(-1);
+                    setEnableRoll(false);
                 }
                 activePlayer.setNumTimeRolledDouble(activePlayer.getNumTimeRolledDouble() + 1);
             }

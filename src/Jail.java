@@ -15,6 +15,7 @@ public class Jail extends Card{
     }
 
     public void putInJail(Player activePlayer){
+        activePlayer.setPrevPosition(8);
         activePlayer.setPosition(8);
         activePlayer.setIsInJail(1);
 

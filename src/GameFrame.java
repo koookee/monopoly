@@ -312,13 +312,7 @@ public class GameFrame extends JFrame implements GameView {
 
         getContentPane().remove(playerPanel);
 
-
-
-
-
-
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
-
 
         displayGUI();
 
