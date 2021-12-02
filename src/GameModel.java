@@ -192,7 +192,7 @@ public class GameModel {
     }
     public void enableBuyButton(){
         for(GameView view : views){
-            view.enableBuyButton();
+            view.enableBuyButton(getActivePlayer());
         }
     }
     public void disableBuyButton(){

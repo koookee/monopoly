@@ -217,11 +217,9 @@ public class GameFrame extends JFrame implements GameView {
 
         else if(roll[0] == roll[1]) {
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
-
         }
         else{
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
-
         }
 
         bodyPanel.add(playerRoll);
@@ -310,6 +308,7 @@ public class GameFrame extends JFrame implements GameView {
             if (board.get(key).getOwner() != null && board.get(key).getOwner().getName().equals(p.getName())) { //TODO: Would ideally use == but that compares position and name. Could we change it to only check for name?
                 squareCenterArr.get(board.get(key).getPosition()).setVisible(true);
             }
+            else squareCenterArr.get(board.get(key).getPosition()).setVisible(false);
         }
     }
 
@@ -387,10 +386,10 @@ public class GameFrame extends JFrame implements GameView {
     }
 
     @Override
-    public void enableBuyButton() {
+    public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-
+        displayBuyButtonOnCard(p);
     }
     @Override
     public void disableBuyButton() {
