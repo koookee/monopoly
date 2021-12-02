@@ -341,7 +341,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
-        
+
         getContentPane().remove(playerPanel);
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
@@ -387,7 +387,7 @@ public class GameFrame extends JFrame implements GameView {
     public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-        displayBuyButtonOnCard(p);
+       //isplayBuyButtonOnCard(p);
     }
     @Override
     public void disableBuyButton() {

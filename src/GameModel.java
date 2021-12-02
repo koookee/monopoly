@@ -280,9 +280,11 @@ public class GameModel {
     }
 
     public void buy(){
-        activePlayer.buyCard(currentCard);
-        views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-        disableBuyButton();
+        if (activePlayer.getMoney() > currentCard.getCost()) {
+            activePlayer.buyCard(currentCard);
+            views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            disableBuyButton();
+        }
     }
 
     public void nextTurn(){
