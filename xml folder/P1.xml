@@ -5,46 +5,46 @@
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1400</int>
+   <int>1300</int>
   </void>
   <void property="name">
    <string>P1</string>
+  </void>
+  <void property="numTimeRolledDouble">
+   <int>1</int>
   </void>
   <void property="playing">
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>3</int>
+   <int>13</int>
+  </void>
+  <void property="prevPosition">
+   <int>5</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
     <void method="add">
-     <object class="Card">
+     <object class="Railroad">
       <void property="cardType">
        <object class="java.lang.Enum" method="valueOf">
         <class>Card$CardType</class>
-        <string>property</string>
+        <string>railroad</string>
        </object>
       </void>
       <void property="color">
        <object class="java.awt.Color">
         <int>0</int>
-        <int>255</int>
-        <int>255</int>
+        <int>0</int>
+        <int>0</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>100</int>
-      </void>
-      <void property="hotelCost">
-       <int>50</int>
-      </void>
-      <void property="houseCost">
-       <int>50</int>
+       <int>200</int>
       </void>
       <void property="name">
-       <string>wellington Street</string>
+       <string>Bytown&amp;Prescott Railway</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -53,7 +53,7 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>3</int>
+       <int>5</int>
       </void>
      </object>
     </void>
@@ -62,10 +62,10 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>1</int>
+     <int>4</int>
     </void>
     <void index="1">
-     <int>2</int>
+     <int>4</int>
     </void>
    </array>
   </void>

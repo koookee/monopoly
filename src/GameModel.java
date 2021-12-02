@@ -692,13 +692,21 @@ public class GameModel {
 
     public void importXML(){
         ArrayList<Player> importedPLayers = new ArrayList<>();
+        createGameBoard();
+        setEnableRoll(true);
+        boolean dontImport =false;
+        int k = 0;
         for (Player p :
                 players) {
 
             p = Player.deserializeFromXML("xml folder\\"+p.getName() + ".xml");
-            System.out.println(p);
+            dontImport = players.get(k).getPosition() == p.getPosition();
             importedPLayers.add(p);
-
+            for (Card c :
+                    p.getProperties()) {
+                gameBoard.put(c.getPosition(), c);
+            }
+        k++;
         }
         players = importedPLayers;
 
@@ -707,6 +715,7 @@ public class GameModel {
             if (players.get(i).isActivePlayer()){
                 activePlayer = players.get(i);
             }
+            if (!dontImport)
             views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
         }
 
