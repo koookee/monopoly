@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * @author Andre, Jack, Cassidy, Hussein
  */
@@ -36,4 +38,6 @@ public interface GameView {
     void disableBuyButton();
 
     void setRollEnable(boolean b);
+
+    void displayBuyArrOptions(ArrayList<Card> buyArrOptions);
 }

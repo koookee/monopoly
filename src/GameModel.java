@@ -19,6 +19,7 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
     private boolean hasNotRolled;
+    private ArrayList<Card> buyArrOptions;
     private int numOfHouses;
     private int numOfHotels;
     int dice1;
@@ -35,6 +36,7 @@ public class GameModel {
         this.status = GameModel.Status.UNDECIDED;
         this.views = new ArrayList();
         this.gameBoard = new HashMap();
+        this.buyArrOptions = new ArrayList<>();
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
         this.hasNotRolled = true;
@@ -280,10 +282,34 @@ public class GameModel {
     }
 
     public void buy(){
-        if (activePlayer.getMoney() > currentCard.getCost()) {
-            activePlayer.buyCard(currentCard);
-            views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            disableBuyButton();
+        //if (activePlayer.getMoney() > currentCard.getCost()) {
+        //    activePlayer.buyCard(currentCard);
+        //    views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        //    disableBuyButton();
+        //}
+        clearBuyArrOptions();
+        addCardsToBuyArr();
+        for(GameView view : views){
+            view.displayBuyArrOptions(buyArrOptions);
+        }
+    }
+
+    /**
+     * Clears the buyArrOptions ArrayList
+     */
+    private void clearBuyArrOptions(){
+        while (buyArrOptions.size() != 0) buyArrOptions.remove(0);
+    }
+
+    /**
+     * Adds all tiles (cards) on the board to the buyArrOptions ArrayList assuming they can be added
+     */
+    private void addCardsToBuyArr(){
+        if (checkIfCanBuyProperty()) buyArrOptions.add(currentCard);
+        for (Integer key: gameBoard.keySet()){
+            if (checkIfCanBuyHouse(gameBoard.get(key)) || checkIfCanBuyHotel(gameBoard.get(key))){
+                buyArrOptions.add(gameBoard.get(key));
+            }
         }
     }
 
@@ -321,8 +347,8 @@ public class GameModel {
             if (result == 0) { // No owners
                 view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             } else if (result == 1) { // Owns property
-                if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse()) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel()) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse(getCurrentCard())) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel(currentCard)) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
             else if (result == 2) { // Has to pay rent
                 view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -387,6 +413,15 @@ public class GameModel {
 //        roll = dice1 + dice2;
     }
 
+    /**
+     * this method is used to check if the player can buy the property
+     * @return the boolean of whether the player can buy the property or not
+     */
+    private boolean checkIfCanBuyProperty(){
+        if (activePlayer.getMoney() > currentCard.getCost() && currentCard.isOwned() == false) return true;
+        return false;
+    }
+
 
     /**
      * this method is used to buy a property for a player
@@ -396,13 +431,14 @@ public class GameModel {
     }
 
     /**
-     * this method is used to buy a house for a player
+     * this method is used to see if a player can buy a house
+     * @param c the tile to check on
      * @return the boolean of whether the player can buy a house or not
      */
-    private boolean checkIfCanBuyHouse(){ // Check if player has enough funds before calling this method
+    private boolean checkIfCanBuyHouse(Card c){ // Check if player has enough funds before calling this method
         boolean ownsAllTiles = true;
         ArrayList<Card> cards = new ArrayList<>();
-        Color color = currentCard.getColor();
+        Color color = c.getColor();
 
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
@@ -416,11 +452,11 @@ public class GameModel {
         boolean allowedToBuyHouse = true;
         if (ownsAllTiles){
             for (Card card : cards){
-                if (currentCard.getHouses() - card.getHouses() > 0 || currentCard.getHouses() == 4) allowedToBuyHouse = false;
+                if (c.getHouses() - card.getHouses() > 0 || c.getHouses() == 4) allowedToBuyHouse = false;
             }
         }
 
-        if (numOfHouses == 0 || !ownsAllTiles || activePlayer.getMoney() < currentCard.getHouseCost()) allowedToBuyHouse = false;
+        if (numOfHouses == 0 || !ownsAllTiles || activePlayer.getMoney() < c.getHouseCost()) allowedToBuyHouse = false;
 
         return allowedToBuyHouse;
     }
@@ -436,13 +472,14 @@ public class GameModel {
     }
 
     /**
-     * this method is used to buy a hotel for a player
+     * this method is used to see if a player can buy a hotel
+     * @param c the tile to check on
      * @return the boolean of whether the player can buy a hotel or not
      */
-    private boolean checkIfCanBuyHotel(){
+    private boolean checkIfCanBuyHotel(Card c){
         boolean canBuy = true;
         ArrayList<Card> cards = new ArrayList<>();
-        Color color = currentCard.getColor();
+        Color color = c.getColor();
 
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
@@ -455,7 +492,7 @@ public class GameModel {
             if (card.getHouses() != 4 && card.getHotels() == 0) canBuy = false;
         }
 
-        if (activePlayer.getMoney() < currentCard.getHotelCost() || numOfHotels == 0) canBuy = false;
+        if (activePlayer.getMoney() < c.getHotelCost() || numOfHotels == 0) canBuy = false;
         return canBuy;
     }
 

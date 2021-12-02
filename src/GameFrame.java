@@ -405,6 +405,21 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    @Override
+    public void displayBuyArrOptions(ArrayList<Card> buyArrOptions) {
+        JFrame jFrame = new JFrame("Buy Options");
+        jFrame.setLayout(new BorderLayout());
+        JPanel grid = new JPanel(new GridLayout(buyArrOptions.size(), 2));
+        jFrame.add(grid, BorderLayout.CENTER);
+        for (Card c : buyArrOptions){
+            JLabel nameAndCost = new JLabel("Name: " + c.getName() + " | Cost: " + c.getCost());
+            grid.add(nameAndCost);
+            grid.add(new JButton("Buy"));
+        }
+        jFrame.setSize(600, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setVisible(true);
+    }
 
     /**
      * Gives the player information about the property they landed on and the option to buy (if possible)
