@@ -235,8 +235,14 @@ public class GameFrame extends JFrame implements GameView {
         JButton save = new JButton("save");
         footerPanel.add(save);
 
+        JButton importButton = new JButton("import");
+        footerPanel.add(importButton);
+
         save.setActionCommand("save");
         save.addActionListener(controller);
+
+        importButton.setActionCommand("import");
+        importButton.addActionListener(controller);
 
 
         rollButton.setEnabled(enableRoll);
@@ -330,7 +336,21 @@ public class GameFrame extends JFrame implements GameView {
 
     }
     @Override
-    public void handleBot(GameEvent e){
+    public void updateFromImport(Player p, int[] roll ){
+//        updatePlayerIcon(p,roll);
+
+
+        getContentPane().remove(playerPanel);
+
+        if (p.isActivePlayer())
+        playerPanel = paintPlayerInfo(p, roll);
+
+        displayGUI();
+
+
+        updatePlayerIcon(p, roll);
+
+
 
     }
 

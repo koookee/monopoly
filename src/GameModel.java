@@ -51,6 +51,7 @@ public class GameModel {
         players.add(new Player(name, false));
         players.add(new AutoPlayer(name, true));
         if(players.size()==1) activePlayer = players.get(0);
+        activePlayer.setActivePlayer(true);
     }
 
     /**
@@ -110,7 +111,9 @@ public class GameModel {
     public void changeTurn(){
         currTurn = (currTurn + 1) % players.size();
         while (!players.get(currTurn).isPlaying()) currTurn = (currTurn + 1) % players.size(); // Skips the players that are bankrupt
+        activePlayer.setActivePlayer(false);
         activePlayer = players.get(currTurn);
+        activePlayer.setActivePlayer(true);
         activePlayer.setExconvict(false);
         if(activePlayer instanceof AutoPlayer) {
             botPlay();
@@ -248,7 +251,7 @@ public class GameModel {
 
     public void roll(){
         rollDice();
-
+        System.out.println(activePlayer.getPrevPosition() + " "+ activePlayer.getPosition());
         checkJailRoll();
 
 
@@ -507,6 +510,7 @@ public class GameModel {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
+        activePlayer.setRolls(new int[] {dice1,dice2});
 
 //        // For debugging purposes (can make players move to specific tiles)
 //        Scanner scanner = new Scanner(System.in);
@@ -686,6 +690,34 @@ public class GameModel {
         }
     }
 
+    public void importXML(){
+        ArrayList<Player> importedPLayers = new ArrayList<>();
+        for (Player p :
+                players) {
+
+            p = Player.deserializeFromXML("xml folder\\"+p.getName() + ".xml");
+            System.out.println(p);
+            importedPLayers.add(p);
+
+        }
+        players = importedPLayers;
+
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i).getName());
+            if (players.get(i).isActivePlayer()){
+                activePlayer = players.get(i);
+            }
+            views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
+        }
+
+
+
+
+//        Player p = Player.deserializeFromXML("xml folder\\p1.xml");
+//        System.out.println(p);
+
+
+    }
     /*
     public static void main(String[] args) {
         GameModel gameModel = new GameModel();

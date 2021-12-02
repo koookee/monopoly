@@ -273,22 +273,7 @@ public class Card {
         // is owned
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "name='" + name + '\'' +
-                ", cost=" + cost +
-                ", color=" + color +
-                ", isOwned=" + isOwned +
-                ", owner=" + owner +
-                ", position=" + position +
-                ", houses=" + houses +
-                ", hotels=" + hotels +
-                ", houseCost=" + houseCost +
-                ", hotelCost=" + hotelCost +
-                ", cardType=" + cardType +
-                '}';
-    }
+
 
     public void serializeToXML (String filename)
     {

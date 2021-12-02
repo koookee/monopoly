@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.13" class="java.beans.XMLDecoder">
- <object class="AutoPlayer">
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="AutoPlayer" id="AutoPlayer0">
   <void property="bot">
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1500</int>
+   <int>1320</int>
   </void>
   <void property="name">
    <string>Bot1</string>
@@ -13,8 +13,61 @@
   <void property="playing">
    <boolean>true</boolean>
   </void>
+  <void property="position">
+   <int>7</int>
+  </void>
   <void property="properties">
-   <object class="java.util.ArrayList"/>
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object class="java.lang.Enum" method="valueOf">
+        <class>Card$CardType</class>
+        <string>property</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>175</int>
+        <int>175</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>180</int>
+      </void>
+      <void property="hotelCost">
+       <int>50</int>
+      </void>
+      <void property="houseCost">
+       <int>50</int>
+      </void>
+      <void property="name">
+       <string>bronson Avenue</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="AutoPlayer0"/>
+      </void>
+      <void property="position">
+       <int>7</int>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void property="rolls">
+   <array class="int" length="2">
+    <void index="0">
+     <int>5</int>
+    </void>
+    <void index="1">
+     <int>2</int>
+    </void>
+   </array>
   </void>
  </object>
 </java>

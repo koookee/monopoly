@@ -1,6 +1,9 @@
 import java.awt.*;
 
 public class Railroad extends Card{
+    public Railroad(){
+
+    }
 
     /**
      * the constructor for the card Class
