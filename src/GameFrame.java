@@ -341,9 +341,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
-
-        displayBuyButtonOnCard(model.getActivePlayer());
-
+        
         getContentPane().remove(playerPanel);
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
