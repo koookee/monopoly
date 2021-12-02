@@ -23,7 +23,7 @@ private GameModel model;
     public void buyProperty(GameFrame frame, String message) {
        int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
         if(confirmed == JOptionPane.YES_OPTION){
-            this.model.play(5);
+           // this.model.play(5);
         }
     }
 
@@ -35,7 +35,7 @@ private GameModel model;
     public void askToBuyHouse(GameFrame frame, String message){
         int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
         if(confirmed == JOptionPane.YES_OPTION){
-            this.model.play(6);
+            //this.model.play(6);
         }
     }
 
@@ -47,7 +47,7 @@ private GameModel model;
     public void askToBuyHotel(GameFrame frame, String message){
         int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
         if(confirmed == JOptionPane.YES_OPTION){
-            this.model.play(7);
+           // this.model.play(7);
         }
     }
 
@@ -68,7 +68,7 @@ private GameModel model;
     public void confirmPass(GameFrame frame, String message) {
         int confirmed = JOptionPane.showConfirmDialog(null, message);
         if(confirmed == JOptionPane.YES_OPTION){
-            this.model.play(3);
+           // this.model.play(3);
         }
     }
 

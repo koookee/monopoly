@@ -4,6 +4,7 @@
  *
  */
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.sql.SQLOutput;
@@ -697,12 +698,38 @@ public class GameModel {
         }
     }
 
-    public void importXML(){
+    public void importXML() {
+
         ArrayList<Player> importedPLayers = new ArrayList<>();
         createGameBoard();
         setEnableRoll(true);
 
         int k = 0;
+        for (Player p :
+                players) {
+
+            p = Player.deserializeFromXML("xml folder\\" + p.getName() + ".xml");
+
+            importedPLayers.add(p);
+            for (Card c :
+                    p.getProperties()) {
+                gameBoard.put(c.getPosition(), c);
+            }
+            k++;
+        }
+        players = importedPLayers;
+
+        for (int i = 0; i < players.size(); i++) {
+            if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
+            if (players.get(i).isActivePlayer()) {
+                activePlayer = players.get(i);
+            }
+
+            views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
+        }
+    }
+    public void importPlayers(){
+        ArrayList<Player> importedPLayers = new ArrayList<>();
         for (Player p :
                 players) {
 
@@ -713,7 +740,7 @@ public class GameModel {
                     p.getProperties()) {
                 gameBoard.put(c.getPosition(), c);
             }
-        k++;
+
         }
         players = importedPLayers;
 
@@ -725,6 +752,7 @@ public class GameModel {
 
             views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
         }
+    }
 
 
 
@@ -733,7 +761,7 @@ public class GameModel {
 //        System.out.println(p);
 
 
-    }
+
     /*
     public static void main(String[] args) {
         GameModel gameModel = new GameModel();

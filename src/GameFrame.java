@@ -39,6 +39,10 @@ public class GameFrame extends JFrame implements GameView {
     private JButton buyButton;
     private JButton pass;
 
+    private WelcomeController welcomeControl;
+
+    private int[] startInformation;
+
 
     /**
      * Constructor for GameFrame the class
@@ -54,19 +58,28 @@ public class GameFrame extends JFrame implements GameView {
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
+        rollButton = new JButton("Roll");
+        buyButton = new JButton("Buy");
+        pass = new JButton("Next Turn");
 
 
 
         model = new GameModel();
         model.addGameModelView(this);
 
-        WelcomeController control = new WelcomeController(model);
-        this.playerNum = control.getPlayerNumber(this);
+        welcomeControl = new WelcomeController(model);
+
+        startInformation =welcomeControl.askPlayerImport(this);
+        this.playerNum = startInformation[0];
+
+
+
 
         this.createSquares();
         this.mainPanel = paintBoard();
 
         this.playerPanel = paintPlayerInfo(model.getActivePlayer(), new int[]{0,0});
+
 
 
         icon.setBounds(10,40, 50,50);
@@ -75,6 +88,8 @@ public class GameFrame extends JFrame implements GameView {
         icon4.setBounds(130,40, 50,50);
 
         enableBuy = false;
+
+
     }
 
 
@@ -223,24 +238,25 @@ public class GameFrame extends JFrame implements GameView {
         JPanel footerPanel = new JPanel(new GridLayout(5, 3));
 
 
-        rollButton = new JButton("Roll");
+
         footerPanel.add(rollButton);
 
-        buyButton = new JButton("Buy");
+
         footerPanel.add(buyButton);
 
-        pass = new JButton("Next Turn");
+
         footerPanel.add(pass);
 
         JButton save = new JButton("save");
         footerPanel.add(save);
+
 
         JButton importButton = new JButton("import");
         footerPanel.add(importButton);
 
         save.setActionCommand("save");
         save.addActionListener(controller);
-
+        if (startInformation[1] == 1) importButton.setEnabled(false);
         importButton.setActionCommand("import");
         importButton.addActionListener(controller);
 
@@ -256,6 +272,7 @@ public class GameFrame extends JFrame implements GameView {
         pass.setEnabled(!enableRoll);
         pass.setActionCommand("next turn");
         pass.addActionListener(controller);
+
 
 
 
@@ -309,6 +326,7 @@ public class GameFrame extends JFrame implements GameView {
         for (Integer key : model.getGameBoard().keySet()){
             updateCardGUI(model.getGameBoard().get(key));
         }
+
 
         this.revalidate();
         this.setVisible(true);
@@ -599,13 +617,17 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+
     /**
      * Main method that runs the program
      * @param args the arguments passed of type String array
      */
     public static void main(String[] args) {
         GameFrame gameFrame = new GameFrame();
+
         gameFrame.displayGUI();
+
+
     }
 }
 
