@@ -5,6 +5,7 @@
  */
 
 import java.awt.*;
+import java.io.File;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -510,7 +511,7 @@ public class GameModel {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
-        activePlayer.setRolls(new int[] {dice1,dice2});
+        
 
 //        // For debugging purposes (can make players move to specific tiles)
 //        Scanner scanner = new Scanner(System.in);
@@ -682,8 +683,14 @@ public class GameModel {
         WINNER,
         UNDECIDED,
     }
-    
+
     public void save(){
+        File directory = new File("xml folder\\");
+        File[] files = directory.listFiles();
+        for (File f :
+                files) {
+            f.delete();
+        }
         for (Player p :
                 players) {
             p.serializeToXML("xml folder\\"+p.getName() +".xml");
@@ -694,13 +701,13 @@ public class GameModel {
         ArrayList<Player> importedPLayers = new ArrayList<>();
         createGameBoard();
         setEnableRoll(true);
-        boolean dontImport =false;
+
         int k = 0;
         for (Player p :
                 players) {
 
             p = Player.deserializeFromXML("xml folder\\"+p.getName() + ".xml");
-            dontImport = players.get(k).getPosition() == p.getPosition();
+
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {
@@ -711,11 +718,11 @@ public class GameModel {
         players = importedPLayers;
 
         for (int i = 0; i < players.size(); i++) {
-            System.out.println(players.get(i).getName());
+            if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
             if (players.get(i).isActivePlayer()){
                 activePlayer = players.get(i);
             }
-            if (!dontImport)
+
             views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
         }
 

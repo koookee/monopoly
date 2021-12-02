@@ -5,7 +5,7 @@
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1300</int>
+   <int>1150</int>
   </void>
   <void property="name">
    <string>P1</string>
@@ -13,14 +13,17 @@
   <void property="numTimeRolledDouble">
    <int>1</int>
   </void>
+  <void property="numUtils">
+   <int>1</int>
+  </void>
   <void property="playing">
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>13</int>
+   <int>10</int>
   </void>
   <void property="prevPosition">
-   <int>5</int>
+   <int>8</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
@@ -44,7 +47,7 @@
        <int>200</int>
       </void>
       <void property="name">
-       <string>Bytown&amp;Prescott Railway</string>
+       <string>Canadian Pacific Railway</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -53,7 +56,40 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>5</int>
+       <int>10</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Utilities">
+      <void property="cardType">
+       <object class="java.lang.Enum" method="valueOf">
+        <class>Card$CardType</class>
+        <string>ultility</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>255</int>
+        <int>255</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>100</int>
+      </void>
+      <void property="name">
+       <string>Water Works</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>19</int>
       </void>
      </object>
     </void>
@@ -62,10 +98,10 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>4</int>
+     <int>1</int>
     </void>
     <void index="1">
-     <int>4</int>
+     <int>1</int>
     </void>
    </array>
   </void>
