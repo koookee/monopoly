@@ -33,6 +33,12 @@ public class GameController implements ActionListener {
         else if(e.getActionCommand().equals("next turn")){
             this.model.nextTurn();
         }
+        else if(e.getActionCommand().equals("save")){
+            this.model.save();
+        }
+        else if(e.getActionCommand().equals("import")){
+            this.model.importXML();
+        }
 
     }
 

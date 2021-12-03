@@ -25,7 +25,7 @@ public interface GameView {
 
     void askToBuyHotel(GameEvent gameEvent);
 
-    void handleBot(GameEvent e);
+    void updateFromImport(Player p, int[] roll );
 
     void announceBoughtBotProperty(GameEvent gameEvent);
 

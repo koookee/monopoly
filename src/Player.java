@@ -4,7 +4,16 @@
  */
 
 
+import java.awt.*;
+import java.beans.ExceptionListener;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Player {
@@ -19,6 +28,10 @@ public class Player {
     private boolean exconvict;
     private boolean isBot;
     private int numTimeRolledDouble;
+    private boolean isActivePlayer;
+    private int[] rolls;
+
+    public Player(){}
 
     /**
      * The constructor for the Player class
@@ -36,6 +49,67 @@ public class Player {
         this.isInJail = 0;
         this.exconvict = false;
         this.numTimeRolledDouble =0;
+        isActivePlayer = false;
+        rolls = new int[2];
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int[] getRolls() {
+        return rolls;
+    }
+
+    public void setRolls(int[] rolls) {
+        this.rolls = rolls;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "prevPosition=" + prevPosition +
+                ", name='" + name + '\'' +
+                ", money=" + money +
+                ", position=" + position +
+                ", playing=" + playing +
+                ", properties=" + properties +
+                ", numUtils=" + numUtils +
+                ", isInJail=" + isInJail +
+                ", exconvict=" + exconvict +
+                ", isBot=" + isBot +
+                ", numTimeRolledDouble=" + numTimeRolledDouble +
+                ", isActivePlayer=" + isActivePlayer +
+                ", rolls=" + Arrays.toString(rolls) +
+                '}';
+    }
+
+    public boolean isActivePlayer() {
+        return isActivePlayer;
+    }
+
+    public void setActivePlayer(boolean activePlayer) {
+        isActivePlayer = activePlayer;
+    }
+
+    public void setProperties(ArrayList<Card> properties) {
+        this.properties = properties;
+    }
+
+    public void setNumUtils(int numUtils) {
+        this.numUtils = numUtils;
+    }
+
+    public boolean isExconvict() {
+        return exconvict;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 
     public int getNumTimeRolledDouble() {
@@ -207,5 +281,47 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, position);
+    }
+
+    public void serializeToXML (String filename)
+    {
+        try{
+            FileOutputStream fos = new FileOutputStream(filename);
+            XMLEncoder encoder = new XMLEncoder(fos);
+
+            encoder.writeObject(this);
+            encoder.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Player deserializeFromXML(String filename) {
+        Player playerToReturn = null;
+        try{
+            FileInputStream fis = new FileInputStream(filename);
+            XMLDecoder decoder = new XMLDecoder(fis);
+            Player decoded = (Player) decoder.readObject();
+            decoder.close();
+            fis.close();
+            playerToReturn =  decoded;
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return playerToReturn;
+    }
+
+    public static void main(String[] args) {
+        Player player = new Player("Joe", false);
+        player.buyCard(new Card("card", 0, 2, Color.black));
+        player.serializeToXML("player.xml");
+
+
+        Player player1 = Player.deserializeFromXML("player.xml");
+        System.out.println(player1);
     }
 }

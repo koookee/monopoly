@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Player" id="Player0">
+  <void property="money">
+   <int>1500</int>
+  </void>
+  <void property="name">
+   <string>Joe</string>
+  </void>
+  <void property="playing">
+   <boolean>true</boolean>
+  </void>
+  <void property="properties">
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="Card">
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="name">
+       <string>card</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>2</int>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

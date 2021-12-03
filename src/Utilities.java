@@ -1,6 +1,9 @@
 import java.awt.*;
 
 public class Utilities extends Card{
+    public Utilities(){
+
+    }
     /**
      * the constructor for the card Class
      * @param name the name of that card

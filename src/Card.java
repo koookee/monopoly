@@ -1,4 +1,10 @@
 import java.awt.*;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @author Andre, Jack, Cassidy, Hussein
@@ -31,7 +37,9 @@ public class Card {
         ultility
     }
 
+    public Card(){
 
+    }
     /**
      * The constructor for the Card class
      * @param name the String for the name of the card
@@ -72,6 +80,34 @@ public class Card {
         this.houseCost = houseCost;
         this.hotelCost = hotelCost;
         this.isOwned = false;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void setHouseCost(int houseCost) {
+        this.houseCost = houseCost;
+    }
+
+    public void setHotelCost(int hotelCost) {
+        this.hotelCost = hotelCost;
+    }
+
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
     }
 
     /**
@@ -236,5 +272,48 @@ public class Card {
         // no owner
         // is owned
     }
+
+
+
+    public void serializeToXML (String filename)
+    {
+        try{
+            FileOutputStream fos = new FileOutputStream(filename);
+            XMLEncoder encoder = new XMLEncoder(fos);
+
+            encoder.writeObject(this);
+            encoder.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static Card deserializeFromXML(String filename) {
+        Card cardToReturn = null;
+        try{
+            FileInputStream fis = new FileInputStream(filename);
+            XMLDecoder decoder = new XMLDecoder(fis);
+            Card decoded = (Card) decoder.readObject();
+            decoder.close();
+            fis.close();
+            cardToReturn =  decoded;
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cardToReturn;
+    }
+
+    public static void main(String[] args) {
+        Card card = new Card("card", 0, 2, Color.black);
+        card.serializeToXML("card.xml");
+
+        Card card1 = Card.deserializeFromXML("card.xml");
+        System.out.println(card1);
+    }
+
 
 }
