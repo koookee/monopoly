@@ -58,9 +58,7 @@ public class GameFrame extends JFrame implements GameView {
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
-        rollButton = new JButton("Roll");
-        buyButton = new JButton("Buy");
-        pass = new JButton("Next Turn");
+
 
 
 
@@ -237,7 +235,9 @@ public class GameFrame extends JFrame implements GameView {
 
         JPanel footerPanel = new JPanel(new GridLayout(5, 3));
 
-
+        rollButton = new JButton("Roll");
+        buyButton = new JButton("Buy");
+        pass = new JButton("Next Turn");
 
         footerPanel.add(rollButton);
 
