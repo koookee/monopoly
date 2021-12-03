@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -35,7 +36,8 @@ public class GameFrame extends JFrame implements GameView {
     private  JPanel mainPanel;
     private JPanel playerPanel;
     private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
-
+    private ArrayList<JButton> squareCenterArr; // Stores the buy buttons
+    private JFrame buyOptionsWindow;
     private JButton buyButton;
     private JButton pass;
 
@@ -52,6 +54,7 @@ public class GameFrame extends JFrame implements GameView {
         this.model = new GameModel();
         this.squares = new ArrayList<>();
         this.squareBottomArr = new ArrayList<>();
+        this.squareCenterArr = new ArrayList<>();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.icons = new JLabel[]{ icon, icon2, icon3, icon4};
         Dimension frameSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -104,6 +107,10 @@ public class GameFrame extends JFrame implements GameView {
 
             JPanel squareTop = new JPanel();
             JPanel squareBottom = new JPanel(new GridLayout(1, 5)); // 1 column for player 4 columns for potential houses
+
+            JButton buyButton = new JButton("Buy");
+            buyButton.setVisible(false);
+
             JLabel name;
             squareTop.setBackground(c.getColor());
             if (c.getCost() != 0)  name= new JLabel(c.getName() + " ($" + c.getCost()+")");
@@ -138,6 +145,8 @@ public class GameFrame extends JFrame implements GameView {
 
             square.add(squareTop, BorderLayout.PAGE_START);
             square.add(squareBottom, BorderLayout.PAGE_END);
+            square.add(buyButton, BorderLayout.CENTER);
+
             layeredPane.add(square,JLayeredPane.DEFAULT_LAYER);
 
             if(i==0){
@@ -146,7 +155,7 @@ public class GameFrame extends JFrame implements GameView {
                 }
 
             }
-
+            squareCenterArr.add(buyButton);
             squareBottomArr.add(squareBottom);
             squares.add(layeredPane);
         }
@@ -222,11 +231,9 @@ public class GameFrame extends JFrame implements GameView {
 
         else if(roll[0] == roll[1]) {
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " "+ roll[1] + " (Can roll again)");
-
         }
         else{
             playerRoll = new JLabel("Player Rolled : " + roll[0] + " " + roll[1]);
-
         }
 
         bodyPanel.add(playerRoll);
@@ -266,7 +273,7 @@ public class GameFrame extends JFrame implements GameView {
         rollButton.addActionListener(controller);
 
         buyButton.setEnabled(enableBuy);
-        buyButton.setActionCommand("buy");
+        buyButton.setActionCommand("displayBuyOptions");
         buyButton.addActionListener(controller);
 
         pass.setEnabled(!enableRoll);
@@ -310,6 +317,22 @@ public class GameFrame extends JFrame implements GameView {
         }
     }
 
+    /*
+    /**
+     * Displays the buy button on each card the player owns
+
+    public void displayBuyButtonOnCard(Player p){
+        Map<Integer, Card> board = model.getGameBoard();
+        for (Integer key : board.keySet()){                 // TEMPORARILY
+            if (board.get(key).getOwner() != null && board.get(key).getOwner().getName().equals(p.getName())) { //TODO: Would ideally use == but that compares position and name. Could we change it to only check for name?
+                squareCenterArr.get(board.get(key).getPosition()).setVisible(true);
+            }
+            else squareCenterArr.get(board.get(key).getPosition()).setVisible(false);
+        }
+    }
+
+     */
+
     /**
      * Displays the GUI of the whole game
      */
@@ -347,10 +370,7 @@ public class GameFrame extends JFrame implements GameView {
 
         displayGUI();
 
-
         updatePlayerIcon(model.getActivePlayer(), e.getRoll());
-
-
 
     }
     @Override
@@ -386,10 +406,10 @@ public class GameFrame extends JFrame implements GameView {
     }
 
     @Override
-    public void enableBuyButton() {
+    public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-
+       //isplayBuyButtonOnCard(p);
     }
     @Override
     public void disableBuyButton() {
@@ -407,6 +427,29 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    @Override
+    public void displayBuyArrOptions(ArrayList<Card> buyArrOptions) {
+        buyOptionsWindow = new JFrame("Buy Options");
+        buyOptionsWindow.setLayout(new BorderLayout());
+        JPanel grid = new JPanel(new GridLayout(buyArrOptions.size(), 2));
+        buyOptionsWindow.add(grid, BorderLayout.CENTER);
+        for (Card c : buyArrOptions){
+            GameController controller = new GameController(model);
+            String buyButtonName;
+            if (c.isOwned() == false) buyButtonName = "Buy property";
+            else if (c.getHouses() == 4) buyButtonName = "Buy hotel";
+            else buyButtonName = "Buy house";
+            JLabel nameAndCost = new JLabel("Name: " + c.getName() + " | Cost: " + c.getCost());
+            JButton button = new JButton(buyButtonName);
+            button.addActionListener(controller);
+            button.setActionCommand(c.getName());
+            grid.add(nameAndCost);
+            grid.add(button);
+        }
+        buyOptionsWindow.setSize(600, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        buyOptionsWindow.setVisible(true);
+    }
 
     /**
      * Gives the player information about the property they landed on and the option to buy (if possible)
@@ -430,7 +473,7 @@ public class GameFrame extends JFrame implements GameView {
 //
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
-
+        buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
         displayGUI();
     }
 
