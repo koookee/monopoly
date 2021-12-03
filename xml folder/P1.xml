@@ -5,7 +5,7 @@
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1310</int>
+   <int>1120</int>
   </void>
   <void property="name">
    <string>P1</string>
@@ -14,10 +14,10 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>13</int>
+   <int>16</int>
   </void>
   <void property="prevPosition">
-   <int>4</int>
+   <int>6</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
@@ -31,14 +31,14 @@
       </void>
       <void property="color">
        <object class="java.awt.Color">
-        <int>150</int>
-        <int>75</int>
         <int>0</int>
+        <int>255</int>
+        <int>255</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>60</int>
+       <int>120</int>
       </void>
       <void property="hotelCost">
        <int>50</int>
@@ -47,7 +47,7 @@
        <int>50</int>
       </void>
       <void property="name">
-       <string>Lebreton Flats</string>
+       <string>waller Street</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -56,7 +56,7 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>2</int>
+       <int>6</int>
       </void>
      </object>
     </void>
@@ -67,26 +67,23 @@
       </void>
       <void property="color">
        <object class="java.awt.Color">
-        <int>150</int>
-        <int>75</int>
+        <int>255</int>
+        <int>0</int>
         <int>0</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>110</int>
+       <int>260</int>
       </void>
       <void property="hotelCost">
-       <int>50</int>
+       <int>150</int>
       </void>
       <void property="houseCost">
-       <int>50</int>
-      </void>
-      <void property="houses">
-       <int>1</int>
+       <int>150</int>
       </void>
       <void property="name">
-       <string>Sparks Street</string>
+       <string>thompson Street</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -95,7 +92,7 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>1</int>
+       <int>16</int>
       </void>
      </object>
     </void>
@@ -107,7 +104,7 @@
      <int>4</int>
     </void>
     <void index="1">
-     <int>5</int>
+     <int>6</int>
     </void>
    </array>
   </void>

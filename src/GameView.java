@@ -40,4 +40,6 @@ public interface GameView {
     void setRollEnable(boolean b);
 
     void displayBuyArrOptions(ArrayList<Card> buyArrOptions);
+
+    void setImportButtonEnable(boolean b);
 }

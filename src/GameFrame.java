@@ -40,6 +40,8 @@ public class GameFrame extends JFrame implements GameView {
     private JFrame buyOptionsWindow;
     private JButton buyButton;
     private JButton pass;
+    private JButton importButton;
+    private boolean savePressed;
 
     private WelcomeController welcomeControl;
 
@@ -61,6 +63,7 @@ public class GameFrame extends JFrame implements GameView {
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
+        savePressed = false;
 
 
 
@@ -258,12 +261,13 @@ public class GameFrame extends JFrame implements GameView {
         footerPanel.add(save);
 
 
-        JButton importButton = new JButton("import");
+        importButton = new JButton("import");
         footerPanel.add(importButton);
 
         save.setActionCommand("save");
         save.addActionListener(controller);
-        if (startInformation[1] == 1) importButton.setEnabled(false);
+        if (startInformation[1] == 1 && !savePressed) importButton.setEnabled(false);
+
         importButton.setActionCommand("import");
         importButton.addActionListener(controller);
 
@@ -389,7 +393,12 @@ public class GameFrame extends JFrame implements GameView {
         updatePlayerIcon(p, roll);
 
 
+    }
 
+    @Override
+    public void setImportButtonEnable(boolean b){
+        importButton.setEnabled(b);
+        savePressed = true;
     }
 
     @Override

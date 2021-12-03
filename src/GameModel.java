@@ -620,6 +620,10 @@ public class GameModel {
                 players) {
             p.serializeToXML("xml folder\\"+p.getName() +".xml");
         }
+        for (GameView v :
+                views) {
+            v.setImportButtonEnable(true);
+        }
     }
 
     public void importXML() {
