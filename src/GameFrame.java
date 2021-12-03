@@ -507,8 +507,10 @@ public class GameFrame extends JFrame implements GameView {
     public void announceBankruptcy(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.bankruptcy(this, "P" + (model.getCurrTurn() + 1) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
+        control.bankruptcy(this, (model.getActivePlayer().getName()) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
         squares.get(model.getActivePlayer().getPosition()).remove(icons[model.getPlayers().indexOf(model.getActivePlayer())]);
+        squares.get(model.getActivePlayer().getPosition()).revalidate();
+        squares.get(model.getActivePlayer().getPosition()).repaint();
     }
 
     /**

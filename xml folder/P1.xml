@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="11.0.12" class="java.beans.XMLDecoder">
- <object class="Player">
+ <object class="Player" id="Player0">
+  <void property="activePlayer">
+   <boolean>true</boolean>
+  </void>
   <void property="money">
-   <int>1500</int>
+   <int>18</int>
   </void>
   <void property="name">
    <string>P1</string>
@@ -11,18 +14,241 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>6</int>
+   <int>11</int>
+  </void>
+  <void property="prevPosition">
+   <int>5</int>
   </void>
   <void property="properties">
-   <object class="java.util.ArrayList"/>
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object class="java.lang.Enum" id="Card$CardType0" method="valueOf">
+        <class>Card$CardType</class>
+        <string>property</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>150</int>
+        <int>75</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>60</int>
+      </void>
+      <void property="hotelCost">
+       <int>50</int>
+      </void>
+      <void property="houseCost">
+       <int>50</int>
+      </void>
+      <void property="name">
+       <string>Lebreton Flats</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>2</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>175</int>
+        <int>175</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>180</int>
+      </void>
+      <void property="hotelCost">
+       <int>50</int>
+      </void>
+      <void property="houseCost">
+       <int>50</int>
+      </void>
+      <void property="name">
+       <string>bronson Avenue</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>7</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>0</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>260</int>
+      </void>
+      <void property="hotelCost">
+       <int>150</int>
+      </void>
+      <void property="houseCost">
+       <int>150</int>
+      </void>
+      <void property="name">
+       <string>thompson Street</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>16</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>255</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>350</int>
+      </void>
+      <void property="hotelCost">
+       <int>200</int>
+      </void>
+      <void property="houseCost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>mcLeod Street</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>25</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>135</int>
+        <int>225</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>500</int>
+      </void>
+      <void property="hotelCost">
+       <int>200</int>
+      </void>
+      <void property="houseCost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>street 22</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>30</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>255</int>
+        <int>255</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>100</int>
+      </void>
+      <void property="hotelCost">
+       <int>50</int>
+      </void>
+      <void property="houseCost">
+       <int>50</int>
+      </void>
+      <void property="name">
+       <string>laurier Avenue</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>4</int>
+      </void>
+     </object>
+    </void>
+   </object>
   </void>
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>4</int>
+     <int>1</int>
     </void>
     <void index="1">
-     <int>2</int>
+     <int>5</int>
     </void>
    </array>
   </void>

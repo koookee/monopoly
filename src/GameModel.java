@@ -124,6 +124,7 @@ public class GameModel {
             for (GameView view : views) {
                 view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
             }
+            updateStatus();
 
         }
         if(activePlayer.getIsInJail() == 3 ){
@@ -164,6 +165,10 @@ public class GameModel {
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
                 }
+                for (GameView v :
+                        views) {
+                    v.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
 
             }
         }
@@ -181,6 +186,7 @@ public class GameModel {
         }
         if(currentPlayers == 1){
             status = Status.WINNER;
+            views.get(0).announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
         }
 
         return numToReturn;
@@ -211,7 +217,7 @@ public class GameModel {
         if (activePlayer.getIsBot() && (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3)){
             activePlayer.setIsInJail(0);
             activePlayer.setMoney(activePlayer.getMoney() - 50);
-            System.out.println(activePlayer.getMoney());
+            updateStatus();
         }
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
             currentCard = gameBoard.get(8);
@@ -262,11 +268,18 @@ public class GameModel {
             if (dice1 == dice2) setEnableRoll(false);
             announceJail();
         }
-        else if (currentCard.isOwned()) {
+        else if (currentCard.isOwned() && currentCard.getOwner()!= activePlayer) {
+            if (!activePlayer.isBot()) {
+                for (GameView v :
+                        views) {
+                    v.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
+            }
             payRent(currentCard.getOwner(),currentCard);
             disableBuyButton();
+            updateStatus();
         }
-        else if (currentCard.getCost()==0){
+        else if (currentCard.getCost()==0 || currentCard.getCost() > activePlayer.getMoney()){
             disableBuyButton();
         }
         else enableBuyButton();
@@ -501,7 +514,7 @@ public class GameModel {
         botLandOnProperty();
         if (dice1 == dice2){
             botPlay();
-            
+
         }
         else nextTurn();
 
@@ -512,10 +525,10 @@ public class GameModel {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
-        activePlayer.setRolls(new int[] {dice1, dice2});
-        
 
-//        // For debugging purposes (can make players move to specific tiles)
+
+
+        // For debugging purposes (can make players move to specific tiles)
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Enter roll 1");
 //        int num = scanner.nextInt();
@@ -524,6 +537,7 @@ public class GameModel {
 //        num = scanner.nextInt();
 //        dice2 = num;
 //        roll = dice1 + dice2;
+        activePlayer.setRolls(new int[] {dice1, dice2});
     }
 
 
