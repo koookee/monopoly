@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Player" id="Player0">
+  <void property="activePlayer">
+   <boolean>true</boolean>
+  </void>
+  <void property="money">
+   <int>1300</int>
+  </void>
+  <void property="name">
+   <string>P2</string>
+  </void>
+  <void property="playing">
+   <boolean>true</boolean>
+  </void>
+  <void property="position">
+   <int>5</int>
+  </void>
+  <void property="properties">
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="Railroad">
+      <void property="cardType">
+       <object class="java.lang.Enum" method="valueOf">
+        <class>Card$CardType</class>
+        <string>railroad</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>Bytown&amp;Prescott Railway</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>5</int>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void property="rolls">
+   <array class="int" length="2">
+    <void index="0">
+     <int>3</int>
+    </void>
+    <void index="1">
+     <int>2</int>
+    </void>
+   </array>
+  </void>
+ </object>
+</java>

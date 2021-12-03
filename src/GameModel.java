@@ -512,6 +512,7 @@ public class GameModel {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
+        activePlayer.setRolls(new int[] {dice1, dice2});
         
 
 //        // For debugging purposes (can make players move to specific tiles)
@@ -709,7 +710,7 @@ public class GameModel {
                 players) {
 
             p = Player.deserializeFromXML("xml folder\\" + p.getName() + ".xml");
-
+            System.out.println(p);
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {
