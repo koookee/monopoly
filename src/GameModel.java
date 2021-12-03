@@ -265,7 +265,6 @@ public class GameModel {
         }
         else if (currentCard.isOwned()) {
             payRent(currentCard.getOwner(),currentCard);
-            disableBuyButton();
         }
         else if (currentCard.getCost()==0){
             disableBuyButton();
@@ -408,6 +407,7 @@ public class GameModel {
         num = scanner.nextInt();
         dice2 = num;
         roll = dice1 + dice2;
+        enableBuyButton();
     }
 
     /**
