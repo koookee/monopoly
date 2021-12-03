@@ -359,42 +359,15 @@ public class GameModel {
 
 
 
-    /**
-     * Determines what to do when a player lands on a card
-     */
-    private void landedOnCard(){
-        int result = currentCard.functionality(activePlayer);
-        for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            if (result == 0) { // No owners
-                view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            } else if (result == 1) { // Owns property
-                if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse(getCurrentCard())) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel(currentCard)) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            }
-            else if (result == 2) { // Has to pay rent
-                view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            } else if (result == 3){
-                activePlayer.goToJail();
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            }
-        }
-    }
+
 
     private void botLandOnProperty() {
-        if(currentCard.isOwned()){
-            activePlayer.payRent(currentCard.getOwner(),currentCard);
+
+
+        if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
+            activePlayer.buyCard(currentCard);
             for(GameView view: views){
-                view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
-            }
-        }
-        else{
-            if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
-                activePlayer.buyCard(currentCard);
-                for(GameView view: views){
-                    view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
-                }
+                view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
             }
         }
     }
@@ -583,13 +556,15 @@ public class GameModel {
         if(playerNum + botNum > 4 || (playerNum == 1 && botNum == 0)){
             return;
         }
-        for (int i = 0; i <playerNum; i++){
+        int i = 0;
+        for (i = 0; i <playerNum; i++){
             this.players.add(new Player("P"+(i+1), false));
         }
         for(int j = 0; j < botNum; j++){
-            this.players.add(new AutoPlayer("Bot"+ (j+1),  true));
+            this.players.add(new AutoPlayer("Bot"+ (j+i),  true));
         }
         activePlayer = players.get(0);
+
     }
 
     /**
@@ -599,6 +574,7 @@ public class GameModel {
      */
     public void payRent(Player owner, Card card) {
         this.activePlayer.payRent(owner, card);
+        System.out.println("here pay rent");
     }
     // ---------------------------------------------------------------------------------
     /**
@@ -631,19 +607,22 @@ public class GameModel {
         ArrayList<Player> importedPLayers = new ArrayList<>();
         createGameBoard();
         setEnableRoll(true);
+        boolean dontUpdate[] = new boolean[4];
+
 
         int k = 0;
         for (Player p :
                 players) {
-
             p = Player.deserializeFromXML("xml folder\\" + p.getName() + ".xml");
-            System.out.println(p);
+            dontUpdate[k] = p.getPosition() == players.get(k).getPosition();
+            if (p.getPosition() != players.get(k).getPosition())
+                p.setPrevPosition(players.get(k).getPosition());
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {
                 gameBoard.put(c.getPosition(), c);
             }
-            k++;
+        k++;
         }
         players = importedPLayers;
 
@@ -652,53 +631,19 @@ public class GameModel {
             if (players.get(i).isActivePlayer()) {
                 activePlayer = players.get(i);
             }
-
-            views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
-        }
-    }
-    public void importPlayers(){
-        ArrayList<Player> importedPLayers = new ArrayList<>();
-        for (Player p :
-                players) {
-
-            p = Player.deserializeFromXML("xml folder\\"+p.getName() + ".xml");
-
-            importedPLayers.add(p);
-            for (Card c :
-                    p.getProperties()) {
-                gameBoard.put(c.getPosition(), c);
-            }
-
-        }
-        players = importedPLayers;
-
-        for (int i = 0; i < players.size(); i++) {
-            if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
-            if (players.get(i).isActivePlayer()){
-                activePlayer = players.get(i);
-            }
-
-            views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
+            if (!dontUpdate[i])
+                views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
         }
     }
 
 
 
 
-//        Player p = Player.deserializeFromXML("xml folder\\p1.xml");
-//        System.out.println(p);
 
 
 
-    /*
-    public static void main(String[] args) {
-        GameModel gameModel = new GameModel();
-        for (Card c :
-                gameModel.getGameBoard().values()) {
-            System.out.println(c.getCardType());
-        }
-    }
 
-     */
+
+
 
 }
