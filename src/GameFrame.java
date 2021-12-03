@@ -497,7 +497,7 @@ public class GameFrame extends JFrame implements GameView {
         Card card = gameEvent.getCard();
 
         owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
-        model.payRent(card.getOwner(), card);
+
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 

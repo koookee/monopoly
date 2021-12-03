@@ -574,7 +574,7 @@ public class GameModel {
      */
     public void payRent(Player owner, Card card) {
         this.activePlayer.payRent(owner, card);
-        System.out.println("here pay rent");
+
     }
     // ---------------------------------------------------------------------------------
     /**
