@@ -256,7 +256,7 @@ public class GameFrame extends JFrame implements GameView {
         rollButton.addActionListener(controller);
 
         buyButton.setEnabled(enableBuy);
-        buyButton.setActionCommand("buy");
+        buyButton.setActionCommand("displayBuyOptions");
         buyButton.addActionListener(controller);
 
         pass.setEnabled(!enableRoll);
@@ -412,9 +412,14 @@ public class GameFrame extends JFrame implements GameView {
         JPanel grid = new JPanel(new GridLayout(buyArrOptions.size(), 2));
         jFrame.add(grid, BorderLayout.CENTER);
         for (Card c : buyArrOptions){
+            GameController controller = new GameController(model);
             JLabel nameAndCost = new JLabel("Name: " + c.getName() + " | Cost: " + c.getCost());
+            JButton button = new JButton("Buy");
+            button.addActionListener(controller);
+            button.setActionCommand("buy");
+
             grid.add(nameAndCost);
-            grid.add(new JButton("Buy"));
+            grid.add(button);
         }
         jFrame.setSize(600, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -289,9 +289,13 @@ public class GameModel {
         //}
         clearBuyArrOptions();
         addCardsToBuyArr();
-        for(GameView view : views){
-            view.displayBuyArrOptions(buyArrOptions);
-        }
+        for(GameView view : views) view.displayBuyArrOptions(buyArrOptions);
+    }
+
+    public void confirmPurchase(){
+        activePlayer.buyCard(currentCard);
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        disableBuyButton();
     }
 
     /**
