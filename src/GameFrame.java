@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class GameFrame extends JFrame implements GameView {
     private JPanel playerPanel;
     private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
     private ArrayList<JButton> squareCenterArr; // Stores the buy buttons
-
+    private JFrame buyOptionsWindow;
     private JButton buyButton;
     private JButton pass;
 
@@ -299,9 +300,10 @@ public class GameFrame extends JFrame implements GameView {
         }
     }
 
+    /*
     /**
      * Displays the buy button on each card the player owns
-     */
+
     public void displayBuyButtonOnCard(Player p){
         Map<Integer, Card> board = model.getGameBoard();
         for (Integer key : board.keySet()){                 // TEMPORARILY
@@ -311,6 +313,8 @@ public class GameFrame extends JFrame implements GameView {
             else squareCenterArr.get(board.get(key).getPosition()).setVisible(false);
         }
     }
+
+     */
 
     /**
      * Displays the GUI of the whole game
@@ -407,23 +411,26 @@ public class GameFrame extends JFrame implements GameView {
 
     @Override
     public void displayBuyArrOptions(ArrayList<Card> buyArrOptions) {
-        JFrame jFrame = new JFrame("Buy Options");
-        jFrame.setLayout(new BorderLayout());
+        buyOptionsWindow = new JFrame("Buy Options");
+        buyOptionsWindow.setLayout(new BorderLayout());
         JPanel grid = new JPanel(new GridLayout(buyArrOptions.size(), 2));
-        jFrame.add(grid, BorderLayout.CENTER);
+        buyOptionsWindow.add(grid, BorderLayout.CENTER);
         for (Card c : buyArrOptions){
             GameController controller = new GameController(model);
+            String buyButtonName;
+            if (c.isOwned() == false) buyButtonName = "Buy property";
+            else if (c.getHouses() == 4) buyButtonName = "Buy hotel";
+            else buyButtonName = "Buy house";
             JLabel nameAndCost = new JLabel("Name: " + c.getName() + " | Cost: " + c.getCost());
-            JButton button = new JButton("Buy");
+            JButton button = new JButton(buyButtonName);
             button.addActionListener(controller);
-            button.setActionCommand("buy");
-
+            button.setActionCommand(c.getName());
             grid.add(nameAndCost);
             grid.add(button);
         }
-        jFrame.setSize(600, 100);
+        buyOptionsWindow.setSize(600, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setVisible(true);
+        buyOptionsWindow.setVisible(true);
     }
 
     /**
@@ -448,7 +455,7 @@ public class GameFrame extends JFrame implements GameView {
 //
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
-
+        buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
         displayGUI();
     }
 

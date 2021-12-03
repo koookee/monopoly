@@ -292,9 +292,12 @@ public class GameModel {
         for(GameView view : views) view.displayBuyArrOptions(buyArrOptions);
     }
 
-    public void confirmPurchase(){
-        activePlayer.buyCard(currentCard);
-        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+    public void confirmPurchase(String cardName){
+        Card tile = getCard(cardName);
+        System.out.println(tile.getName());
+        if (tile.isOwned() == false) buyProperty(); // No owner so purchase property
+        else if (tile.getHouses() == 4) buyHotel(tile); // Player has enough to buy a hotel
+        else if (tile.getHouses() < 4) buyHouse(tile); // Not enough to buy hotel but owns property
         disableBuyButton();
     }
 
@@ -370,7 +373,6 @@ public class GameModel {
             for(GameView view: views){
                 view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
             }
-
         }
         else{
             if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
@@ -378,26 +380,17 @@ public class GameModel {
                 for(GameView view: views){
                     view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
                 }
-
             }
         }
     }
 
     public void botPlay() {
-
-
-
-
         roll();
-
         botLandOnProperty();
         if (dice1 == dice2){
             botPlay();
-            
         }
         else nextTurn();
-
-
     }
 
     private void rollDice() {
@@ -406,15 +399,15 @@ public class GameModel {
         roll = dice1 + dice2;
         
 
-//        // For debugging purposes (can make players move to specific tiles)
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter roll 1");
-//        int num = scanner.nextInt();
-//        dice1 = num;
-//        System.out.println("Enter roll 2");
-//        num = scanner.nextInt();
-//        dice2 = num;
-//        roll = dice1 + dice2;
+//         For debugging purposes (can make players move to specific tiles)
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter roll 1");
+        int num = scanner.nextInt();
+        dice1 = num;
+        System.out.println("Enter roll 2");
+        num = scanner.nextInt();
+        dice2 = num;
+        roll = dice1 + dice2;
     }
 
     /**
@@ -432,6 +425,7 @@ public class GameModel {
      */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -467,12 +461,15 @@ public class GameModel {
 
     /**
      * Buys the house
+     * @param c the tile the house is on
      */
-    private void buyHouse(){
+    public void buyHouse(Card c){
         numOfHouses--;
-        currentCard.setHouses(currentCard.getHouses() + 1);
-        currentCard.setCost(currentCard.getCost() + currentCard.getHouseCost());
-        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHouseCost());
+        c.setHouses(c.getHouses() + 1);
+        c.setCost(c.getCost() + c.getHouseCost());
+        activePlayer.setMoney(activePlayer.getMoney() - c.getHouseCost());
+        // TODO should change the method call
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -502,14 +499,17 @@ public class GameModel {
 
     /**
      * converts the 4 houses into a hotel
+     * @param c the tile the house is on
      */
-    private void buyHotel(){
+    private void buyHotel(Card c){
         numOfHouses += 4;
         numOfHotels--;
-        currentCard.setHouses(0);
-        currentCard.setHotels(1);
-        currentCard.setCost(currentCard.getCost() + currentCard.getHotelCost());
-        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHotelCost());
+        c.setHouses(0);
+        c.setHotels(1);
+        c.setCost(c.getCost() + c.getHotelCost());
+        activePlayer.setMoney(activePlayer.getMoney() - c.getHotelCost());
+        // TODO should change the method call
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -518,6 +518,11 @@ public class GameModel {
      */
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    private Card getCard(String cardName){
+        for (Integer key: gameBoard.keySet()) if (gameBoard.get(key).getName().equals(cardName)) return gameBoard.get(key);
+        return null; // No card found
     }
 
     /**

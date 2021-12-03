@@ -30,9 +30,6 @@ public class GameController implements ActionListener {
         else if(e.getActionCommand().equals("displayBuyOptions")){
             this.model.buy();
         }
-        else if(e.getActionCommand().equals("buy")){
-            this.model.confirmPurchase();
-        }
         else if(e.getActionCommand().equals("next turn")){
             this.model.nextTurn();
         }
@@ -41,6 +38,10 @@ public class GameController implements ActionListener {
         }
         else if(e.getActionCommand().equals("import")){
             this.model.importXML();
+        }
+        else { // action command in this case is the name of the property
+            this.model.confirmPurchase(e.getActionCommand());
+            System.out.println(e.getActionCommand());
         }
 
     }
