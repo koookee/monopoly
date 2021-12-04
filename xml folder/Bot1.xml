@@ -5,49 +5,46 @@
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>820</int>
+   <int>800</int>
   </void>
   <void property="name">
-   <string>Bot2</string>
+   <string>Bot1</string>
+  </void>
+  <void property="numUtils">
+   <int>1</int>
   </void>
   <void property="playing">
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>22</int>
+   <int>27</int>
   </void>
   <void property="prevPosition">
-   <int>15</int>
+   <int>20</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
     <void method="add">
-     <object class="Card" id="Card0">
+     <object class="Railroad" id="Railroad0">
       <void property="cardType">
        <object class="java.lang.Enum" id="Card$CardType0" method="valueOf">
         <class>Card$CardType</class>
-        <string>property</string>
+        <string>railroad</string>
        </object>
       </void>
       <void property="color">
-       <object class="java.awt.Color">
-        <int>255</int>
-        <int>175</int>
-        <int>175</int>
+       <object class="java.awt.Color" id="Color0">
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>180</int>
-      </void>
-      <void property="hotelCost">
-       <int>50</int>
-      </void>
-      <void property="houseCost">
-       <int>50</int>
+       <int>200</int>
       </void>
       <void property="name">
-       <string>bronson Avenue</string>
+       <string>Bytown&amp;Prescott Railway</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -56,26 +53,43 @@
        <object idref="AutoPlayer0"/>
       </void>
       <void property="position">
-       <int>7</int>
+       <int>5</int>
       </void>
-      <void id="Integer0" property="hotels"/>
+      <void id="Integer0" property="hotelCost"/>
      </object>
     </void>
     <void method="add">
      <object class="Railroad">
       <void property="cardType">
-       <object class="java.lang.Enum" method="valueOf">
-        <class>Card$CardType</class>
-        <string>railroad</string>
-       </object>
+       <object idref="Card$CardType0"/>
       </void>
       <void property="color">
-       <object class="java.awt.Color">
-        <int>0</int>
-        <int>0</int>
-        <int>0</int>
-        <int>255</int>
-       </object>
+       <object idref="Color0"/>
+      </void>
+      <void property="cost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>Canadian Pacific Railway</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="AutoPlayer0"/>
+      </void>
+      <void property="position">
+       <int>10</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Railroad">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object idref="Color0"/>
       </void>
       <void property="cost">
        <int>200</int>
@@ -95,29 +109,18 @@
      </object>
     </void>
     <void method="add">
-     <object class="Card">
+     <object class="Railroad">
       <void property="cardType">
        <object idref="Card$CardType0"/>
       </void>
       <void property="color">
-       <object class="java.awt.Color">
-        <int>255</int>
-        <int>255</int>
-        <int>0</int>
-        <int>255</int>
-       </object>
+       <object idref="Color0"/>
       </void>
       <void property="cost">
-       <int>300</int>
-      </void>
-      <void property="hotelCost">
-       <int>150</int>
-      </void>
-      <void property="houseCost">
-       <int>150</int>
+       <int>200</int>
       </void>
       <void property="name">
-       <string>morrison Street</string>
+       <string>New York Central Railway</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -126,7 +129,40 @@
        <object idref="AutoPlayer0"/>
       </void>
       <void property="position">
-       <int>22</int>
+       <int>20</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Utilities">
+      <void property="cardType">
+       <object class="java.lang.Enum" method="valueOf">
+        <class>Card$CardType</class>
+        <string>ultility</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>255</int>
+        <int>255</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>Electric Company</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="AutoPlayer0"/>
+      </void>
+      <void property="position">
+       <int>27</int>
       </void>
      </object>
     </void>
@@ -135,10 +171,10 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>4</int>
+     <int>1</int>
     </void>
     <void index="1">
-     <int>3</int>
+     <int>6</int>
     </void>
    </array>
   </void>

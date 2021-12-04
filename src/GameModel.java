@@ -167,6 +167,8 @@ public class GameModel {
                 playerLost = 1;
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
+                    c.setHouses(0);
+                    c.setHotels(0);
                 }
                 for (GameView v :
                         views) {
@@ -300,6 +302,7 @@ public class GameModel {
             dice1 = 0;
             dice2 = 0;
         }
+        updateViews(dice1,dice2);
 
 
 
@@ -396,21 +399,21 @@ public class GameModel {
     }
 
     private void rollDice() {
-        dice1 = (int) (Math.random() * 6 + 1);
-        dice2 = (int) (Math.random() * 6 + 1);
-        roll = dice1 + dice2;
+//        dice1 = (int) (Math.random() * 6 + 1);
+//        dice2 = (int) (Math.random() * 6 + 1);
+//        roll = dice1 + dice2;
 
 
 
 //         For debugging purposes (can make players move to specific tiles)
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter roll 1");
-//        int num = scanner.nextInt();
-//        dice1 = num;
-//        System.out.println("Enter roll 2");
-//        num = scanner.nextInt();
-//        dice2 = num;
-//        roll = dice1 + dice2;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter roll 1");
+        int num = scanner.nextInt();
+        dice1 = num;
+        System.out.println("Enter roll 2");
+        num = scanner.nextInt();
+        dice2 = num;
+        roll = dice1 + dice2;
         activePlayer.setRolls(new int[] {dice1, dice2});
     }
     /**
