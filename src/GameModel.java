@@ -46,17 +46,7 @@ public class GameModel {
         this.createGameBoard();
     }
 
-    /**
-     * This method adds a player to our list of players
-     * We set the active player to the first player since they are Player 1
-     * @param name is the String of the name the player wants
-     */
-    private void addPlayer(String name){
-        players.add(new Player(name, false));
-        players.add(new AutoPlayer(name, true));
-        if(players.size()==1) activePlayer = players.get(0);
-        activePlayer.setActivePlayer(true);
-    }
+
 
     /**
      * This method creates the gameboard for the players
@@ -238,7 +228,7 @@ public class GameModel {
             int current = this.activePlayer.getIsInJail();
             current += 1;
             this.activePlayer.setIsInJail(current);
-            System.out.println(activePlayer.getIsInJail());
+
         }
         else{
             activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -275,7 +265,8 @@ public class GameModel {
         rollDice();
 
         checkJailRoll();
-        System.out.println(activePlayer.getPrevPosition() + " "+ activePlayer.getPosition());
+
+
 
 
 
@@ -324,7 +315,7 @@ public class GameModel {
 
     public void confirmPurchase(String cardName){
         Card tile = getCard(cardName);
-        System.out.println(tile.getName());
+
         if (tile.isOwned() == false) buyProperty(); // No owner so purchase property
         else if (tile.getHouses() == 4) buyHotel(tile); // Player has enough to buy a hotel
         else if (tile.getHouses() < 4) buyHouse(tile); // Not enough to buy hotel but owns property
@@ -582,10 +573,14 @@ public class GameModel {
         }
         int i = 0;
         for (i = 0; i <playerNum; i++){
-            this.players.add(new Player("P"+(i+1), false));
+            Player player = new Player("P"+(i+1), false);
+            player.setPlayerNumber(i+1);
+            this.players.add(player);
         }
         for(int j = 0; j < botNum; j++){
-            this.players.add(new AutoPlayer("Bot"+ (j+i),  true));
+            Player autoPlayer = new AutoPlayer("Bot"+ (j+i),  true);
+            autoPlayer.setPlayerNumber(j+i+1);
+            this.players.add(autoPlayer);
         }
         activePlayer = players.get(0);
 
@@ -644,7 +639,6 @@ public class GameModel {
                 p.setPrevPosition(players.get(k).getPosition());
             if (!p.isHasRolled()) setEnableRoll(true);
             else if (p.getRolls()[0] == p.getRolls()[1])setEnableRoll(true);
-
             System.out.println(p);
             importedPLayers.add(p);
             for (Card c :
@@ -659,6 +653,7 @@ public class GameModel {
             if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
             if (players.get(i).isActivePlayer()) {
                 activePlayer = players.get(i);
+                currTurn = i;
             }
             if (!dontUpdate[i])
                 views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());

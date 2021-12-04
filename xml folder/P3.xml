@@ -8,19 +8,19 @@
    <int>1500</int>
   </void>
   <void property="name">
-   <string>P2</string>
+   <string>P3</string>
   </void>
   <void property="playerNumber">
    <object class="java.lang.Enum" method="valueOf">
     <class>Player$PlayerNumber</class>
-    <string>player2</string>
+    <string>player3</string>
    </object>
   </void>
   <void property="playing">
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>10</int>
+   <int>5</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList"/>
@@ -28,7 +28,7 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>6</int>
+     <int>1</int>
     </void>
     <void index="1">
      <int>4</int>

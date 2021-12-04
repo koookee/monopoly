@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="11.0.12" class="java.beans.XMLDecoder">
- <object class="Player" id="Player0">
-  <void property="hasRolled">
+ <object class="Player">
+  <void property="activePlayer">
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1488</int>
+   <int>1500</int>
   </void>
   <void property="name">
    <string>P1</string>
+  </void>
+  <void property="numTimeRolledDouble">
+   <int>1</int>
+  </void>
+  <void property="playerNumber">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Player$PlayerNumber</class>
+    <string>player1</string>
+   </object>
   </void>
   <void property="playing">
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>6</int>
+   <int>20</int>
   </void>
   <void property="prevPosition">
-   <int>2</int>
+   <int>10</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList"/>
   </void>
-  <void id="Integer0" property="isInJail"/>
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>1</int>
+     <int>5</int>
     </void>
     <void index="1">
-     <int>3</int>
+     <int>5</int>
     </void>
    </array>
   </void>

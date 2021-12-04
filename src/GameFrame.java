@@ -438,7 +438,7 @@ public class GameFrame extends JFrame implements GameView {
     public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-       //isplayBuyButtonOnCard(p);
+
     }
     @Override
     public void disableBuyButton() {
@@ -487,19 +487,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void unownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-//        CardController unowned = new CardController(model);
-//        Card card = gameEvent.getCard();
-//
-//        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()){
-//            if (card.getCardType() == Card.CardType.ultility){
-//                unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-//                        "\nRent is dependent on your roll"+ "\nWould you like to purchase?");
-//            }else {
-//                unowned.buyProperty(this, "You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-//                        "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
-//            }
-//        }
-//
+
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
         buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
@@ -645,7 +633,7 @@ public class GameFrame extends JFrame implements GameView {
         int prev = activePlayer.getPrevPosition();
 
         if(roll[0] != 0 && roll[1] != 0){
-            if(activePlayer.getName().equals("P1")){
+            if(activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player1)){
                 //squares.get(position).add(icon);
                 System.out.println("here");
 
@@ -655,7 +643,7 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(prev).repaint();
 
 
-            }else if(activePlayer.getName().equals("P2") ||activePlayer.getName().equals("Bot1")){
+            }else if(activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player2)){
 
                 squares.get(prev).remove(icons[1]);
                 squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
@@ -663,31 +651,20 @@ public class GameFrame extends JFrame implements GameView {
                 squares.get(prev).repaint();
 
             }
-            else if (activePlayer.getName().equals("P3")||activePlayer.getName().equals("Bot2")) {
+            else if (activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player3)) {
 
                 squares.get(prev).remove(icon3);
                 squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
 
-//                if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
-//                    icon3.setBounds(150,75,50,50);
-//                }else icon3.setBounds(150,100, 50,50);
-//                icon4.setBounds(1,100, 50,50);
-
-
-
             }
-            else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1
-                    ||activePlayer.getName().equals("Bot3")) {
+            else if (activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player4)|| position> topSquares-1 && position <= rightSquares-1) {
 
                 squares.get(prev).remove(icon4);
                 squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
-//                if (position >botSquares-1 && position<=leftSquares-1){
-//                    icon4.setBounds(1,60,50,50);
-//                }else icon4.setBounds(1,100, 50,50);
 
             }
         }
