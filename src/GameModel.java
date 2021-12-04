@@ -589,9 +589,9 @@ public class GameModel {
         for(int j = 0; j < botNum; j++){
             switch (i+j){
 
-                case 1: name = "Thimble"; break;
-                case 2: name = "Iron"; break;
-                case 3: name = "Hat"; break;
+                case 1: name = "Thimble Bot"; break;
+                case 2: name = "Iron Bot"; break;
+                case 3: name = "Hat Bot"; break;
             }
             Player autoPlayer = new AutoPlayer(name,  true);
             autoPlayer.setPlayerNumber(j+i+1);
