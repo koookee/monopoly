@@ -192,7 +192,11 @@ public class GameModel {
         }
         if(currentPlayers == 1){
             status = Status.WINNER;
-            views.get(0).announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            for (GameView v :
+                    views) {
+                v.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                v.closeWindow();
+            }
         }
 
         return numToReturn;

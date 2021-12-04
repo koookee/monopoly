@@ -44,4 +44,6 @@ public interface GameView {
     void setImportButtonEnable(boolean b);
 
     void removePlayerIcon(Player p);
+
+    void closeWindow();
 }

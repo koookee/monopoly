@@ -411,6 +411,13 @@ public class GameFrame extends JFrame implements GameView {
     }
 
     @Override
+    public void closeWindow() {
+        this.setVisible(false);
+        this.dispose();
+        System.exit(0);
+    }
+
+    @Override
     public void announceBoughtBotProperty(GameEvent gameEvent) {
         Player player = gameEvent.getModel().getActivePlayer();
         Card card = gameEvent.getCard();
