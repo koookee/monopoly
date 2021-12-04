@@ -284,10 +284,11 @@ public class GameModel {
                         views) {
                     v.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
                 }
+                payRent(currentCard.getOwner(),currentCard);
+                disableBuyButton();
+                updateStatus();
             }
-            payRent(currentCard.getOwner(),currentCard);
-            disableBuyButton();
-            updateStatus();
+
         }
         else if (currentCard.getCost()==0 || currentCard.getCost() > activePlayer.getMoney()){
             disableBuyButton();
@@ -370,8 +371,13 @@ public class GameModel {
 
     private void botLandOnProperty() {
 
+        if(currentCard.isOwned()){
+            activePlayer.payRent(currentCard.getOwner(),currentCard);
+            for(GameView view: views){
+                view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
+            }
 
-        if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
+        }else if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0 && !currentCard.isOwned()){
             activePlayer.buyCard(currentCard);
             for(GameView view: views){
                 view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
