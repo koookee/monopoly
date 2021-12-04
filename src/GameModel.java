@@ -171,7 +171,10 @@ public class GameModel {
                 for (GameView v :
                         views) {
                     v.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                    v.removePlayerIcon(x);
                 }
+
+
 
             }
         }
@@ -617,6 +620,7 @@ public class GameModel {
             dontUpdate[k] = p.getPosition() == players.get(k).getPosition();
             if (p.getPosition() != players.get(k).getPosition())
                 p.setPrevPosition(players.get(k).getPosition());
+            if (p.getRolls()[0] != 0) setEnableRoll(false);
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {

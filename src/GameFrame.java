@@ -374,7 +374,8 @@ public class GameFrame extends JFrame implements GameView {
 
         displayGUI();
 
-        updatePlayerIcon(model.getActivePlayer(), e.getRoll());
+        if(model.getActivePlayer().isPlaying())
+            updatePlayerIcon(model.getActivePlayer(), e.getRoll());
 
     }
     @Override
@@ -399,6 +400,14 @@ public class GameFrame extends JFrame implements GameView {
     public void setImportButtonEnable(boolean b){
         importButton.setEnabled(b);
         savePressed = true;
+    }
+
+    @Override
+    public void removePlayerIcon(Player p) {
+        squares.get(p.getPrevPosition()).remove(icons[model.getPlayers().indexOf(p)]);
+        squares.get(p.getPrevPosition()).revalidate();
+        squares.get(p.getPrevPosition()).repaint();
+
     }
 
     @Override

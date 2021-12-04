@@ -42,4 +42,6 @@ public interface GameView {
     void displayBuyArrOptions(ArrayList<Card> buyArrOptions);
 
     void setImportButtonEnable(boolean b);
+
+    void removePlayerIcon(Player p);
 }
