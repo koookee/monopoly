@@ -635,7 +635,7 @@ public class GameFrame extends JFrame implements GameView {
         if(roll[0] != 0 && roll[1] != 0){
             if(activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player1)){
                 //squares.get(position).add(icon);
-                System.out.println("here");
+
 
                 squares.get(prev).remove(icons[0]);
                 squares.get(position).add(icons[0],JLayeredPane.PALETTE_LAYER);

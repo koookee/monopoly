@@ -572,17 +572,33 @@ public class GameModel {
             return;
         }
         int i = 0;
+        String name ="";
         for (i = 0; i <playerNum; i++){
-            Player player = new Player("P"+(i+1), false);
+
+
+            switch (i){
+                case 0: name = "Shoe"; break;
+                case 1: name = "Thimble"; break;
+                case 2: name = "Iron"; break;
+                case 3: name = "Hat"; break;
+            }
+            Player player = new Player(name, false);
             player.setPlayerNumber(i+1);
             this.players.add(player);
         }
         for(int j = 0; j < botNum; j++){
-            Player autoPlayer = new AutoPlayer("Bot"+ (j+i),  true);
+            switch (i+j){
+
+                case 1: name = "Thimble"; break;
+                case 2: name = "Iron"; break;
+                case 3: name = "Hat"; break;
+            }
+            Player autoPlayer = new AutoPlayer(name,  true);
             autoPlayer.setPlayerNumber(j+i+1);
             this.players.add(autoPlayer);
         }
         activePlayer = players.get(0);
+        activePlayer.setActivePlayer(true);
 
     }
 
@@ -626,7 +642,7 @@ public class GameModel {
         ArrayList<Player> importedPLayers = new ArrayList<>();
         createGameBoard();
         setEnableRoll(true);
-        boolean dontUpdate[] = new boolean[4];
+        boolean[] dontUpdate = new boolean[4];
         setEnableRoll(false);
 
 
@@ -634,6 +650,7 @@ public class GameModel {
         for (Player p :
                 players) {
             p = Player.deserializeFromXML("xml folder\\" + p.getName() + ".xml");
+
             dontUpdate[k] = p.getPosition() == players.get(k).getPosition();
             if (p.getPosition() != players.get(k).getPosition())
                 p.setPrevPosition(players.get(k).getPosition());
@@ -655,7 +672,7 @@ public class GameModel {
                 activePlayer = players.get(i);
                 currTurn = i;
             }
-            if (!dontUpdate[i])
+            if (!dontUpdate[i] || players.get(i).getRolls()[0] == 0)
                 views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
         }
     }
