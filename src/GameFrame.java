@@ -319,7 +319,7 @@ public class GameFrame extends JFrame implements GameView {
 
         this.mainPanel.revalidate();
         this.playerPanel.revalidate();
-
+        this.playerPanel.setBorder(BorderFactory.createEmptyBorder(0,50,0,50));
         this.add(playerPanel, BorderLayout.LINE_END);
         this.add(mainPanel, BorderLayout.CENTER);
 

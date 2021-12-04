@@ -1,0 +1,343 @@
+<person>
+    <entry>
+        <key>0</key>
+        <value>
+&lt;name&gt;Go&lt;/name&gt;
+&lt;cost&gt;0&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>1</key>
+        <value>
+&lt;name&gt;Sparks Street&lt;/name&gt;
+&lt;cost&gt;60&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=150,g=75,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>2</key>
+        <value>
+&lt;name&gt;Lebreton Flats&lt;/name&gt;
+&lt;cost&gt;60&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=150,g=75,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>3</key>
+        <value>
+&lt;name&gt;wellington Street&lt;/name&gt;
+&lt;cost&gt;100&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>4</key>
+        <value>
+&lt;name&gt;laurier Avenue&lt;/name&gt;
+&lt;cost&gt;100&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>5</key>
+        <value>
+&lt;name&gt;Bytown&amp;Prescott Railway&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;railroad&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>6</key>
+        <value>
+&lt;name&gt;waller Street&lt;/name&gt;
+&lt;cost&gt;120&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>7</key>
+        <value>
+&lt;name&gt;bronson Avenue&lt;/name&gt;
+&lt;cost&gt;180&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=175,b=175]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;50&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>8</key>
+        <value>
+&lt;name&gt;Jail&lt;/name&gt;
+&lt;cost&gt;0&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=255]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>9</key>
+        <value>
+&lt;name&gt;Hurdman Road&lt;/name&gt;
+&lt;cost&gt;180&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=175,b=175]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;100&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>10</key>
+        <value>
+&lt;name&gt;Canadian Pacific Railway&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;railroad&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>11</key>
+        <value>
+&lt;name&gt;Lett Street&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=175,b=175]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;100&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>12</key>
+        <value>
+&lt;name&gt;lampman Crescent&lt;/name&gt;
+&lt;cost&gt;220&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=200,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;100&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>13</key>
+        <value>
+&lt;name&gt;macKay Street&lt;/name&gt;
+&lt;cost&gt;220&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=200,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;100&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>14</key>
+        <value>
+&lt;name&gt;slater Street&lt;/name&gt;
+&lt;cost&gt;240&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=200,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;100&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>15</key>
+        <value>
+&lt;name&gt;Canadian National Railway&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;railroad&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>16</key>
+        <value>
+&lt;name&gt;thompson Street&lt;/name&gt;
+&lt;cost&gt;260&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;150&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>17</key>
+        <value>
+&lt;name&gt;sweetLand Avenue&lt;/name&gt;
+&lt;cost&gt;260&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;150&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>18</key>
+        <value>
+&lt;name&gt;sloper Place&lt;/name&gt;
+&lt;cost&gt;280&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;150&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>19</key>
+        <value>
+&lt;name&gt;Water Works&lt;/name&gt;
+&lt;cost&gt;100&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;ultility&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>20</key>
+        <value>
+&lt;name&gt;New York Central Railway&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=0]&lt;/color&gt;
+&lt;cardType&gt;railroad&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>21</key>
+        <value>
+&lt;name&gt;perly Drive&lt;/name&gt;
+&lt;cost&gt;300&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;150&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>22</key>
+        <value>
+&lt;name&gt;morrison Street&lt;/name&gt;
+&lt;cost&gt;300&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;150&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>23</key>
+        <value>
+&lt;name&gt;Go to Jail&lt;/name&gt;
+&lt;cost&gt;0&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=0,b=255]&lt;/color&gt;
+&lt;cardType&gt;jail&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>24</key>
+        <value>
+&lt;name&gt;keefer Street&lt;/name&gt;
+&lt;cost&gt;320&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>25</key>
+        <value>
+&lt;name&gt;mcLeod Street&lt;/name&gt;
+&lt;cost&gt;350&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>26</key>
+        <value>
+&lt;name&gt;parliament Hill&lt;/name&gt;
+&lt;cost&gt;400&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>27</key>
+        <value>
+&lt;name&gt;Electric Company&lt;/name&gt;
+&lt;cost&gt;200&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=255,g=255,b=255]&lt;/color&gt;
+&lt;cardType&gt;ultility&lt;/cardType&gt;
+&lt;houseCost&gt;0&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>28</key>
+        <value>
+&lt;name&gt;rideau Canal&lt;/name&gt;
+&lt;cost&gt;420&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=255,b=0]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>29</key>
+        <value>
+&lt;name&gt;street 21&lt;/name&gt;
+&lt;cost&gt;450&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=135,b=225]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+    <entry>
+        <key>30</key>
+        <value>
+&lt;name&gt;street 22&lt;/name&gt;
+&lt;cost&gt;500&lt;/cost&gt;
+&lt;color&gt;java.awt.Color[r=0,g=135,b=225]&lt;/color&gt;
+&lt;cardType&gt;property&lt;/cardType&gt;
+&lt;houseCost&gt;200&lt;/houseCost&gt;
+&lt;isOwned&gt;false&lt;/isOwned&gt;
+</value>
+    </entry>
+</person>
