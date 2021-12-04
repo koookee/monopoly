@@ -376,7 +376,7 @@ public class GameModel {
 
     private void botLandOnProperty() {
 
-        if(currentCard.isOwned()){
+        if(currentCard.isOwned() && currentCard.getOwner() != activePlayer){
             activePlayer.payRent(currentCard.getOwner(),currentCard);
             for(GameView view: views){
                 view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
@@ -393,7 +393,7 @@ public class GameModel {
     public void botPlay() {
         roll();
         botLandOnProperty();
-        if (dice1 == dice2){
+        if (dice1 == dice2 && activePlayer.getNumTimeRolledDouble() <= 3){
             botPlay();
         }
         else nextTurn();
@@ -403,7 +403,7 @@ public class GameModel {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
-        System.out.println(dice1 + " " + dice2);
+
 
 
 
@@ -637,6 +637,7 @@ public class GameModel {
             if (p.getPosition() != players.get(k).getPosition())
                 p.setPrevPosition(players.get(k).getPosition());
             if (p.getRolls()[0] != 0) setEnableRoll(false);
+            else if (p.getRolls()[0] == p.getRolls()[1])setEnableRoll(true);
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {
