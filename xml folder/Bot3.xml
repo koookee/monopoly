@@ -4,8 +4,11 @@
   <void property="bot">
    <boolean>true</boolean>
   </void>
+  <void property="hasRolled">
+   <boolean>true</boolean>
+  </void>
   <void property="money">
-   <int>1294</int>
+   <int>1132</int>
   </void>
   <void property="name">
    <string>Bot3</string>
@@ -14,40 +17,40 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>16</int>
+   <int>17</int>
   </void>
   <void property="prevPosition">
-   <int>11</int>
+   <int>6</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
     <void method="add">
      <object class="Card">
       <void property="cardType">
-       <object class="java.lang.Enum" method="valueOf">
+       <object class="java.lang.Enum" id="Card$CardType0" method="valueOf">
         <class>Card$CardType</class>
         <string>property</string>
        </object>
       </void>
       <void property="color">
        <object class="java.awt.Color">
+        <int>0</int>
         <int>255</int>
-        <int>175</int>
-        <int>175</int>
+        <int>255</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>200</int>
+       <int>120</int>
       </void>
       <void property="hotelCost">
-       <int>100</int>
+       <int>50</int>
       </void>
       <void property="houseCost">
-       <int>100</int>
+       <int>50</int>
       </void>
       <void property="name">
-       <string>Lett Street</string>
+       <string>waller Street</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -56,19 +59,56 @@
        <object idref="AutoPlayer0"/>
       </void>
       <void property="position">
-       <int>11</int>
+       <int>6</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Card">
+      <void property="cardType">
+       <object idref="Card$CardType0"/>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>255</int>
+        <int>0</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>260</int>
+      </void>
+      <void property="hotelCost">
+       <int>150</int>
+      </void>
+      <void property="houseCost">
+       <int>150</int>
+      </void>
+      <void property="name">
+       <string>sweetLand Avenue</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="AutoPlayer0"/>
+      </void>
+      <void property="position">
+       <int>17</int>
       </void>
      </object>
     </void>
    </object>
   </void>
+  <void id="Integer0" property="isInJail"/>
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>3</int>
+     <int>6</int>
     </void>
     <void index="1">
-     <int>2</int>
+     <int>5</int>
     </void>
    </array>
   </void>

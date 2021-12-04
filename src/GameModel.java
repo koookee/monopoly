@@ -247,6 +247,7 @@ public class GameModel {
         }
 
         if (dice1 == dice2){
+            activePlayer.setHasRolled(false);
             if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
                 announceJailTime();
                 setEnableRoll(false);
@@ -270,6 +271,7 @@ public class GameModel {
     }
 
     public void roll(){
+        activePlayer.setHasRolled(true);
         rollDice();
 
         checkJailRoll();
@@ -352,9 +354,12 @@ public class GameModel {
         this.updateStatus();
         this.changeTurn();
         activePlayer.setNumTimeRolledDouble(0);
+        activePlayer.setHasRolled(false);
+
         setEnableRoll(true);
         disableBuyButton();
         updateViews(0,0);
+
 
 
     }
@@ -627,6 +632,7 @@ public class GameModel {
         createGameBoard();
         setEnableRoll(true);
         boolean dontUpdate[] = new boolean[4];
+        setEnableRoll(false);
 
 
         int k = 0;
@@ -636,8 +642,10 @@ public class GameModel {
             dontUpdate[k] = p.getPosition() == players.get(k).getPosition();
             if (p.getPosition() != players.get(k).getPosition())
                 p.setPrevPosition(players.get(k).getPosition());
-            if (p.getRolls()[0] != 0) setEnableRoll(false);
+            if (!p.isHasRolled()) setEnableRoll(true);
             else if (p.getRolls()[0] == p.getRolls()[1])setEnableRoll(true);
+
+            System.out.println(p);
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {

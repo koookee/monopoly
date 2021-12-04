@@ -30,6 +30,7 @@ public class Player {
     private int numTimeRolledDouble;
     private boolean isActivePlayer;
     private int[] rolls;
+    private boolean hasRolled;
 
     public Player(){}
 
@@ -51,6 +52,7 @@ public class Player {
         this.numTimeRolledDouble =0;
         isActivePlayer = false;
         rolls = new int[2];
+        hasRolled =false;
     }
 
     public void setName(String name) {
@@ -61,8 +63,8 @@ public class Player {
         return rolls;
     }
 
-    public void setRolls(int[] rolls) {
-        this.rolls = rolls;
+    public boolean isHasRolled() {
+        return hasRolled;
     }
 
     @Override
@@ -81,7 +83,16 @@ public class Player {
                 ", numTimeRolledDouble=" + numTimeRolledDouble +
                 ", isActivePlayer=" + isActivePlayer +
                 ", rolls=" + Arrays.toString(rolls) +
+                ", hasRolled=" + hasRolled +
                 '}';
+    }
+
+    public void setHasRolled(boolean hasRolled) {
+        this.hasRolled = hasRolled;
+    }
+
+    public void setRolls(int[] rolls) {
+        this.rolls = rolls;
     }
 
     public boolean isActivePlayer() {
