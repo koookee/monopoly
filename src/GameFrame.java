@@ -42,6 +42,7 @@ public class GameFrame extends JFrame implements GameView {
     private JButton pass;
     private JButton importButton;
     private boolean savePressed;
+    private boolean iconUpdated;
 
     private WelcomeController welcomeControl;
 
@@ -64,6 +65,7 @@ public class GameFrame extends JFrame implements GameView {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
         savePressed = false;
+        iconUpdated = false;
 
 
 
@@ -374,8 +376,10 @@ public class GameFrame extends JFrame implements GameView {
 
         displayGUI();
 
-        if(model.getActivePlayer().isPlaying())
+        if(model.getActivePlayer().isPlaying() && !iconUpdated)
             updatePlayerIcon(model.getActivePlayer(), e.getRoll());
+        else iconUpdated = !iconUpdated;
+
 
     }
     @Override
@@ -511,13 +515,16 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController owned = new CardController(model);
         Card card = gameEvent.getCard();
-
-        owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
-
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 
         displayGUI();
+        updatePlayerIcon(model.getActivePlayer(),model.getActivePlayer().getRolls());
+        iconUpdated = true;
+
+        owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
+
+
     }
 
     /**
@@ -640,6 +647,7 @@ public class GameFrame extends JFrame implements GameView {
         if(roll[0] != 0 && roll[1] != 0){
             if(activePlayer.getName().equals("P1")){
                 //squares.get(position).add(icon);
+                System.out.println("here");
 
                 squares.get(prev).remove(icons[0]);
                 squares.get(position).add(icons[0],JLayeredPane.PALETTE_LAYER);

@@ -172,15 +172,7 @@ public class Card {
      * @return an int amount of the rent
      */
     public int getRent() {
-        int sameColor = 0;
-        for (Card c :
-                getOwner().getProperties()) {
-                if (c.getColor() == this.getColor()) {
-                    sameColor++;
-                }
-            }
-        if (cardType == CardType.property) return (int) (cost * (0.1* (sameColor+1.5)));
-
+        if (cardType == CardType.property) return (int) (cost * 0.1);
         return 0;
     }
 
