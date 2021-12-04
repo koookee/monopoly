@@ -273,6 +273,7 @@ public class GameModel {
         checkJailRoll();
 
 
+        updateViews(dice1,dice2);
         if(currentCard instanceof Jail){
             ((Jail) currentCard).putInJail(activePlayer);
             if (dice1 == dice2) setEnableRoll(false);
@@ -300,7 +301,7 @@ public class GameModel {
             dice2 = 0;
         }
 
-        updateViews(dice1,dice2);
+
 
     }
 
