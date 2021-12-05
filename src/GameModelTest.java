@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 
 public class GameModelTest extends TestCase {
     GameModel gm = new GameModel();
-
     protected void setUp(){
         gm.addPlayers(3, 1);
 
@@ -25,10 +24,11 @@ public class GameModelTest extends TestCase {
     }
 
     /**
+
      * testActivePlayer tests to see if ActivePlayer is working correctly.
      */
     public void testActivePlayer(){
-        assertEquals("P1", gm.getPlayers().get(0).getName());
+        assertEquals(gm.getActivePlayer(), gm.getPlayers().get(0));
     }
 
     /**
@@ -76,29 +76,19 @@ public class GameModelTest extends TestCase {
         assertEquals("UNDECIDED", GameModel.Status.valueOf("UNDECIDED").toString());
     }
 
-    /**
-     * testPlayChoice1 tests to see that when play(1) is called that the dice rolls a value.
-     */
-    public void testPlayChoice1(){
-      //  gm.play(1);
-        /*
-        gm.play(1);
-        assert(gm.roll != 0);
-        Needs to be implemented again
-         */
+    public void testNextTurn(){
+        gm.setCurrentCard(1);
+        gm.buyProperty();
+        assertEquals(gm.getActivePlayer().getProperties().get(0), gm.getCurrentCard());
     }
 
-    /**
-     * testPlayChoice5 tests to see that when play(5) is called that the ActivePlayer buys a property.
-     */
-    public void testPlayChoice5(){
-        /*
-        gm.setCurrentCard(1);
-       // gm.play(5);
-        assertEquals(1, gm.getActivePlayer().getProperties().size());
-        Needs to be implemented again
-         */
+    public void testBuyHouse(){
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+
+        assertEquals(gm.getCurrentCard().getHouses(), 1);
     }
+
 
 
 }

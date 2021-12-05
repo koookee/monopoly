@@ -119,7 +119,7 @@ public class GameModel {
             updateStatus();
 
         }
-        if(activePlayer.getIsInJail() == 3 ){
+        if(activePlayer.getIsInJail() >= 3 ){
             announceJailTime();
             activePlayer.setIsInJail(0);
             activePlayer.setMoney(activePlayer.getMoney() - 50);
