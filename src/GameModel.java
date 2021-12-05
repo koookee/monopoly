@@ -405,14 +405,14 @@ public class GameModel {
 
 
 //         For debugging purposes (can make players move to specific tiles)
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter roll 1");
-        int num = scanner.nextInt();
-        dice1 = num;
-        System.out.println("Enter roll 2");
-        num = scanner.nextInt();
-        dice2 = num;
-        roll = dice1 + dice2;
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter roll 1");
+//        int num = scanner.nextInt();
+//        dice1 = num;
+//        System.out.println("Enter roll 2");
+//        num = scanner.nextInt();
+//        dice2 = num;
+//        roll = dice1 + dice2;
         activePlayer.setRolls(new int[] {dice1, dice2});
     }
     /**
@@ -639,6 +639,7 @@ public class GameModel {
     }
 
     public void importXML() {
+
 
         ArrayList<Player> importedPLayers = new ArrayList<>();
         createGameBoard();

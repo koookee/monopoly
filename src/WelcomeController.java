@@ -19,7 +19,7 @@ public class WelcomeController {
         if (!directory.exists())
             directory.mkdirs();
         if (directory.listFiles().length != 0){
-            int importYesNo = JOptionPane.showOptionDialog(frame, "Do you want to use the same number of players as last time", null, JOptionPane.YES_NO_OPTION,
+            int importYesNo = JOptionPane.showOptionDialog(frame, "Do you want to load the last save", null, JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,null, new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
             File[] files = directory.listFiles();
             for (File f :

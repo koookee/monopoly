@@ -48,6 +48,8 @@ public class GameFrame extends JFrame implements GameView {
 
     private int[] startInformation;
 
+    private boolean hasImported;
+
 
     /**
      * Constructor for GameFrame the class
@@ -94,6 +96,7 @@ public class GameFrame extends JFrame implements GameView {
         icon4.setBounds(130,40, 50,50);
 
         enableBuy = false;
+        hasImported = false;
 
 
     }
@@ -355,6 +358,12 @@ public class GameFrame extends JFrame implements GameView {
         for (Integer key : model.getGameBoard().keySet()){
             updateCardGUI(model.getGameBoard().get(key));
         }
+
+        if (startInformation[1] == 0 && !hasImported) {
+            model.importXML();
+            hasImported = true;
+        }
+
 
 
         this.revalidate();
@@ -639,11 +648,16 @@ public class GameFrame extends JFrame implements GameView {
         int position = activePlayer.getPosition();
         int prev = activePlayer.getPrevPosition();
 
+
+
         if(prev != position){
-            squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
-            squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)],JLayeredPane.PALETTE_LAYER);
-            squares.get(prev).revalidate();
-            squares.get(prev).repaint();
+            if (roll[0] != 0) {
+
+                squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
+                squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)], JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
+            }
         }
 
 
