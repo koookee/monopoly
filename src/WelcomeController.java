@@ -16,6 +16,8 @@ public class WelcomeController {
         int numPlayer = 0;
 
         File directory = new File("xml folder\\");
+        if (!directory.exists())
+            directory.mkdirs();
         if (directory.listFiles().length != 0){
             int importYesNo = JOptionPane.showOptionDialog(frame, "Do you want to use the same number of players as last time", null, JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,null, new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);

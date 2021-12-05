@@ -25,9 +25,9 @@ public class Utilities extends Card{
             return 0;
         }
         else if(this.getOwner().getNumUtils() == 1){
-            return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*4;
+            return Math.abs((this.getOwner().getPosition() - this.getOwner().getPrevPosition()))*4;
         }else{
-            return (this.getOwner().getPosition() - this.getOwner().getPrevPosition())*10;
+            return Math.abs(this.getOwner().getPosition() - this.getOwner().getPrevPosition())*10;
         }
     }
 }
