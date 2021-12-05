@@ -263,13 +263,14 @@ public class GameModel {
     public void roll(){
         activePlayer.setHasRolled(true);
         rollDice();
-
+        enableBuyButton();
         checkJailRoll();
 
         if(currentCard instanceof Jail){
             ((Jail) currentCard).putInJail(activePlayer);
             if (dice1 == dice2) setEnableRoll(false);
             announceJail();
+            //disableBuyButton();
         }
         else if (currentCard.isOwned() && currentCard.getOwner()!= activePlayer) {
             if (!activePlayer.isBot()) {
@@ -288,7 +289,7 @@ public class GameModel {
         }
 
          */
-        enableBuyButton();
+
 
         if(activePlayer.getIsInJail() > 1){
             dice1 = 0;
@@ -419,7 +420,7 @@ public class GameModel {
      * @return the boolean of whether the player can buy the property or not
      */
     private boolean checkIfCanBuyProperty(){
-        if (activePlayer.getMoney() > currentCard.getCost() && currentCard.isOwned() == false) return true;
+        if (activePlayer.getMoney() > currentCard.getCost() && currentCard.isOwned() == false && currentCard.getCost() != 0) return true;
         return false;
     }
 
