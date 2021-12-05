@@ -487,10 +487,9 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void unownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
-        buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
+        closeBuyWindow();
         displayGUI();
     }
 
@@ -511,7 +510,6 @@ public class GameFrame extends JFrame implements GameView {
         iconUpdated = true;
 
         owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
-
 
     }
 
@@ -622,6 +620,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    @Override
+    public void closeBuyWindow() {
+        buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
+    }
 
     /**
      * Updates the player icons on the board GUI
