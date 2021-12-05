@@ -88,7 +88,4 @@ public class GameModelTest extends TestCase {
 
         assertEquals(gm.getCurrentCard().getHouses(), 1);
     }
-
-
-
 }

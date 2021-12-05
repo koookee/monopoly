@@ -1,11 +1,12 @@
+
 /**
  * @author Andre, Jack, Cassidy, Hussein
  * This class is to test the game model class.
  */
 
-import junit.framework.TestCase;
+        import junit.framework.TestCase;
 
-import java.awt.*;
+        import java.awt.*;
 
 public class PlayerTest extends TestCase {
     Player testPlayer = new Player("testPlayer", false);
