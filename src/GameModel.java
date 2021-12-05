@@ -4,10 +4,18 @@
  *
  */
 
-import javax.swing.*;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
-import java.io.File;
-import java.sql.SQLOutput;
+import java.io.*;
 import java.util.*;
 
 public class GameModel {
@@ -685,10 +693,13 @@ public class GameModel {
         WINNER,
         UNDECIDED,
     }
-
+    // Menu choice
+    // original.xml
+    // international.xml
     public void save(){
         File directory = new File("xml folder\\");
         File[] files = directory.listFiles();
+        File temp = new File("src/original.xml");
         for (File f :
                 files) {
             f.delete();
@@ -696,6 +707,57 @@ public class GameModel {
         for (Player p :
                 players) {
             p.serializeToXML("xml folder\\"+p.getName() +".xml");
+        }
+        try{
+            DocumentBuilder builder = null;
+            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document document = builder.newDocument();
+            Element root = document.createElement("original");
+            for(int key : gameBoard.keySet()){
+
+                Card value = gameBoard.get(key);
+
+                Element newNode = document.createElement("entry");
+                Element newKey = document.createElement("key");
+                Element newValue = document.createElement("value");
+
+                newKey.setTextContent(key + "");
+
+
+                StringWriter sw = new StringWriter();
+
+                newValue.setTextContent(value.toString());
+
+                newNode.appendChild(newKey);
+                newNode.appendChild(newValue);
+
+                root.appendChild(newNode);
+
+            }
+            document.appendChild(root);
+
+            TransformerFactory y = TransformerFactory.newInstance();
+            Transformer transformer = y.newTransformer();
+            DOMSource source = new DOMSource(document);
+            FileWriter write = new FileWriter(new File("src/data.xml"));
+            StreamResult result = new StreamResult(write);
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt%7Dindent-amount", "4");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.transform(source, result);
+            /*
+            Source source = new DOMSource(document);
+            File file = new File("data.xml");
+            Result result = new StreamResult(file);*/
+            //transformer.transform(source,result);
+
+
+        }catch(IOException | TransformerConfigurationException ex){
+            ex.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
 

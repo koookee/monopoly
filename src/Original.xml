@@ -1,434 +1,242 @@
-<GameModel>
-    <BoardElement>
-        <Card>
-            <name>Go</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Sparks Street</name>
-            <cost>60</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>2</initialRent>
-            <house1Rent>10</house1Rent>
-            <house2Rent>30</house2Rent>
-            <house3Rent>90</house3Rent>
-            <house4Rent>160</house4Rent>
-            <hotelRent>250</hotelRent>
-            <color>BROWN</color>
-            <numOfColors>2</numOfColors>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Lebreton Flats</name>
-            <cost>60</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>4</initialRent>
-            <house1Rent>20</house1Rent>
-            <house2Rent>60</house2Rent>
-            <house3Rent>180</house3Rent>
-            <house4Rent>320</house4Rent>
-            <hotelRent>450</hotelRent>
-            <color>BROWN</color>
-            <numOfColors>2</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <RailRoad>
-            <name>Reading Railroad</name>
-            <cost>200</cost>
-        </RailRoad>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Wellington Street</name>
-            <cost>100</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>6</initialRent>
-            <house1Rent>30</house1Rent>
-            <house2Rent>90</house2Rent>
-            <house3Rent>270</house3Rent>
-            <house4Rent>400</house4Rent>
-            <hotelRent>550</hotelRent>
-            <color>LIGHTBLUE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Laurier Avenue</name>
-            <cost>100</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>6</initialRent>
-            <house1Rent>30</house1Rent>
-            <house2Rent>90</house2Rent>
-            <house3Rent>270</house3Rent>
-            <house4Rent>400</house4Rent>
-            <hotelRent>550</hotelRent>
-            <color>LIGHTBLUE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Connecticut Avenue</name>
-            <cost>120</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>8</initialRent>
-            <house1Rent>40</house1Rent>
-            <house2Rent>100</house2Rent>
-            <house3Rent>300</house3Rent>
-            <house4Rent>450</house4Rent>
-            <hotelRent>600</hotelRent>
-            <color>LIGHTBLUE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <LandOnJail>
-            <name>In Jail - Just Visiting</name>
-            <cost>0</cost>
-        </LandOnJail>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>ST.Charles Place</name>
-            <cost>140</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>10</initialRent>
-            <house1Rent>50</house1Rent>
-            <house2Rent>150</house2Rent>
-            <house3Rent>450</house3Rent>
-            <house4Rent>625</house4Rent>
-            <hotelRent>750</hotelRent>
-            <color>PURPLE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Utility>
-            <name>Electric Company</name>
-            <cost>150</cost>
-        </Utility>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>States Avenue</name>
-            <cost>140</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>10</initialRent>
-            <house1Rent>50</house1Rent>
-            <house2Rent>150</house2Rent>
-            <house3Rent>450</house3Rent>
-            <house4Rent>625</house4Rent>
-            <hotelRent>750</hotelRent>
-            <color>PURPLE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Virginia Avenue</name>
-            <cost>160</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>12</initialRent>
-            <house1Rent>60</house1Rent>
-            <house2Rent>180</house2Rent>
-            <house3Rent>500</house3Rent>
-            <house4Rent>700</house4Rent>
-            <hotelRent>900</hotelRent>
-            <color>PURPLE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <RailRoad>
-            <name>Pennsylvania Railroad</name>
-            <cost>200</cost>
-        </RailRoad>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>ST. James Place</name>
-            <cost>180</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>14</initialRent>
-            <house1Rent>70</house1Rent>
-            <house2Rent>200</house2Rent>
-            <house3Rent>550</house3Rent>
-            <house4Rent>750</house4Rent>
-            <hotelRent>950</hotelRent>
-            <color>ORANGE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Tenessee Avenue</name>
-            <cost>180</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>14</initialRent>
-            <house1Rent>70</house1Rent>
-            <house2Rent>200</house2Rent>
-            <house3Rent>550</house3Rent>
-            <house4Rent>750</house4Rent>
-            <hotelRent>950</hotelRent>
-            <color>ORANGE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>New York Avenue</name>
-            <cost>200</cost>
-            <costPerHouse>100</costPerHouse>
-            <initialRent>16</initialRent>
-            <house1Rent>80</house1Rent>
-            <house2Rent>220</house2Rent>
-            <house3Rent>600</house3Rent>
-            <house4Rent>800</house4Rent>
-            <hotelRent>1000</hotelRent>
-            <color>ORANGE</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <FreeParking>
-            <name>Free Parking</name>
-            <cost>0</cost>
-        </FreeParking>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Kentucky Avenue</name>
-            <cost>220</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>18</initialRent>
-            <house1Rent>90</house1Rent>
-            <house2Rent>250</house2Rent>
-            <house3Rent>700</house3Rent>
-            <house4Rent>875</house4Rent>
-            <hotelRent>1050</hotelRent>
-            <color>RED</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Indiana Avenue</name>
-            <cost>220</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>18</initialRent>
-            <house1Rent>90</house1Rent>
-            <house2Rent>250</house2Rent>
-            <house3Rent>700</house3Rent>
-            <house4Rent>875</house4Rent>
-            <hotelRent>1050</hotelRent>
-            <color>RED</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Illinois Avenue</name>
-            <cost>240</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>20</initialRent>
-            <house1Rent>100</house1Rent>
-            <house2Rent>300</house2Rent>
-            <house3Rent>750</house3Rent>
-            <house4Rent>925</house4Rent>
-            <hotelRent>1110</hotelRent>
-            <color>RED</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <RailRoad>
-            <name>B&amp;O RailRoad</name>
-            <cost>200</cost>
-        </RailRoad>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Atlantic Avenue</name>
-            <cost>260</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>22</initialRent>
-            <house1Rent>110</house1Rent>
-            <house2Rent>330</house2Rent>
-            <house3Rent>800</house3Rent>
-            <house4Rent>975</house4Rent>
-            <hotelRent>1150</hotelRent>
-            <color>YELLOW</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Ventnor Avenue</name>
-            <cost>260</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>22</initialRent>
-            <house1Rent>110</house1Rent>
-            <house2Rent>330</house2Rent>
-            <house3Rent>800</house3Rent>
-            <house4Rent>975</house4Rent>
-            <hotelRent>1150</hotelRent>
-            <color>YELLOW</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Utility>
-            <name>Water Works</name>
-            <cost>150</cost>
-        </Utility>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Marvin Gardens</name>
-            <cost>280</cost>
-            <costPerHouse>150</costPerHouse>
-            <initialRent>24</initialRent>
-            <house1Rent>120</house1Rent>
-            <house2Rent>360</house2Rent>
-            <house3Rent>850</house3Rent>
-            <house4Rent>1025</house4Rent>
-            <hotelRent>1200</hotelRent>
-            <color>YELLOW</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <GoToJail>
-            <name>In Jail</name>
-            <cost>0</cost>
-        </GoToJail>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Pacific Avenue</name>
-            <cost>300</cost>
-            <costPerHouse>200</costPerHouse>
-            <initialRent>26</initialRent>
-            <house1Rent>130</house1Rent>
-            <house2Rent>390</house2Rent>
-            <house3Rent>900</house3Rent>
-            <house4Rent>1100</house4Rent>
-            <hotelRent>1275</hotelRent>
-            <color>GREEN</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>North Carolina Avenue</name>
-            <cost>300</cost>
-            <costPerHouse>200</costPerHouse>
-            <initialRent>26</initialRent>
-            <house1Rent>130</house1Rent>
-            <house2Rent>390</house2Rent>
-            <house3Rent>900</house3Rent>
-            <house4Rent>1100</house4Rent>
-            <hotelRent>1275</hotelRent>
-            <color>GREEN</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Pennsylvania Avenue</name>
-            <cost>320</cost>
-            <costPerHouse>200</costPerHouse>
-            <initialRent>28</initialRent>
-            <house1Rent>150</house1Rent>
-            <house2Rent>450</house2Rent>
-            <house3Rent>1000</house3Rent>
-            <house4Rent>1200</house4Rent>
-            <hotelRent>1400</hotelRent>
-            <color>GREEN</color>
-            <numOfColors>3</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <RailRoad>
-            <name>ShortLine Railroad</name>
-            <cost>200</cost>
-        </RailRoad>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Free Pass</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Park Place</name>
-            <cost>350</cost>
-            <costPerHouse>200</costPerHouse>
-            <initialRent>35</initialRent>
-            <house1Rent>175</house1Rent>
-            <house2Rent>500</house2Rent>
-            <house3Rent>1100</house3Rent>
-            <house4Rent>1300</house4Rent>
-            <hotelRent>1500</hotelRent>
-            <color>DARKBLUE</color>
-            <numOfColors>2</numOfColors>
-        </Property>
-    </BoardElement>
-    <BoardElement>
-        <Tax>
-            <name>Luxury Tax</name>
-            <cost>100</cost>
-        </Tax>
-    </BoardElement>
-    <BoardElement>
-        <Property>
-            <name>Boardwalk</name>
-            <cost>400</cost>
-            <costPerHouse>200</costPerHouse>
-            <initialRent>50</initialRent>
-            <house1Rent>200</house1Rent>
-            <house2Rent>600</house2Rent>
-            <house3Rent>1400</house3Rent>
-            <house4Rent>1700</house4Rent>
-            <hotelRent>200</hotelRent>
-            <color>DARKBLUE</color>
-            <numOfColors>2</numOfColors>
-        </Property>
-    </BoardElement>
-</GameModel>
+<GameBoard>
+    <Card>
+        <name>Go</name>
+        <cost>0</cost>
+        <color>Color.white</color>
+        <type>property</type>
+        <houseCost>0</houseCost>
+        <hotelCost>0</hotelCost>
+    </Card>
+    <Card>
+        <name>Sparks Street</name>
+        <cost>60</cost>
+        <color>new Color(150, 75, 0)</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Lebreton Flats</name>
+        <cost>60</cost>
+        <color>new Color(150, 75,0)</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Wellington Street</name>
+        <cost>100</cost>
+        <color>Color.CYAN</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Laurier Avenue</name>
+        <cost>100</cost>
+        <color>Color.CYAN</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Bytown and Preston Railway</name>
+        <cost>200</cost>
+        <color>Color.black</color>
+        <type>railroad</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Waller Street</name>
+        <cost>120</cost>
+        <color>Color.CYAN</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Bronson Avenue</name>
+        <cost>180</cost>
+        <color>Color.pink</color>
+        <type>property</type>
+        <houseCost>50</houseCost>
+        <hotelCost>50</hotelCost>
+    </Card>
+    <Card>
+        <name>Jail</name>
+        <cost>0</cost>
+        <color>Color.blue</color>
+        <type>jail</type>
+        <houseCost>0</houseCost>
+        <hotelCost>0</hotelCost>
+    </Card>
+    <Card>
+        <name>Hurdman Road</name>
+        <cost>180</cost>
+        <color>Color.pink</color>
+        <type>property</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>Canadian Pacific Railway</name>
+        <cost>200</cost>
+        <color>Color.black</color>
+        <type>railroad</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>Lett Street</name>
+        <cost>200</cost>
+        <color>Color.pink</color>
+        <type>property</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>Lampman Crescent</name>
+        <cost>220</cost>
+        <color>Color.orange</color>
+        <type>property</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>MacKay Street</name>
+        <cost>220</cost>
+        <color>Color.orange</color>
+        <type>property</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>Slater Street</name>
+        <cost>240</cost>
+        <color>Color.orange</color>
+        <type>property</type>
+        <houseCost>100</houseCost>
+        <hotelCost>100</hotelCost>
+    </Card>
+    <Card>
+        <name>Canadian National Railway</name>
+        <cost>200</cost>
+        <color>Color.black</color>
+        <type>railroad</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Thompson Street</name>
+        <cost>260</cost>
+        <color>Color.red</color>
+        <type>property</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Sweetland Avenue</name>
+        <cost>260</cost>
+        <color>Color.red</color>
+        <type>property</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Sloper Place</name>
+        <cost>280</cost>
+        <color>Color.red</color>
+        <type>property</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Water Works</name>
+        <cost>100</cost>
+        <color>Color.white</color>
+        <type>ultility</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>New York Central Railway</name>
+        <cost>200</cost>
+        <color>Color.black</color>
+        <type>railroad</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Perly Drive</name>
+        <cost>300</cost>
+        <color>Color.yellow</color>
+        <type>property</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Morrison Street</name>
+        <cost>300</cost>
+        <color>Color.yellow</color>
+        <type>property</type>
+        <houseCost>150</houseCost>
+        <hotelCost>150</hotelCost>
+    </Card>
+    <Card>
+        <name>Go to Jail</name>
+        <cost>0</cost>
+        <color>Color.blue</color>
+        <type>jail</type>
+        <houseCost>0</houseCost>
+        <hotelCost>0</hotelCost>
+    </Card>
+    <Card>
+        <name>Keefer Street</name>
+        <cost>320</cost>
+        <color>Color.yellow</color>
+        <type>property</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+    <Card>
+        <name>McLeod Street</name>
+        <cost>350</cost>
+        <color>Color.green</color>
+        <type>property</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+    <Card>
+        <name>Parliament Hill</name>
+        <cost>400</cost>
+        <color>Color.green</color>
+        <type>property</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+    <Card>
+        <name>Electric Company</name>
+        <cost>200</cost>
+        <color>Color.white</color>
+        <type>ultility</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+    <Card>
+        <name>Rideau Canal</name>
+        <cost>420</cost>
+        <color>Color.green</color>
+        <type>property</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+    <Card>
+        <name>Street 21</name>
+        <cost>450</cost>
+        <color>new Color(0, 135, 2225)</color>
+        <type>property</type>
+        <houseCost>200</houseCost>
+        <hotelCost>200</hotelCost>
+    </Card>
+</GameBoard>

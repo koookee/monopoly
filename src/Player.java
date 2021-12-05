@@ -317,7 +317,7 @@ public class Player {
 
     public static void main(String[] args) {
         Player player = new Player("Joe", false);
-        player.buyCard(new Card("card", 0, 2, Color.black));
+        //player.buyCard(new Card("card", 0, 2, Color.black));
         player.serializeToXML("player.xml");
 
 

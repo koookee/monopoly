@@ -1,10 +1,7 @@
 import java.awt.*;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * @author Andre, Jack, Cassidy, Hussein
@@ -80,6 +77,17 @@ public class Card {
         this.houseCost = houseCost;
         this.hotelCost = hotelCost;
         this.isOwned = false;
+    }
+
+    public String bla(){
+        String str = "\n";
+        str += "<name>" + this.name + "</name>";
+        str += "<cost>" + this.cost + "</cost>";
+        str += "<color>" + this.color + "</color>";
+        str += "<cardType>" + this.cardType + "</cardType>";
+        str += "<houseCost>" + this.houseCost + "</houseCost>";
+        str += "<isOwned>" + this.isOwned + "</isOwned>";
+        return str;
     }
 
     public void setName(String name) {
@@ -308,11 +316,11 @@ public class Card {
     }
 
     public static void main(String[] args) {
-        Card card = new Card("card", 0, 2, Color.black);
-        card.serializeToXML("card.xml");
+        //Card card = new Card("card", 0, 2, Color.black);
+        //card.serializeToXML("card.xml");
 
-        Card card1 = Card.deserializeFromXML("card.xml");
-        System.out.println(card1);
+        //Card card1 = Card.deserializeFromXML("card.xml");
+        //System.out.println(card1);
     }
 
 

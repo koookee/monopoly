@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Railroad extends Card{
+public class Railroad extends Card {
     public Railroad(){
 
     }

@@ -1,32 +1,29 @@
 <GameModel>
-    <BoardElement>
-        <Card>
-            <name>Go</name>
-            <cost>0</cost>
-        </Card>
-    </BoardElement>
-    <BoardElement>
-        <Card>
-            <name>Sparks Street</name>
-            <cost>60</cost>
-            <costPerHouse>50</costPerHouse>
-            <initialRent>2</initialRent>
-            <house1Rent>10</house1Rent>
-            <house2Rent>30</house2Rent>
-            <house3Rent>90</house3Rent>
-            <house4Rent>160</house4Rent>
-            <hotelRent>250</hotelRent>
-            <color>BROWN</color>
-            <numOfColors>2</numOfColors>
-        </Card>
-    </BoardElement>
-    <BoardElement>
+    <Card>
+        <type>property</type>
+        <name>Go</name>
+        <cost>0</cost>
+    </Card>
+    <Card>
+        <type>property</type>
+        <name>Sparks Street</name>
+        <cost>60</cost>
+        <costPerHouse>50</costPerHouse>
+        <initialRent>2</initialRent>
+        <house1Rent>10</house1Rent>
+        <house2Rent>30</house2Rent>
+        <house3Rent>90</house3Rent>
+        <house4Rent>160</house4Rent>
+        <hotelRent>250</hotelRent>
+        <numOfColors>2</numOfColors>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Lebreton Flats</name>
             <cost>60</cost>
@@ -40,14 +37,14 @@
             <color>BROWN</color>
             <numOfColors>2</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <RailRoad>
             <name>Reading Railroad</name>
             <cost>200</cost>
         </RailRoad>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Wellington Street</name>
             <cost>100</cost>
@@ -61,14 +58,14 @@
             <color>LIGHTBLUE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Laurier Avenue</name>
             <cost>100</cost>
@@ -82,8 +79,8 @@
             <color>LIGHTBLUE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Connecticut Avenue</name>
             <cost>120</cost>
@@ -97,14 +94,14 @@
             <color>LIGHTBLUE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <LandOnJail>
             <name>In Jail - Just Visiting</name>
             <cost>0</cost>
         </LandOnJail>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>ST.Charles Place</name>
             <cost>140</cost>
@@ -118,14 +115,14 @@
             <color>PURPLE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Utility>
             <name>Electric Company</name>
             <cost>150</cost>
         </Utility>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>States Avenue</name>
             <cost>140</cost>
@@ -139,8 +136,8 @@
             <color>PURPLE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Virginia Avenue</name>
             <cost>160</cost>
@@ -154,14 +151,14 @@
             <color>PURPLE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <RailRoad>
             <name>Pennsylvania Railroad</name>
             <cost>200</cost>
         </RailRoad>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>ST. James Place</name>
             <cost>180</cost>
@@ -175,14 +172,14 @@
             <color>ORANGE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Tenessee Avenue</name>
             <cost>180</cost>
@@ -196,8 +193,8 @@
             <color>ORANGE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>New York Avenue</name>
             <cost>200</cost>
@@ -211,14 +208,14 @@
             <color>ORANGE</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <FreeParking>
             <name>Free Parking</name>
             <cost>0</cost>
         </FreeParking>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Kentucky Avenue</name>
             <cost>220</cost>
@@ -232,14 +229,14 @@
             <color>RED</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Indiana Avenue</name>
             <cost>220</cost>
@@ -253,8 +250,8 @@
             <color>RED</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Illinois Avenue</name>
             <cost>240</cost>
@@ -268,14 +265,14 @@
             <color>RED</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <RailRoad>
             <name>B&amp;O RailRoad</name>
             <cost>200</cost>
         </RailRoad>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Atlantic Avenue</name>
             <cost>260</cost>
@@ -289,8 +286,8 @@
             <color>YELLOW</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Ventnor Avenue</name>
             <cost>260</cost>
@@ -304,14 +301,14 @@
             <color>YELLOW</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Utility>
             <name>Water Works</name>
             <cost>150</cost>
         </Utility>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Marvin Gardens</name>
             <cost>280</cost>
@@ -325,14 +322,14 @@
             <color>YELLOW</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <GoToJail>
             <name>In Jail</name>
             <cost>0</cost>
         </GoToJail>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Pacific Avenue</name>
             <cost>300</cost>
@@ -346,8 +343,8 @@
             <color>GREEN</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>North Carolina Avenue</name>
             <cost>300</cost>
@@ -361,14 +358,14 @@
             <color>GREEN</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Pennsylvania Avenue</name>
             <cost>320</cost>
@@ -382,20 +379,20 @@
             <color>GREEN</color>
             <numOfColors>3</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <RailRoad>
             <name>ShortLine Railroad</name>
             <cost>200</cost>
         </RailRoad>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Card>
             <name>Free Pass</name>
             <cost>0</cost>
         </Card>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Park Place</name>
             <cost>350</cost>
@@ -409,14 +406,14 @@
             <color>DARKBLUE</color>
             <numOfColors>2</numOfColors>
         </Property>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Tax>
             <name>Luxury Tax</name>
             <cost>100</cost>
         </Tax>
-    </BoardElement>
-    <BoardElement>
+    </Card>
+    <Card>
         <Property>
             <name>Boardwalk</name>
             <cost>400</cost>
@@ -430,5 +427,5 @@
             <color>DARKBLUE</color>
             <numOfColors>2</numOfColors>
         </Property>
-    </BoardElement>
+    </Card>
 </GameModel>
