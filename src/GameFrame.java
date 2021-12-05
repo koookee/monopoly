@@ -475,6 +475,9 @@ public class GameFrame extends JFrame implements GameView {
             grid.add(nameAndCost);
             grid.add(button);
         }
+        if (buyArrOptions.size() == 0) {
+            grid.add(new JLabel("Nothing to buy"));
+        }
         buyOptionsWindow.setSize(600, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         buyOptionsWindow.setVisible(true);
