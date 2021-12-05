@@ -638,47 +638,12 @@ public class GameFrame extends JFrame implements GameView {
         int position = activePlayer.getPosition();
         int prev = activePlayer.getPrevPosition();
 
-        if(roll[0] != 0 && roll[1] != 0){
+        if(prev != position){
             squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
             squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)],JLayeredPane.PALETTE_LAYER);
             squares.get(prev).revalidate();
             squares.get(prev).repaint();
         }
-//            if(activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player1)){
-//                //squares.get(position).add(icon);
-//
-//
-//                squares.get(prev).remove(icons[0]);
-//                squares.get(position).add(icons[0],JLayeredPane.PALETTE_LAYER);
-//                squares.get(prev).revalidate();
-//                squares.get(prev).repaint();
-//
-//
-//            }else if(activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player2)){
-//
-//                squares.get(prev).remove(icons[1]);
-//                squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
-//                squares.get(prev).revalidate();
-//                squares.get(prev).repaint();
-//
-//            }
-//            else if (activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player3)) {
-//
-//                squares.get(prev).remove(icon3);
-//                squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
-//                squares.get(prev).revalidate();
-//                squares.get(prev).repaint();
-//
-//            }
-//            else if (activePlayer.getPlayerNumber().equals(Player.PlayerNumber.player4)|| position> topSquares-1 && position <= rightSquares-1) {
-//
-//                squares.get(prev).remove(icon4);
-//                squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
-//                squares.get(prev).revalidate();
-//                squares.get(prev).repaint();
-//
-//            }
-//        }
 
 
     }
