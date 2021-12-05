@@ -282,10 +282,13 @@ public class GameModel {
             }
 
         }
+        /*
         else if (currentCard.getCost()==0 || currentCard.getCost() > activePlayer.getMoney()){
             disableBuyButton();
         }
-        else enableBuyButton();
+
+         */
+        enableBuyButton();
 
         if(activePlayer.getIsInJail() > 1){
             dice1 = 0;
@@ -346,9 +349,11 @@ public class GameModel {
         disableBuyButton();
         updateViews(0,0);
 
-
-
+        for (GameView view : views) {
+            view.closeBuyWindow();
+        }
     }
+
     public void announceJailTime(){
         for(GameView view : views){
             view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));

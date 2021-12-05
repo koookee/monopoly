@@ -46,4 +46,6 @@ public interface GameView {
     void removePlayerIcon(Player p);
 
     void closeWindow();
+
+    void closeBuyWindow();
 }
