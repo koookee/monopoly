@@ -18,10 +18,10 @@ public class GameFrame extends JFrame implements GameView {
     private ArrayList<JLayeredPane> squares;
 
 
-    private final JLabel icon = new JLabel(new ImageIcon("boot.png"));
-    private final JLabel icon2 = new JLabel(new ImageIcon("pin.png"));
-    private final JLabel icon3 = new JLabel(new ImageIcon("iron.png"));
-    private final JLabel icon4 = new JLabel(new ImageIcon("hat.png"));
+    private final JLabel icon ;
+    private final JLabel icon2;
+    private final JLabel icon3;
+    private final JLabel icon4;
     private JButton rollButton;
 
     private JLabel[] icons;
@@ -56,6 +56,10 @@ public class GameFrame extends JFrame implements GameView {
      */
     public GameFrame() {
         super("Monopoly");
+        icon = new JLabel(new ImageIcon("boot.png"));
+        icon2 = new JLabel(new ImageIcon("pin.png"));
+        icon3 = new JLabel(new ImageIcon("iron.png"));
+        icon4 = new JLabel(new ImageIcon("hat.png"));
         this.model = new GameModel();
         this.squares = new ArrayList<>();
         this.squareBottomArr = new ArrayList<>();
@@ -347,6 +351,9 @@ public class GameFrame extends JFrame implements GameView {
      */
     public void displayGUI() {
         this.setLayout(new BorderLayout());
+
+
+
         //this.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height ));
 
         this.mainPanel.revalidate();
@@ -359,14 +366,12 @@ public class GameFrame extends JFrame implements GameView {
             updateCardGUI(model.getGameBoard().get(key));
         }
 
-        if (startInformation[1] == 0 && !hasImported) {
-            model.importXML();
-            hasImported = true;
-        }
+
 
 
 
         this.revalidate();
+
         this.setVisible(true);
     }
 
@@ -401,7 +406,10 @@ public class GameFrame extends JFrame implements GameView {
         if (p.isActivePlayer())
         playerPanel = paintPlayerInfo(p, roll);
 
+
         displayGUI();
+
+
 
 
         updatePlayerIcon(p, roll);
@@ -652,11 +660,11 @@ public class GameFrame extends JFrame implements GameView {
 
         if(prev != position){
             if (roll[0] != 0) {
-
                 squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
                 squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)], JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
+
             }
         }
 
@@ -672,6 +680,16 @@ public class GameFrame extends JFrame implements GameView {
         GameFrame gameFrame = new GameFrame();
 
         gameFrame.displayGUI();
+        //I know this is bad and not the way to do things but have mercy plz 
+        try {
+            if (gameFrame.startInformation[1] == 0 && !gameFrame.hasImported) {
+                gameFrame.model.importXML();
+                gameFrame.hasImported = true;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
 
     }
