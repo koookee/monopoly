@@ -610,8 +610,9 @@ public class GameFrame extends JFrame implements GameView {
             control.announceJailTime(this, "You have served your sentence and have been fined $50");
         }
         else {
-            control.announceJailTime(this, "You did not roll a double! \nTime in Jail: "
-                    + model.getActivePlayer().getIsInJail());
+            control.announceJailTime(this, "You did not roll a double! \nYou Rolled: " + gameEvent.getRoll()[0]+
+                    " " + gameEvent.getRoll()[1] +
+                    "\nTime in Jail: " + model.getActivePlayer().getIsInJail());
         }
     }
 
