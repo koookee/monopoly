@@ -112,29 +112,29 @@ public class WelcomeController {
 
         if (importYesNo == JOptionPane.YES_OPTION){
             model.setGameBoard(new File("originalcards1\\"));
-            try {
-                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
-                bw.write("originalcards1\\");
-                bw.close();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+//                bw.write("originalcards1\\");
+//                bw.close();
+//
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         else{
             model.setGameBoard(new File("internationalcards1\\"));
-            try {
-                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
-                bw.write("internationalcards1\\");
-                bw.close();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+//                bw.write("internationalcards1\\");
+//                bw.close();
+//
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
     }

@@ -4,8 +4,11 @@
   <void property="activePlayer">
    <boolean>true</boolean>
   </void>
+  <void property="hasRolled">
+   <boolean>true</boolean>
+  </void>
   <void property="money">
-   <int>1320</int>
+   <int>1080</int>
   </void>
   <void property="name">
    <string>Shoe</string>
@@ -20,7 +23,10 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>7</int>
+   <int>20</int>
+  </void>
+  <void property="prevPosition">
+   <int>16</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
@@ -34,23 +40,23 @@
       </void>
       <void property="color">
        <object class="java.awt.Color">
-        <int>255</int>
-        <int>175</int>
-        <int>175</int>
+        <int>116</int>
+        <int>83</int>
+        <int>164</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>180</int>
+       <int>220</int>
       </void>
       <void property="hotelCost">
-       <int>50</int>
+       <int>100</int>
       </void>
       <void property="houseCost">
-       <int>50</int>
+       <int>100</int>
       </void>
       <void property="name">
-       <string>Coral Avenue</string>
+       <string>MacKay Street</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -59,7 +65,40 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>7</int>
+       <int>13</int>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="Railroad">
+      <void property="cardType">
+       <object class="java.lang.Enum" method="valueOf">
+        <class>Card$CardType</class>
+        <string>railroad</string>
+       </object>
+      </void>
+      <void property="color">
+       <object class="java.awt.Color">
+        <int>0</int>
+        <int>0</int>
+        <int>0</int>
+        <int>255</int>
+       </object>
+      </void>
+      <void property="cost">
+       <int>200</int>
+      </void>
+      <void property="name">
+       <string>New York Central Railway</string>
+      </void>
+      <void property="owned">
+       <boolean>true</boolean>
+      </void>
+      <void property="owner">
+       <object idref="Player0"/>
+      </void>
+      <void property="position">
+       <int>20</int>
       </void>
      </object>
     </void>
@@ -68,10 +107,10 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>2</int>
+     <int>1</int>
     </void>
     <void index="1">
-     <int>5</int>
+     <int>3</int>
     </void>
    </array>
   </void>

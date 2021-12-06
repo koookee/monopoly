@@ -613,7 +613,29 @@ public class GameModel {
     public void save(){
         File directory = new File("xml folder\\");
         File[] files = directory.listFiles();
-        File temp = new File("src/original.xml");
+        if (new File("originalcards1\\" + gameBoard.get(0).getName() + ".xml").exists()) {
+            try {
+                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+                bw.write("originalcards1\\");
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+                bw.write("internationalcards1\\");
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         for (File f :
                 files) {
             f.delete();
@@ -635,9 +657,29 @@ public class GameModel {
         String gameBoardType = "";
 
 
+
         setEnableRoll(true);
         boolean[] dontUpdate = new boolean[4];
         setEnableRoll(false);
+
+
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader("Gameboard Setting\\gameBoard.txt"));
+            String s;
+            while ((s=br.readLine()) != null){
+                if(s.equals("originalcards1\\"))
+                    setGameBoard(new File("originalcards1\\"));
+                else
+                    setGameBoard(new File("internationalcards1\\"));
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
 
         int k = 0;
@@ -667,6 +709,7 @@ public class GameModel {
                 currTurn = i;
             }
             if (!dontUpdate[i] || players.get(i).getRolls()[0] == 0)
+
                 views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
         }
     }
