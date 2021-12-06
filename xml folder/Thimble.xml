@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <java version="11.0.9" class="java.beans.XMLDecoder">
-=======
-<<<<<<< HEAD
-<java version="11.0.9" class="java.beans.XMLDecoder">
- <object class="Player" id="Player0">
-  <void property="activePlayer">
-   <boolean>true</boolean>
-  </void>
-  <void property="money">
-   <int>1380</int>
-=======
-<java version="11.0.12" class="java.beans.XMLDecoder">
->>>>>>> BuyFeature
  <object class="Player">
   <void property="money">
    <int>1500</int>
->>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
   </void>
   <void property="name">
    <string>Thimble</string>
@@ -30,76 +16,11 @@
   <void property="playing">
    <boolean>true</boolean>
   </void>
-<<<<<<< HEAD
-=======
-  <void property="position">
-<<<<<<< HEAD
-   <int>6</int>
-=======
-   <int>7</int>
->>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
-  </void>
->>>>>>> BuyFeature
   <void property="properties">
-   <object class="java.util.ArrayList">
-    <void method="add">
-     <object class="Card">
-      <void property="cardType">
-       <object class="java.lang.Enum" method="valueOf">
-        <class>Card$CardType</class>
-        <string>property</string>
-       </object>
-      </void>
-      <void property="color">
-       <object class="java.awt.Color">
-        <int>0</int>
-        <int>255</int>
-        <int>255</int>
-        <int>255</int>
-       </object>
-      </void>
-      <void property="cost">
-       <int>120</int>
-      </void>
-      <void property="hotelCost">
-       <int>50</int>
-      </void>
-      <void property="houseCost">
-       <int>50</int>
-      </void>
-      <void property="name">
-       <string>Conch Street</string>
-      </void>
-      <void property="owned">
-       <boolean>true</boolean>
-      </void>
-      <void property="owner">
-       <object idref="Player0"/>
-      </void>
-      <void property="position">
-       <int>6</int>
-      </void>
-     </object>
-    </void>
-   </object>
+   <object class="java.util.ArrayList"/>
   </void>
   <void property="rolls">
-<<<<<<< HEAD
    <array class="int" length="2"/>
-=======
-   <array class="int" length="2">
-    <void index="0">
-<<<<<<< HEAD
-     <int>2</int>
-=======
-     <int>5</int>
->>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
-    </void>
-    <void index="1">
-     <int>2</int>
-    </void>
-   </array>
->>>>>>> BuyFeature
   </void>
  </object>
 </java>
