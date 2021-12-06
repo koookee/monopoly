@@ -10,9 +10,6 @@
   <void property="name">
    <string>Shoe</string>
   </void>
-  <void property="numTimeRolledDouble">
-   <int>1</int>
-  </void>
   <void property="playerNumber">
    <object class="java.lang.Enum" method="valueOf">
     <class>Player$PlayerNumber</class>
@@ -22,24 +19,11 @@
   <void property="playing">
    <boolean>true</boolean>
   </void>
-  <void property="position">
-   <int>15</int>
-  </void>
-  <void property="prevPosition">
-   <int>7</int>
-  </void>
   <void property="properties">
    <object class="java.util.ArrayList"/>
   </void>
   <void property="rolls">
-   <array class="int" length="2">
-    <void index="0">
-     <int>4</int>
-    </void>
-    <void index="1">
-     <int>4</int>
-    </void>
-   </array>
+   <array class="int" length="2"/>
   </void>
  </object>
 </java>

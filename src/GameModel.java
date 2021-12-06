@@ -291,7 +291,6 @@ public class GameModel {
     public void buy(){
         //if (activePlayer.getMoney() > currentCard.getCost()) {
         //    activePlayer.buyCard(currentCard);
-        //    views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
         //    disableBuyButton();
         //}
         clearBuyArrOptions();
@@ -709,8 +708,11 @@ public class GameModel {
                 currTurn = i;
             }
             if (!dontUpdate[i] || players.get(i).getRolls()[0] == 0)
+                for (GameView v :
+                        views) {
+                    v.updateFromImport(players.get(i), players.get(i).getRolls());
+                }
 
-                views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
         }
     }
 
