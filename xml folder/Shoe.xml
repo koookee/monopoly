@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.9" class="java.beans.XMLDecoder">
+<java version="11.0.12" class="java.beans.XMLDecoder">
  <object class="Player">
   <void property="activePlayer">
+   <boolean>true</boolean>
+  </void>
+  <void property="hasRolled">
    <boolean>true</boolean>
   </void>
   <void property="money">
@@ -19,11 +22,21 @@
   <void property="playing">
    <boolean>true</boolean>
   </void>
+  <void property="position">
+   <int>5</int>
+  </void>
   <void property="properties">
    <object class="java.util.ArrayList"/>
   </void>
   <void property="rolls">
-   <array class="int" length="2"/>
+   <array class="int" length="2">
+    <void index="0">
+     <int>2</int>
+    </void>
+    <void index="1">
+     <int>3</int>
+    </void>
+   </array>
   </void>
  </object>
 </java>
