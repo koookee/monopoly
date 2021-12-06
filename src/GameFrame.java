@@ -667,13 +667,20 @@ public class GameFrame extends JFrame implements GameView {
 
 
         if(prev != position){
-            if (roll[0] != 0) {
+            if (position == 0 ){
+                squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
+                squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)], JLayeredPane.PALETTE_LAYER);
+                squares.get(prev).revalidate();
+                squares.get(prev).repaint();
+            }
+            if (roll[0] !=0) {
                 squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
                 squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)], JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
 
             }
+
         }
 
 
