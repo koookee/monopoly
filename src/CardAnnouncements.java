@@ -15,7 +15,7 @@ private GameModel model;
       this.model = model;
     }
 
-    
+
 
     /**
      * Tells the player that they have to pay rent
@@ -25,17 +25,7 @@ private GameModel model;
     public void payRent(GameFrame frame, String message) {
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }
-
-    /**
-     * Gives the player the option to confirm whether they want to pass or not
-     * @param frame the game frame it's displayed on
-     * @param message the String message inside the popup
-     */
-    public void confirmPass(GameFrame frame, String message) {
-        int confirmed = JOptionPane.showConfirmDialog(null, message);
-        if(confirmed == JOptionPane.YES_OPTION){
-        }
-    }
+    
 
     public void payJailFee(GameFrame frame, String message){
         int confirm = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
