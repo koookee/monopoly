@@ -137,6 +137,9 @@ public class GameModelTest extends TestCase {
         assertEquals(930, gm.getActivePlayer().getMoney());
     }
 
+    /**
+     * testToJail tests to see that when the player is sent to jail that the player responds accordingly
+     */
     public void testToJail(){
         gm.getActivePlayer().goToJail();
         assertEquals(1 , gm.getActivePlayer().getIsInJail());
