@@ -4,52 +4,18 @@
 
 import javax.swing.*;
 
-public class CardController {
+public class CardAnnouncements {
 private GameModel model;
 
     /**
      * The constructor for the CardController class
      * @param model the game model that controls the logic
      */
-    public CardController(GameModel model){
+    public CardAnnouncements(GameModel model){
       this.model = model;
     }
 
-    /**
-     * Gives the player the option to buy a property
-     * @param frame the game frame it's displayed on
-     * @param message the String message inside the popup
-     */
-    public void buyProperty(GameFrame frame, String message) {
-       int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
-        if(confirmed == JOptionPane.YES_OPTION){
-           // this.model.play(5);
-        }
-    }
-
-    /**
-     * Gives the player the option to buy a house
-     * @param frame the game frame it's displayed on
-     * @param message the String message inside the popup
-     */
-    public void askToBuyHouse(GameFrame frame, String message){
-        int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
-        if(confirmed == JOptionPane.YES_OPTION){
-            //this.model.play(6);
-        }
-    }
-
-    /**
-     * Gives the player the option to buy a hotel
-     * @param frame the game frame it's displayed on
-     * @param message the String message inside the popup
-     */
-    public void askToBuyHotel(GameFrame frame, String message){
-        int confirmed = JOptionPane.showConfirmDialog(frame, message, null, JOptionPane.YES_NO_OPTION);
-        if(confirmed == JOptionPane.YES_OPTION){
-           // this.model.play(7);
-        }
-    }
+    
 
     /**
      * Tells the player that they have to pay rent

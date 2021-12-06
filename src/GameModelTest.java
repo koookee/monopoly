@@ -26,7 +26,6 @@ public class GameModelTest extends TestCase {
     }
 
     /**
-
      * testActivePlayer tests to see if ActivePlayer is working correctly.
      */
     public void testActivePlayer(){

@@ -9,7 +9,6 @@ import java.awt.*;
 
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class GameFrame extends JFrame implements GameView {
@@ -486,7 +485,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void ownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-        CardController owned = new CardController(model);
+        CardAnnouncements owned = new CardAnnouncements(model);
         Card card = gameEvent.getCard();
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
@@ -506,7 +505,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void announcePassGo(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-        CardController controller = new CardController(model);
+        CardAnnouncements controller = new CardAnnouncements(model);
         controller.announcePassGo(this, model.getActivePlayer().getName() + " passed go!\nYou Received $200!");
     }
 
@@ -542,7 +541,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void announceToJail(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-        CardController control = new CardController(model);
+        CardAnnouncements control = new CardAnnouncements(model);
         control.announceToJail(this, gameEvent.getModel().getActivePlayer().getName()
                 +" has been Sent To Jail!");
     }
@@ -554,7 +553,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void announceJailTime(GameEvent gameEvent){
         GameModel model = gameEvent.getModel();
-        CardController control = new CardController(model);
+        CardAnnouncements control = new CardAnnouncements(model);
         if(gameEvent.getRoll()[0] == gameEvent.getRoll()[1]){
             control.announceDouble(this, "You are out of Jail!\nYou Rolled: " + gameEvent.getRoll()[0] +" " + gameEvent.getRoll()[1]);
         } else if(model.getActivePlayer().getIsInJail() >= 3){
@@ -574,7 +573,7 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void payJailFee(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-        CardController jailFee = new CardController(model);
+        CardAnnouncements jailFee = new CardAnnouncements(model);
         jailFee.payJailFee(this, "Would you like to pay 50$ to get out of Jail?");
 
     }
