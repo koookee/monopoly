@@ -625,7 +625,9 @@ public class GameModel {
 
 
         ArrayList<Player> importedPLayers = new ArrayList<>();
-        setGameBoard(new File("originalcards1\\"));
+        String gameBoardType = "";
+
+
         setEnableRoll(true);
         boolean[] dontUpdate = new boolean[4];
         setEnableRoll(false);
@@ -641,7 +643,7 @@ public class GameModel {
                 p.setPrevPosition(players.get(k).getPosition());
             if (!p.isHasRolled()) setEnableRoll(true);
             else if (p.getRolls()[0] == p.getRolls()[1])setEnableRoll(true);
-            System.out.println(p);
+
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {

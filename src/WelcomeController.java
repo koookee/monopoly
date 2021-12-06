@@ -3,7 +3,7 @@
  */
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 
 public class WelcomeController {
     private GameModel model;
@@ -30,13 +30,34 @@ public class WelcomeController {
             if (importYesNo == JOptionPane.YES_OPTION){
 
                 model.addPlayers(numPlayer,numBots);
+                String gameBoardType = "";
+                try {
+
+                    BufferedReader br = new BufferedReader(new FileReader("Gameboard Setting\\gameBoard.txt"));
+
+                    while ((gameBoardType=br.readLine()) != null){
+                        if (gameBoardType.equals("internationalcards1\\"))
+                            model.setGameBoard(new File("internationalcards1\\"));
+                        else
+                            model.setGameBoard(new File("originalcards1\\"));
+                    }
+                    br.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
                 return new int[]{numBots+numPlayer,0};
 
             }else{
+                askBoard(frame);
                 int[] playersAndBots = getPlayerNumber(frame);
                 if (playersAndBots[0] == numPlayer && playersAndBots[1] == numBots) {
-
-                    return new int[]{playersAndBots[0] + playersAndBots[1], 0};
+                    System.out.println("here");
+                    return new int[]{playersAndBots[0] + playersAndBots[1], 2};
                 }
                 else
                     return new int[] {playersAndBots[0]+ playersAndBots[1], 1};
@@ -44,6 +65,7 @@ public class WelcomeController {
             }
         }
         else{
+            askBoard(frame);
             int[] playersAndBots = getPlayerNumber(frame);
             return new int[] {playersAndBots[0]+ playersAndBots[1], 1};
         }
@@ -81,6 +103,39 @@ public class WelcomeController {
 
 
         return new int[] {playerNum , botNum};
+
+    }
+
+    public void askBoard(JFrame frame){
+        int importYesNo = JOptionPane.showOptionDialog(frame, "Do you want to Original or SpongeBob version", null, JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,null, new Object[] { "Original", "SpongeBob" }, JOptionPane.YES_OPTION);
+
+        if (importYesNo == JOptionPane.YES_OPTION){
+            model.setGameBoard(new File("originalcards1\\"));
+            try {
+                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+                bw.write("originalcards1\\");
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            model.setGameBoard(new File("internationalcards1\\"));
+            try {
+                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
+                bw.write("internationalcards1\\");
+                bw.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }

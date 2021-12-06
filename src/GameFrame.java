@@ -275,7 +275,7 @@ public class GameFrame extends JFrame implements GameView {
 
         save.setActionCommand("save");
         save.addActionListener(controller);
-        if (startInformation[1] == 1 && !savePressed) importButton.setEnabled(false);
+        if ((startInformation[1] == 1 || startInformation[1] == 2) && !savePressed) importButton.setEnabled(false);
 
         importButton.setActionCommand("import");
         importButton.addActionListener(controller);
@@ -687,7 +687,7 @@ public class GameFrame extends JFrame implements GameView {
                 gameFrame.hasImported = true;
             }
         }catch (Exception e){
-            System.out.println(e);
+            System.err.println(e);
         }
 
 

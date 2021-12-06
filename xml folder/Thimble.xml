@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="11.0.12" class="java.beans.XMLDecoder">
  <object class="Player" id="Player0">
-  <void property="activePlayer">
+  <void property="hasRolled">
    <boolean>true</boolean>
   </void>
   <void property="money">
@@ -50,7 +50,7 @@
        <int>100</int>
       </void>
       <void property="name">
-       <string>Hurdman Road</string>
+       <string>Intertidal Seaway</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
