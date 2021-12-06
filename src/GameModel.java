@@ -174,27 +174,48 @@ public class GameModel {
         return numToReturn;
     }
 
+    /**
+     * Updates the game view
+     * @param numDice1 the int roll of the first dice
+     * @param numDice2 the int roll of the second dice
+     */
     private void updateViews(int numDice1, int numDice2){
         for (GameView view : views) {
             view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{numDice1, numDice2}));
         }
     }
+
+    /**
+     * Enables the buy button
+     */
     public void enableBuyButton(){
         for(GameView view : views){
-            view.enableBuyButton(getActivePlayer());
+            view.enableBuyButton();
         }
     }
+
+    /**
+     * Disables the buy button
+     */
     public void disableBuyButton(){
         for(GameView view : views){
             view.disableBuyButton();
         }
     }
+
+    /**
+     * Sets whether the roll button is enabled or disabled
+     * @param b the boolean of whether the button is enabled or disabled. true enables it and false disables it
+     */
     public void setEnableRoll(boolean b){
         for(GameView view : views){
             view.setRollEnable(b);
         }
     }
 
+    /**
+     * Checks if the roll is a jail roll and if it then the player is moved to jail
+     */
     private void checkJailRoll(){
         if (activePlayer.getIsBot() && (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3)){
             activePlayer.setIsInJail(0);
@@ -240,6 +261,10 @@ public class GameModel {
         }
     }
 
+    /**
+     * Rolls the dice and disables/enables some of the buttons.
+     * Also announces if a player is in jail or if they have to pay rent
+     */
     public void roll(){
         activePlayer.setHasRolled(true);
         rollDice();
@@ -262,42 +287,32 @@ public class GameModel {
             }
 
         }
-        /*
-        else if (currentCard.getCost()==0 || currentCard.getCost() > activePlayer.getMoney()){
-            disableBuyButton();
-        }
-
-         */
         if(activePlayer.getPrevPosition() + (dice1 + dice2) > 30){
-            for (GameView v :
-                    views) {
-                v.announcePassGo(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            for (GameView view : views) {
+                view.announcePassGo(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
             }
             this.activePlayer.setMoney(activePlayer.getMoney() + 200);
         }
-
-
         if(activePlayer.getIsInJail() > 1){
             dice1 = 0;
             dice2 = 0;
         }
         updateViews(dice1,dice2);
-
-
-
     }
 
+    /**
+     * Displays the buy window and gives the player the option to buy
+     */
     public void buy(){
-        //if (activePlayer.getMoney() > currentCard.getCost()) {
-        //    activePlayer.buyCard(currentCard);
-        //    views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-        //    disableBuyButton();
-        //}
         clearBuyArrOptions();
         addCardsToBuyArr();
         for(GameView view : views) view.displayBuyArrOptions(buyArrOptions);
     }
 
+    /**
+     * Confirms the player's purchase of a property, house, or hotel
+     * @param cardName the String name of the card the purchase is done on
+     */
     public void confirmPurchase(String cardName){
         Card tile = getCard(cardName);
 
@@ -326,6 +341,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * Passes the turn to another player
+     */
     public void nextTurn(){
         this.updateStatus();
         this.changeTurn();
@@ -341,22 +359,27 @@ public class GameModel {
         }
     }
 
+    /**
+     * Announces the status of a player in jail
+     */
     public void announceJailTime(){
         for(GameView view : views){
             view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
         }
     }
 
+    /**
+     * Announces that a player was sent to jail
+     */
     public void announceJail(){
         for(GameView view : views){
             view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
         }
     }
 
-
-
-
-
+    /**
+     * Makes the bot pay rent or buy the property
+     */
     private void botLandOnProperty() {
 
         if(currentCard.isOwned() && currentCard.getOwner() != activePlayer){
@@ -373,6 +396,9 @@ public class GameModel {
         }
     }
 
+    /**
+     * Makes the bot roll the dice and buy property/pay rent
+     */
     public void botPlay() {
         roll();
         botLandOnProperty();
@@ -382,6 +408,9 @@ public class GameModel {
         else nextTurn();
     }
 
+    /**
+     * The calculations for rolling the dice
+     */
     private void rollDice() {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
@@ -390,7 +419,7 @@ public class GameModel {
 
 
 
-//         For debugging purposes (can make players move to specific tiles)
+//        For debugging purposes (can make players move to specific tiles)
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Enter roll 1");
 //        int num = scanner.nextInt();
@@ -401,6 +430,7 @@ public class GameModel {
 //        roll = dice1 + dice2;
         activePlayer.setRolls(new int[] {dice1, dice2});
     }
+
     /**
      * this method is used to check if the player can buy the property
      * @return the boolean of whether the player can buy the property or not
@@ -511,6 +541,11 @@ public class GameModel {
         return players;
     }
 
+    /**
+     * Gets the card object given the name
+     * @param cardName the String of the card name
+     * @return the Card object
+     */
     private Card getCard(String cardName){
         for (Integer key: gameBoard.keySet()) if (gameBoard.get(key).getName().equals(cardName)) return gameBoard.get(key);
         return null; // No card found
@@ -518,6 +553,7 @@ public class GameModel {
 
     /**
      * Setter for Current Card.
+     * @param i the int index of the card
      */
     public void setCurrentCard(int i) {
         currentCard = gameBoard.get(i);
@@ -606,10 +642,14 @@ public class GameModel {
         WINNER,
         UNDECIDED,
     }
-    // Menu choice
-    // original.xml
-    // international.xml
+
+    /**
+     * Saves the current state of the game
+     */
     public void save(){
+        // Menu choice
+        // original.xml
+        // international.xml
         File directory = new File("xml folder\\");
         File[] files = directory.listFiles();
         if (new File("originalcards1\\" + gameBoard.get(0).getName() + ".xml").exists()) {
@@ -649,19 +689,15 @@ public class GameModel {
         }
     }
 
+    /**
+     * Loads in a previously saved game
+     */
     public void importXML() {
-
-
         ArrayList<Player> importedPLayers = new ArrayList<>();
         String gameBoardType = "";
-
-
-
         setEnableRoll(true);
         boolean[] dontUpdate = new boolean[4];
         setEnableRoll(false);
-
-
         try {
 
             BufferedReader br = new BufferedReader(new FileReader("Gameboard Setting\\gameBoard.txt"));

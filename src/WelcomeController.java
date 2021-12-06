@@ -11,6 +11,11 @@ public class WelcomeController {
         this.model = model;
     }
 
+    /**
+     * Asks the player to import the saved game
+     * @param frame the JFrame window
+     * @return the int array of the number of bots and players
+     */
     public int[] askPlayerImport(JFrame frame){
         int numBots =0;
         int numPlayer = 0;
@@ -47,11 +52,7 @@ public class WelcomeController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-
                 return new int[]{numBots+numPlayer,0};
-
             }else{
                 askBoard(frame);
                 int[] playersAndBots = getPlayerNumber(frame);
@@ -69,15 +70,17 @@ public class WelcomeController {
             int[] playersAndBots = getPlayerNumber(frame);
             return new int[] {playersAndBots[0]+ playersAndBots[1], 1};
         }
-
-
     }
 
+    /***
+     * Gets the number of players and bots
+     * @param frame the JFrame window
+     * @return the int array of the number of players and bots
+     */
     public int[] getPlayerNumber(JFrame frame){
         Integer[] playerChoices = {1, 2, 3 ,4};
         Integer[][] botChoicesChoices= {{1,2,3}, {0,1,2}, {0,1}, {0}};
         Integer[] botChoices;
-        
 
         Integer playerNum = (Integer) JOptionPane.showInputDialog(frame, "Pick number of real players",null, JOptionPane.QUESTION_MESSAGE, null,
                 playerChoices, playerChoices[0]);
@@ -101,41 +104,17 @@ public class WelcomeController {
 
         model.addPlayers(playerNum, botNum);
 
-
         return new int[] {playerNum , botNum};
-
     }
 
+    /**
+     * Asks for which board to use
+     * @param frame the JFrame window
+     */
     public void askBoard(JFrame frame){
         int importYesNo = JOptionPane.showOptionDialog(frame, "Do you want to Original or SpongeBob version", null, JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,null, new Object[] { "Original", "SpongeBob" }, JOptionPane.YES_OPTION);
-
-        if (importYesNo == JOptionPane.YES_OPTION){
-            model.setGameBoard(new File("originalcards1\\"));
-//            try {
-//                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
-//                bw.write("originalcards1\\");
-//                bw.close();
-//
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
-        else{
-            model.setGameBoard(new File("internationalcards1\\"));
-//            try {
-//                Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
-//                bw.write("internationalcards1\\");
-//                bw.close();
-//
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
-
+        if (importYesNo == JOptionPane.YES_OPTION) model.setGameBoard(new File("originalcards1\\"));
+        else model.setGameBoard(new File("internationalcards1\\"));
     }
 }

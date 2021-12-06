@@ -23,7 +23,6 @@ public class GameController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //
         if (e.getActionCommand().equals("roll")){
             this.model.roll();
         }
@@ -41,7 +40,6 @@ public class GameController implements ActionListener {
         }
         else { // action command in this case is the name of the property
             this.model.confirmPurchase(e.getActionCommand());
-
         }
 
     }
