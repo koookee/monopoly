@@ -396,33 +396,36 @@ public class GameFrame extends JFrame implements GameView {
 
 
     }
+
+    /**
+     * Updates the view after the import
+     * @param p the Player
+     * @param roll the arr of the int rolls
+     */
     @Override
     public void updateFromImport(Player p, int[] roll ){
 //        updatePlayerIcon(p,roll);
-
-
         getContentPane().remove(playerPanel);
-
         if (p.isActivePlayer())
         playerPanel = paintPlayerInfo(p, roll);
-
-
         displayGUI();
-
-
-
-
         updatePlayerIcon(p, roll);
-
-
     }
 
+    /**
+     * Sets whether the import button is enabled or disabled
+     * @param b the boolean of whether it's enabled or not. true: enabled. false: disabled
+     */
     @Override
     public void setImportButtonEnable(boolean b){
         importButton.setEnabled(b);
         savePressed = true;
     }
 
+    /**
+     * Removes the player icon
+     * @param p the Player of who the icon is supposed to be removed
+     */
     @Override
     public void removePlayerIcon(Player p) {
         squares.get(p.getPrevPosition()).remove(icons[model.getPlayers().indexOf(p)]);
@@ -431,6 +434,9 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Closes the window
+     */
     @Override
     public void closeWindow() {
         this.setVisible(false);
@@ -438,6 +444,10 @@ public class GameFrame extends JFrame implements GameView {
         System.exit(0);
     }
 
+    /**
+     * announces the bot bought a property
+     * @param gameEvent
+     */
     @Override
     public void announceBoughtBotProperty(GameEvent gameEvent) {
         Player player = gameEvent.getModel().getActivePlayer();
@@ -445,18 +455,29 @@ public class GameFrame extends JFrame implements GameView {
         JOptionPane.showMessageDialog(this,player.getName() + " has bought " + card.getName() , null, JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * announces the bot paid rent
+     * @param gameEvent
+     */
     public void announcePaidBotRent(GameEvent gameEvent) {
         Player player = gameEvent.getModel().getActivePlayer();
         Card card = gameEvent.getCard();
         JOptionPane.showMessageDialog(this,player.getName() + " has paid rent to " + card.getOwner().getName() + " for " + card.getName(), null, JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * enables the buy button
+     * @param p
+     */
     @Override
     public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-
     }
+
+    /**
+     * Disables the buy button
+     */
     @Override
     public void disableBuyButton() {
         enableBuy = false;
@@ -464,6 +485,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Sets whether the roll button is enabled or not
+     * @param b the boolean of whether the roll button is enable or not. true: enable. false: disabled
+     */
     @Override
     public void setRollEnable(boolean b) {
 
@@ -473,6 +498,10 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    /**
+     * Dispplays the buy window and gives the player the option to buy a property, house, or hotel
+     * @param buyArrOptions the array of the options that the player can buy
+     */
     @Override
     public void displayBuyArrOptions(ArrayList<Card> buyArrOptions) {
         buyOptionsWindow = new JFrame("Buy Options");
@@ -624,6 +653,10 @@ public class GameFrame extends JFrame implements GameView {
                 +" has been Sent To Jail!");
     }
 
+    /**
+     * Announces the status of the player in jail
+     * @param gameEvent is a game event that holds useful information
+     */
     @Override
     public void announceJailTime(GameEvent gameEvent){
 
@@ -641,6 +674,10 @@ public class GameFrame extends JFrame implements GameView {
         }
     }
 
+    /**
+     * Asks the player if they'd like to pay a fine to get out of jail
+     * @param gameEvent
+     */
     @Override
     public void payJailFee(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
