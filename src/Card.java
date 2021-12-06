@@ -79,16 +79,7 @@ public class Card {
         this.isOwned = false;
     }
 
-    public String bla(){
-        String str = "\n";
-        str += "<name>" + this.name + "</name>";
-        str += "<cost>" + this.cost + "</cost>";
-        str += "<color>" + this.color + "</color>";
-        str += "<cardType>" + this.cardType + "</cardType>";
-        str += "<houseCost>" + this.houseCost + "</houseCost>";
-        str += "<isOwned>" + this.isOwned + "</isOwned>";
-        return str;
-    }
+    
 
     public void setName(String name) {
         this.name = name;
