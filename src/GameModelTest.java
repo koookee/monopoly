@@ -138,11 +138,9 @@ public class GameModelTest extends TestCase {
         assertEquals(930, gm.getActivePlayer().getMoney());
     }
 
-
     public void testToJail(){
         gm.getActivePlayer().goToJail();
         assertEquals(1 , gm.getActivePlayer().getIsInJail());
         assertEquals(8, gm.getActivePlayer().getPosition());
     }
-
 }
