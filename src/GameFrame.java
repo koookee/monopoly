@@ -465,11 +465,11 @@ public class GameFrame extends JFrame implements GameView {
     }
 
     /**
-     * Gives the player information about the property they landed on and the option to buy (if possible)
+     * Refreshes the view
      * @param gameEvent is a game event that holds useful information
      */
     @Override
-    public void unownedProperty(GameEvent gameEvent) {
+    public void refreshView(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());

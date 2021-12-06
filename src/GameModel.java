@@ -446,7 +446,7 @@ public class GameModel {
      */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
-        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        for(GameView view : views)  view.refreshView(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -490,7 +490,7 @@ public class GameModel {
         c.setCost(c.getCost() + c.getHouseCost());
         activePlayer.setMoney(activePlayer.getMoney() - c.getHouseCost());
         // TODO should change the method call
-        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        for(GameView view : views)  view.refreshView(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -530,7 +530,7 @@ public class GameModel {
         c.setCost(c.getCost() + c.getHotelCost());
         activePlayer.setMoney(activePlayer.getMoney() - c.getHotelCost());
         // TODO should change the method call
-        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        for(GameView view : views)  view.refreshView(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**

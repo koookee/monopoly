@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface GameView {
     void handleGameStatusUpdate(GameEvent e);
 
-    void unownedProperty(GameEvent e);
+    void refreshView(GameEvent e);
 
     void ownedProperty(GameEvent e);
 
