@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <java version="11.0.9" class="java.beans.XMLDecoder">
  <object class="Player" id="Player0">
   <void property="hasRolled">
@@ -6,9 +7,21 @@
   </void>
   <void property="money">
    <int>1220</int>
+=======
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Player">
+  <void property="activePlayer">
+   <boolean>true</boolean>
+  </void>
+  <void property="money">
+   <int>1500</int>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
   </void>
   <void property="name">
    <string>Shoe</string>
+  </void>
+  <void property="numTimeRolledDouble">
+   <int>1</int>
   </void>
   <void property="playerNumber">
    <object class="java.lang.Enum" method="valueOf">
@@ -20,6 +33,7 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
+<<<<<<< HEAD
    <int>18</int>
   </void>
   <void property="prevPosition">
@@ -67,6 +81,15 @@
      </object>
     </void>
    </object>
+=======
+   <int>15</int>
+  </void>
+  <void property="prevPosition">
+   <int>7</int>
+  </void>
+  <void property="properties">
+   <object class="java.util.ArrayList"/>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
   </void>
   <void property="rolls">
    <array class="int" length="2">
@@ -74,7 +97,11 @@
      <int>4</int>
     </void>
     <void index="1">
+<<<<<<< HEAD
      <int>6</int>
+=======
+     <int>4</int>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
     </void>
    </array>
   </void>

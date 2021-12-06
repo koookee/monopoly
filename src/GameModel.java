@@ -652,7 +652,7 @@ public class GameModel {
         // international.xml
         File directory = new File("xml folder\\");
         File[] files = directory.listFiles();
-        if (new File("originalcards1\\" + gameBoard.get(0).getName() + ".xml").exists()) {
+        if (new File("originalcards1\\" + gameBoard.get(1).getName() + ".xml").exists()) {
             try {
                 Writer bw = new BufferedWriter(new FileWriter("Gameboard Setting\\gameBoard.txt"));
                 bw.write("originalcards1\\");

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <java version="11.0.9" class="java.beans.XMLDecoder">
  <object class="Player" id="Player0">
   <void property="activePlayer">
@@ -6,6 +7,15 @@
   </void>
   <void property="money">
    <int>1380</int>
+=======
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Player">
+  <void property="hasRolled">
+   <boolean>true</boolean>
+  </void>
+  <void property="money">
+   <int>1500</int>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
   </void>
   <void property="name">
    <string>Thimble</string>
@@ -20,7 +30,11 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
+<<<<<<< HEAD
    <int>6</int>
+=======
+   <int>7</int>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
@@ -68,10 +82,14 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
+<<<<<<< HEAD
      <int>2</int>
+=======
+     <int>5</int>
+>>>>>>> 946b42ce3a628129135422948fae4137a36d0fc7
     </void>
     <void index="1">
-     <int>4</int>
+     <int>2</int>
     </void>
    </array>
   </void>
