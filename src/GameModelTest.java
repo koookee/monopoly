@@ -5,11 +5,13 @@
 
 import junit.framework.TestCase;
 
+import java.io.File;
+
 public class GameModelTest extends TestCase {
     GameModel gm = new GameModel();
     protected void setUp(){
         gm.addPlayers(3, 1);
-
+        gm.setGameBoard(new File("originalcards1\\"));
     }
 
     /**
@@ -36,7 +38,7 @@ public class GameModelTest extends TestCase {
      */
     public void testPayRent(){
         gm.setCurrentCard(1);
-        System.out.println(gm.getCurrentCard());
+        System.out.println(gm.getGameBoard());
         gm.getCurrentCard().setOwned(gm.getPlayers().get(1));
         gm.payRent(gm.getPlayers().get(1), gm.getCurrentCard());
         System.out.println(gm.getActivePlayer().getMoney());
