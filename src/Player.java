@@ -39,6 +39,9 @@ public class Player {
         player4
     }
 
+    /**
+     * Empty constructor for the player
+     */
     public Player(){}
 
     /**
@@ -62,6 +65,10 @@ public class Player {
         hasRolled =false;
     }
 
+    /**
+     * Gets the player number
+     * @return
+     */
     public PlayerNumber getPlayerNumber() {
         return playerNumber;
     }
@@ -69,6 +76,11 @@ public class Player {
     public void setPlayerNumber(PlayerNumber playerNumber) {
         this.playerNumber = playerNumber;
     }
+
+    /**
+     * Sets the player number
+     * @param playerNumber the int of the player number to be set
+     */
     public void setPlayerNumber(int playerNumber) {
         switch (playerNumber){
             case 1: this.playerNumber = PlayerNumber.player1; return;
@@ -78,18 +90,34 @@ public class Player {
         }
     }
 
+    /**
+     * Sets the name of the player
+     * @param name the String of the player name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the int array of the dice rolls
+     * @return the array of the dice rolls
+     */
     public int[] getRolls() {
         return rolls;
     }
 
+    /**
+     * Checks whether the player has rolled or not
+     * @return the boolean of whether they rolled or not. true: yes. false: no
+     */
     public boolean isHasRolled() {
         return hasRolled;
     }
 
+    /**
+     * toString method for the player. Makes it readable
+     * @return the String of the information
+     */
     @Override
     public String toString() {
         return "Player{" +
@@ -111,18 +139,34 @@ public class Player {
                 '}';
     }
 
+    /**
+     * Sets whether the player has rolled or not
+     * @param hasRolled the boolean of whether they have or have not rolled. true: rolled. false: did not roll
+     */
     public void setHasRolled(boolean hasRolled) {
         this.hasRolled = hasRolled;
     }
 
+    /**
+     * Sets the dice rolls that the player got
+     * @param rolls the int array of the dice rolls
+     */
     public void setRolls(int[] rolls) {
         this.rolls = rolls;
     }
 
+    /**
+     * Checks if the player is active or not
+     * @return  the boolean of whether they are active or not. true: active. false: inactive
+     */
     public boolean isActivePlayer() {
         return isActivePlayer;
     }
 
+    /**
+     * Sets the player activity status
+     * @param activePlayer the Player of which the status is to be set
+     */
     public void setActivePlayer(boolean activePlayer) {
         isActivePlayer = activePlayer;
     }
@@ -151,13 +195,26 @@ public class Player {
         return numTimeRolledDouble;
     }
 
+    /**
+     * sets the number of doubles rolled
+     * @param numTimeRolledDouble the int of the number of doubles
+     */
     public void setNumTimeRolledDouble(int numTimeRolledDouble) {
         this.numTimeRolledDouble = numTimeRolledDouble;
     }
 
+    /**
+     * getter for ex-convict
+     * @return boolean of whether they are an ex-convict or not: true: they are. false: they are not
+     */
     public boolean getExconvict(){
         return exconvict;
     }
+
+    /**
+     * setter for the ex-convict status
+     * @param bool the boolean of whether they are an ex-convict or not
+     */
     public void setExconvict(boolean bool){
         exconvict = bool;
     }
@@ -187,6 +244,10 @@ public class Player {
         return name;
     }
 
+    /**
+     * getter for whether the player is a bot or not
+     * @return the boolean of whether they are a bot. true: bot. false: not bot
+     */
     public boolean getIsBot(){
         return isBot;
     }
@@ -299,6 +360,9 @@ public class Player {
         this.isInJail = jailTime;
     }
 
+    /**
+     * sends the player to jail
+     */
     public void goToJail(){
         this.setPosition(8);
         this.setIsInJail(1);
@@ -318,6 +382,10 @@ public class Player {
         return Objects.hash(name, position);
     }
 
+    /**
+     * serializes to XML
+     * @param filename the String of the file name to serialize to
+     */
     public void serializeToXML (String filename)
     {
         try{
@@ -333,6 +401,12 @@ public class Player {
             e.printStackTrace();
         }
     }
+
+    /**
+     * deserialize from XML
+     * @param filename the String of the file name to serialize from
+     * @return the Player object
+     */
     public static Player deserializeFromXML(String filename) {
         Player playerToReturn = null;
         try{
@@ -348,15 +422,5 @@ public class Player {
             e.printStackTrace();
         }
         return playerToReturn;
-    }
-
-    public static void main(String[] args) {
-        Player player = new Player("Joe", false);
-        //player.buyCard(new Card("card", 0, 2, Color.black));
-        player.serializeToXML("player.xml");
-
-
-        Player player1 = Player.deserializeFromXML("player.xml");
-        System.out.println(player1);
     }
 }
