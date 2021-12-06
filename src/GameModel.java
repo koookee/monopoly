@@ -706,6 +706,7 @@ public class GameModel {
             if (players.get(i).isActivePlayer()) {
                 activePlayer = players.get(i);
                 currTurn = i;
+                currentCard = gameBoard.get(activePlayer.getPosition());
             }
             if (!dontUpdate[i] || players.get(i).getRolls()[0] == 0)
                 for (GameView v :
