@@ -618,14 +618,7 @@ public class GameFrame extends JFrame implements GameView {
      * @param args the arguments passed of type String array
      */
     public static void main(String[] args) {
-        GameFrame gameFrame = null;
-        try{
-            gameFrame = new GameFrame();
-
-        }catch (NullPointerException e){
-            System.exit(0);
-        }
-
+        GameFrame gameFrame = new GameFrame();
 
         gameFrame.displayGUI();
         //I know this is bad and not the way to do things but have mercy plz 
