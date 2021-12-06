@@ -1,4 +1,9 @@
 public class AutoPlayer extends Player{
+
+    public AutoPlayer(){
+
+    }
+
     /**
      * Constructor for the AutoPlayer class
      * @param name the String name of the player

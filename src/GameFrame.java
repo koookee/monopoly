@@ -412,6 +412,8 @@ public class GameFrame extends JFrame implements GameView {
         buyButton.setEnabled(true);
     }
 
+
+
     /**
      * Disables the buy button
      */
@@ -618,7 +620,15 @@ public class GameFrame extends JFrame implements GameView {
      * @param args the arguments passed of type String array
      */
     public static void main(String[] args) {
-        GameFrame gameFrame = new GameFrame();
+        GameFrame gameFrame = null;
+        try{
+            gameFrame = new GameFrame();
+
+        }catch (NullPointerException e){
+            System.exit(0);
+        }
+
+
 
         gameFrame.displayGUI();
         //I know this is bad and not the way to do things but have mercy plz 

@@ -183,6 +183,22 @@ public class Player {
         return isBot;
     }
 
+    public void setProperties(ArrayList<Card> properties) {
+        this.properties = properties;
+    }
+
+    public void setNumUtils(int numUtils) {
+        this.numUtils = numUtils;
+    }
+
+    public boolean isExconvict() {
+        return exconvict;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
+
     /**
      * Gets the number of times the player rolled a double
      * @return the int of the number of doubles rolled
