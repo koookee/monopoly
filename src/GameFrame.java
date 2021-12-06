@@ -556,7 +556,7 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController controller = new CardController(model);
 
-        controller.announcePassGo(this, "You passed go!\nYou Received $200!");
+        controller.announcePassGo(this, model.getActivePlayer().getName() + " passed go!\nYou Received $200!");
     }
 
     /**
