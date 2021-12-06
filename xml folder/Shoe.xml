@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11.0.12" class="java.beans.XMLDecoder">
+<java version="11.0.9" class="java.beans.XMLDecoder">
  <object class="Player" id="Player0">
   <void property="hasRolled">
    <boolean>true</boolean>
   </void>
   <void property="money">
-   <int>1325</int>
+   <int>1220</int>
   </void>
   <void property="name">
    <string>Shoe</string>
@@ -20,31 +20,40 @@
    <boolean>true</boolean>
   </void>
   <void property="position">
-   <int>5</int>
+   <int>18</int>
+  </void>
+  <void property="prevPosition">
+   <int>8</int>
   </void>
   <void property="properties">
    <object class="java.util.ArrayList">
     <void method="add">
-     <object class="Railroad">
+     <object class="Card">
       <void property="cardType">
        <object class="java.lang.Enum" method="valueOf">
         <class>Card$CardType</class>
-        <string>railroad</string>
+        <string>property</string>
        </object>
       </void>
       <void property="color">
        <object class="java.awt.Color">
-        <int>0</int>
+        <int>255</int>
         <int>0</int>
         <int>0</int>
         <int>255</int>
        </object>
       </void>
       <void property="cost">
-       <int>200</int>
+       <int>280</int>
+      </void>
+      <void property="hotelCost">
+       <int>150</int>
+      </void>
+      <void property="houseCost">
+       <int>150</int>
       </void>
       <void property="name">
-       <string>Bytown&amp;Prescott Railway</string>
+       <string>Chum Bucket</string>
       </void>
       <void property="owned">
        <boolean>true</boolean>
@@ -53,7 +62,7 @@
        <object idref="Player0"/>
       </void>
       <void property="position">
-       <int>5</int>
+       <int>18</int>
       </void>
      </object>
     </void>
@@ -62,10 +71,10 @@
   <void property="rolls">
    <array class="int" length="2">
     <void index="0">
-     <int>2</int>
+     <int>4</int>
     </void>
     <void index="1">
-     <int>3</int>
+     <int>6</int>
     </void>
    </array>
   </void>
