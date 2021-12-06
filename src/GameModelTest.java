@@ -5,12 +5,13 @@
 
 import junit.framework.TestCase;
 
+import java.io.File;
+
 public class GameModelTest extends TestCase {
     GameModel gm = new GameModel();
-
     protected void setUp(){
         gm.addPlayers(3, 1);
-
+        gm.setGameBoard(new File("originalcards1\\"));
     }
 
     /**
@@ -25,10 +26,11 @@ public class GameModelTest extends TestCase {
     }
 
     /**
+
      * testActivePlayer tests to see if ActivePlayer is working correctly.
      */
     public void testActivePlayer(){
-        assertEquals("P1", gm.getPlayers().get(0).getName());
+        assertEquals(gm.getActivePlayer(), gm.getPlayers().get(0));
     }
 
     /**
@@ -38,7 +40,6 @@ public class GameModelTest extends TestCase {
         gm.setCurrentCard(1);
         gm.getCurrentCard().setOwned(gm.getPlayers().get(1));
         gm.payRent(gm.getPlayers().get(1), gm.getCurrentCard());
-
         assertEquals(1494, gm.getActivePlayer().getMoney());
     }
 
@@ -46,7 +47,6 @@ public class GameModelTest extends TestCase {
      * testCreateGameBoard tests to see if a game board is created when called to.
      */
     public void testCreateGameBoard(){
-        //gm.setGameBoard();
         assertNotNull(gm.getGameBoard());
     }
 
@@ -77,28 +77,69 @@ public class GameModelTest extends TestCase {
     }
 
     /**
-     * testPlayChoice1 tests to see that when play(1) is called that the dice rolls a value.
+     * testNextTurn nests to see if the player can pass his turn
      */
-    public void testPlayChoice1(){
-      //  gm.play(1);
-        /*
-        gm.play(1);
-        assert(gm.roll != 0);
-        Needs to be implemented again
-         */
+    public void testNextTurn(){
+        gm.setCurrentCard(1);
+        gm.buyProperty();
+        assertEquals(gm.getActivePlayer().getProperties().get(0), gm.getCurrentCard());
     }
 
     /**
-     * testPlayChoice5 tests to see that when play(5) is called that the ActivePlayer buys a property.
+     * testBuyHouse checks if the player gets a house, cost of the card with the house, player money
      */
-    public void testPlayChoice5(){
-        /*
+    public void testBuyHouse(){
         gm.setCurrentCard(1);
-       // gm.play(5);
-        assertEquals(1, gm.getActivePlayer().getProperties().size());
-        Needs to be implemented again
-         */
+        int cardCost = gm.getCurrentCard().getCost();
+        gm.buyProperty();
+        gm.setCurrentCard(2);
+        gm.buyProperty();
+
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+
+        assertEquals(gm.getCurrentCard().getHouses(), 1);
+        assertEquals(gm.getCurrentCard().getCost(), cardCost + gm.getCurrentCard().getHouseCost());
+        assertEquals(1330, gm.getActivePlayer().getMoney());
     }
 
+    /**
+     * testBuyHotel checks if the player gets a hotel, cost of the card with the hotel, player money
+     */
+    public void testBuyHotel(){
+        gm.setCurrentCard(1);
+        int cardCost = gm.getCurrentCard().getCost();
+        gm.buyProperty();
+        gm.setCurrentCard(2);
+        gm.buyProperty();
 
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+
+        gm.setCurrentCard(1);
+        //gm.buyHotel(gm.getCurrentCard());
+        assertEquals(gm.getCurrentCard().getHotels(), 1);
+        assertEquals(gm.getCurrentCard().getCost(), cardCost + gm.getCurrentCard().getHouseCost() * 4 + gm.getCurrentCard().getHotelCost());
+        assertEquals(930, gm.getActivePlayer().getMoney());
+    }
+
+    public void testToJail(){
+        gm.getActivePlayer().goToJail();
+        assertEquals(1 , gm.getActivePlayer().getIsInJail());
+        assertEquals(8, gm.getActivePlayer().getPosition());
+    }
 }
