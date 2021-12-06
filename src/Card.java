@@ -15,18 +15,12 @@ public class Card {
     private boolean isOwned;
     private Player owner;
     private int position;
-
     private int houses;
     private int hotels;
-
     private int houseCost;
     private int hotelCost;
-
     private CardType cardType;
-
-
-
-    public static enum CardType {
+    public enum CardType {
         go,
         jail,
         property,
@@ -34,6 +28,9 @@ public class Card {
         ultility
     }
 
+    /**
+     * The empty Card constructor
+     */
     public Card(){
 
     }
@@ -90,30 +87,58 @@ public class Card {
         return str;
     }
 
+    /**
+     * Setter for the name of the card
+     * @param name the String name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Setter for the color of the card
+     * @param color the Color
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Setter fot the owner of the card
+     * @param owner the Player owner
+     */
     public void setOwner(Player owner) {
         this.owner = owner;
     }
 
+    /**
+     * Setter for the position of the card
+     * @param position the int position
+     */
     public void setPosition(int position) {
         this.position = position;
     }
 
+    /**
+     * Setter for the house cost of the card
+     * @param houseCost the int house cost
+     */
     public void setHouseCost(int houseCost) {
         this.houseCost = houseCost;
     }
 
+    /**
+     * Setter for the hotel cost of the card
+     * @param hotelCost the int hotel cost
+     */
     public void setHotelCost(int hotelCost) {
         this.hotelCost = hotelCost;
     }
 
+    /**
+     * Setter for the card type
+     * @param cardType the CardType enum type
+     */
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
     }
@@ -281,8 +306,10 @@ public class Card {
         // is owned
     }
 
-
-
+    /**
+     * serializes to XML
+     * @param filename the String of the file name to serialize tp
+     */
     public void serializeToXML (String filename)
     {
         try{
@@ -298,6 +325,12 @@ public class Card {
             e.printStackTrace();
         }
     }
+
+    /**
+     * deserializes from XML
+     * @param filename the String of the file name to serialize from
+     * @return the Card object
+     */
     public static Card deserializeFromXML(String filename) {
         Card cardToReturn = null;
         try{
@@ -314,14 +347,4 @@ public class Card {
         }
         return cardToReturn;
     }
-
-    public static void main(String[] args) {
-        //Card card = new Card("card", 0, 2, Color.black);
-        //card.serializeToXML("card.xml");
-
-        //Card card1 = Card.deserializeFromXML("card.xml");
-        //System.out.println(card1);
-    }
-
-
 }

@@ -68,7 +68,6 @@ private GameModel model;
     public void confirmPass(GameFrame frame, String message) {
         int confirmed = JOptionPane.showConfirmDialog(null, message);
         if(confirmed == JOptionPane.YES_OPTION){
-           // this.model.play(3);
         }
     }
 

@@ -5,20 +5,27 @@ import java.util.HashMap;
 public class InternationalCards {
     private HashMap<Integer, Card> gameBoard;
 
+    /**
+     * The constructor for the cards
+     */
     public InternationalCards(){
         gameBoard = new HashMap<>();
         createOriginalGameBoard();
-
     }
 
+    /**
+     * Serializes the card to XML
+     */
     public void serializeOriginalToXML(){
         File directory = new File("originalcards1\\");
-
         for(int i = 0; i < gameBoard.size(); i++){
             gameBoard.get(i).serializeToXML("originalcards1\\"+gameBoard.get(i).getName() + ".xml");
         }
     }
 
+    /**
+     * Serializes the custom cards to XML
+     */
     public void serializeCustomToXML(){
         File directory = new File("internationalcards1\\");
 
@@ -27,6 +34,9 @@ public class InternationalCards {
         }
     }
 
+    /**
+     * Creates the original game board with the property costs, house costs, hotel costs, and colors
+     */
     public void createOriginalGameBoard(){
         int position = 0;
         String[] streetNames = {"Go","Sparks Street","Lebreton Flats","Wellington Street","Laurier Avenue","Bytown&Prescott Railway",
@@ -66,6 +76,9 @@ public class InternationalCards {
         }
     }
 
+    /**
+     * Creates the custom game board with the property costs, house costs, hotel costs, and colors
+     */
     public void createCustomGameBoard(){
         int position = 0;
         String[] streetNames = {"Go","Albatross Avenue","Anchor Way","Barnacle Road","Bottom Feeder Lane","Oceanic Express Railway",
@@ -98,6 +111,11 @@ public class InternationalCards {
         }
     }
 
+    /**
+     * Deserializes the XML file into the board map
+     * @param directoryName the File with the name of directoryName
+     * @return the Map of the game board
+     */
     public static HashMap<Integer, Card> deserializeFromXML(File directoryName){
         HashMap<Integer, Card> tempBoard = new HashMap<>();
         for(File f: directoryName.listFiles()){
@@ -105,17 +123,5 @@ public class InternationalCards {
             tempBoard.put(c.getPosition(), c);
         }
         return  tempBoard;
-    }
-
-    public static void main(String[] args) {
-        InternationalCards ic = new InternationalCards();
-        ic.serializeOriginalToXML();
-        ic.createCustomGameBoard();
-        ic.serializeCustomToXML();
-        HashMap<Integer, Card> test = null;
-        test = deserializeFromXML(new File("originalcards1\\"));
-        for(Card c:test.values()){
-            System.out.println(c.getName());
-        }
     }
 }

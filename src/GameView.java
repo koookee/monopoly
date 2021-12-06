@@ -7,13 +7,9 @@ import java.util.ArrayList;
 public interface GameView {
     void handleGameStatusUpdate(GameEvent e);
 
-    void unownedProperty(GameEvent e);
+    void refreshView(GameEvent e);
 
     void ownedProperty(GameEvent e);
-
-    void askToBuyHouse(GameEvent e);
-
-    void announcePlayerPass(GameEvent e);
 
     void announceBankruptcy(GameEvent e);
 
@@ -25,15 +21,13 @@ public interface GameView {
 
     void payJailFee(GameEvent e);
 
-    void askToBuyHotel(GameEvent gameEvent);
-
     void updateFromImport(Player p, int[] roll );
 
     void announceBoughtBotProperty(GameEvent gameEvent);
 
     void announcePaidBotRent(GameEvent gameEvent);
 
-    void enableBuyButton(Player p);
+    void enableBuyButton();
 
     void disableBuyButton();
 
