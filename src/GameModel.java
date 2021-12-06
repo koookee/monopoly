@@ -43,13 +43,12 @@ public class GameModel {
         this.currTurn = 0;
         this.status = GameModel.Status.UNDECIDED;
         this.views = new ArrayList();
-        this.gameBoard = new HashMap();
+        this.gameBoard = new HashMap<>();
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
         this.hasNotRolled = true;
         this.numOfHouses = 32;
         this.numOfHotels = 12;
-        this.createGameBoard();
     }
 
     /**
@@ -67,36 +66,9 @@ public class GameModel {
     /**
      * This method creates the gameboard for the players
      */
-    public void createGameBoard(){
-        int position = 0;
-        String[] streetNames = {"Go","Sparks Street","Lebreton Flats","wellington Street","laurier Avenue","Bytown&Prescott Railway",
-                "waller Street","bronson Avenue","Jail","Hurdman Road","Canadian Pacific Railway","Lett Street","lampman Crescent",
-                "macKay Street","slater Street","Canadian National Railway","thompson Street","sweetLand Avenue","sloper Place",
-                "Water Works", "New York Central Railway","perly Drive","morrison Street","Go to Jail","keefer Street","mcLeod Street","parliament Hill",
-                "Electric Company","rideau Canal", "street 21", "street 22"};
-        int[] costs = {0,60,60,100,100,200,120,180,0,180,200,200,220,220,240,200,260,260,280,100,200,300,300,0,320,350,400,200,420,450,500};
+    public void setGameBoard(File directoryName){
+        gameBoard = InternationalCards.deserializeFromXML(directoryName);
 
-        int[] houseCosts = {0,50,50,50,50,50,50,50,0,100,100,100,100,100,100,150,150,150,150,150,150,150,150,0,200,200,200,200,200,200,200};
-
-        int[] hotelCosts = {0,50,50,50,50,50,50,50,0,100,100,100,100,100,100,150,150,150,150,150,150,150,150,0,200,200,200,200,200,200,200};
-
-        Color[] colors = {Color.white,new Color(150, 75, 0),new Color(150, 75, 0), Color.CYAN,Color.CYAN,Color.black,Color.CYAN,Color.pink,Color.blue,Color.pink,Color.black,
-                Color.pink,Color.orange,Color.orange,Color.orange, Color.black, Color.red,Color.red, Color.red,Color.white,Color.black, Color.yellow,Color.yellow,Color.blue,Color.yellow,Color.green,
-                Color.green,Color.white, Color.green,new Color(0,135,225),new Color(0,135,225)};
-
-        for (int i = 0; i < streetNames.length; i++) {
-            if (i%5==0 && i<21 && i>1){
-                gameBoard.put(i,new Railroad(streetNames[i],costs[i],position, colors[i], Card.CardType.railroad));
-            }else if(i== 19 || i == 27) {
-                gameBoard.put(i, new Utilities(streetNames[i], costs[i],position, colors[i], Card.CardType.ultility));
-            }else if(i == 23){
-                gameBoard.put(i, new Jail(streetNames[i], costs[i],position, colors[i], Card.CardType.jail));
-            }
-            else{
-                gameBoard.put(i,new Card(streetNames[i],costs[i],position, colors[i], Card.CardType.property, houseCosts[i], hotelCosts[i]));
-            }
-            position++;
-        }
     }
 
     /**
@@ -625,7 +597,7 @@ public class GameModel {
     public void importXML() {
 
         ArrayList<Player> importedPLayers = new ArrayList<>();
-        createGameBoard();
+        setGameBoard(new File("originalcards1\\"));
         setEnableRoll(true);
 
         int k = 0;

@@ -46,7 +46,7 @@ public class GameModelTest extends TestCase {
      * testCreateGameBoard tests to see if a game board is created when called to.
      */
     public void testCreateGameBoard(){
-        gm.createGameBoard();
+        //gm.setGameBoard();
         assertNotNull(gm.getGameBoard());
     }
 
