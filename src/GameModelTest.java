@@ -38,18 +38,15 @@ public class GameModelTest extends TestCase {
      */
     public void testPayRent(){
         gm.setCurrentCard(1);
-        System.out.println(gm.getGameBoard());
         gm.getCurrentCard().setOwned(gm.getPlayers().get(1));
         gm.payRent(gm.getPlayers().get(1), gm.getCurrentCard());
-        System.out.println(gm.getActivePlayer().getMoney());
-        //assertEquals(1494, gm.getActivePlayer().getMoney());
+        assertEquals(1494, gm.getActivePlayer().getMoney());
     }
 
     /**
      * testCreateGameBoard tests to see if a game board is created when called to.
      */
     public void testCreateGameBoard(){
-        //gm.setGameBoard();
         assertNotNull(gm.getGameBoard());
     }
 
@@ -79,16 +76,64 @@ public class GameModelTest extends TestCase {
         assertEquals("UNDECIDED", GameModel.Status.valueOf("UNDECIDED").toString());
     }
 
+    /**
+     * testNextTurn nests to see if the player can pass his turn
+     */
     public void testNextTurn(){
         gm.setCurrentCard(1);
         gm.buyProperty();
         assertEquals(gm.getActivePlayer().getProperties().get(0), gm.getCurrentCard());
     }
 
+    /**
+     * testBuyHouse checks if the player gets a house, cost of the card with the house, player money
+     */
     public void testBuyHouse(){
+        gm.setCurrentCard(1);
+        int cardCost = gm.getCurrentCard().getCost();
+        gm.buyProperty();
         gm.setCurrentCard(2);
+        gm.buyProperty();
+
+        gm.setCurrentCard(1);
         gm.buyHouse(gm.getCurrentCard());
 
         assertEquals(gm.getCurrentCard().getHouses(), 1);
+        assertEquals(gm.getCurrentCard().getCost(), cardCost + gm.getCurrentCard().getHouseCost());
+        assertEquals(1330, gm.getActivePlayer().getMoney());
+    }
+
+    /**
+     * testBuyHotel checks if the player gets a hotel, cost of the card with the hotel, player money
+     */
+    public void testBuyHotel(){
+        gm.setCurrentCard(1);
+        int cardCost = gm.getCurrentCard().getCost();
+        gm.buyProperty();
+        gm.setCurrentCard(2);
+        gm.buyProperty();
+
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(1);
+        gm.buyHouse(gm.getCurrentCard());
+        gm.setCurrentCard(2);
+        gm.buyHouse(gm.getCurrentCard());
+
+        gm.setCurrentCard(1);
+        gm.buyHotel(gm.getCurrentCard());
+        assertEquals(gm.getCurrentCard().getHotels(), 1);
+        assertEquals(gm.getCurrentCard().getCost(), cardCost + gm.getCurrentCard().getHouseCost() * 4 + gm.getCurrentCard().getHotelCost());
+        assertEquals(930, gm.getActivePlayer().getMoney());
     }
 }

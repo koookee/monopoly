@@ -492,7 +492,7 @@ public class GameModel {
      * converts the 4 houses into a hotel
      * @param c the tile the house is on
      */
-    private void buyHotel(Card c){
+    public void buyHotel(Card c){
         numOfHouses += 4;
         numOfHotels--;
         c.setHouses(0);
