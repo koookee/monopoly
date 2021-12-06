@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Jail">
+  <void property="cardType">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Card$CardType</class>
+    <string>jail</string>
+   </object>
+  </void>
+  <void property="color">
+   <object class="java.awt.Color">
+    <int>255</int>
+    <int>59</int>
+    <int>59</int>
+    <int>255</int>
+   </object>
+  </void>
+  <void property="name">
+   <string>Go to Jail</string>
+  </void>
+  <void property="position">
+   <int>23</int>
+  </void>
+ </object>
+</java>

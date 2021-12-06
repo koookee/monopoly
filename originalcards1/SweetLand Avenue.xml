@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Card">
+  <void property="cardType">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Card$CardType</class>
+    <string>property</string>
+   </object>
+  </void>
+  <void property="color">
+   <object class="java.awt.Color">
+    <int>214</int>
+    <int>223</int>
+    <int>36</int>
+    <int>255</int>
+   </object>
+  </void>
+  <void property="cost">
+   <int>260</int>
+  </void>
+  <void property="hotelCost">
+   <int>150</int>
+  </void>
+  <void property="houseCost">
+   <int>150</int>
+  </void>
+  <void property="name">
+   <string>SweetLand Avenue</string>
+  </void>
+  <void property="position">
+   <int>17</int>
+  </void>
+ </object>
+</java>

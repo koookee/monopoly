@@ -109,9 +109,9 @@ public class InternationalCards {
 
     public static void main(String[] args) {
         InternationalCards ic = new InternationalCards();
-        //ic.serializeOriginalToXML();
-       // ic.createCustomGameBoard();
-        //ic.serializeCustomToXML();
+        ic.serializeOriginalToXML();
+        ic.createCustomGameBoard();
+        ic.serializeCustomToXML();
         HashMap<Integer, Card> test = null;
         test = deserializeFromXML(new File("originalcards1\\"));
         for(Card c:test.values()){

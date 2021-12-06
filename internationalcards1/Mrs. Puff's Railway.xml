@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.12" class="java.beans.XMLDecoder">
+ <object class="Railroad">
+  <void property="cardType">
+   <object class="java.lang.Enum" method="valueOf">
+    <class>Card$CardType</class>
+    <string>railroad</string>
+   </object>
+  </void>
+  <void property="color">
+   <object class="java.awt.Color">
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>255</int>
+   </object>
+  </void>
+  <void property="cost">
+   <int>200</int>
+  </void>
+  <void property="name">
+   <string>Mrs. Puff&apos;s Railway</string>
+  </void>
+  <void property="position">
+   <int>15</int>
+  </void>
+ </object>
+</java>
