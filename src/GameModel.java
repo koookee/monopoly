@@ -226,7 +226,7 @@ public class GameModel {
                 setEnableRoll(true);
                 if (activePlayer.getNumTimeRolledDouble() == 3){
                     announceJail();
-                    setCurrentCard(21);
+                    setCurrentCard(8);
                     activePlayer.goToJail();
                     activePlayer.setNumTimeRolledDouble(-1);
                     setEnableRoll(false);
@@ -250,7 +250,6 @@ public class GameModel {
             ((Jail) currentCard).putInJail(activePlayer);
             if (dice1 == dice2) setEnableRoll(false);
             announceJail();
-            //disableBuyButton();
         }
         else if (currentCard.isOwned() && currentCard.getOwner()!= activePlayer) {
             if (!activePlayer.isBot()) {
@@ -392,14 +391,14 @@ public class GameModel {
 
 
 //         For debugging purposes (can make players move to specific tiles)
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter roll 1");
-//        int num = scanner.nextInt();
-//        dice1 = num;
-//        System.out.println("Enter roll 2");
-//        num = scanner.nextInt();
-//        dice2 = num;
-//        roll = dice1 + dice2;
+        Scanner scanner = new Scanner(System.in);
+       System.out.println("Enter roll 1");
+        int num = scanner.nextInt();
+        dice1 = num;
+        System.out.println("Enter roll 2");
+        num = scanner.nextInt();
+        dice2 = num;
+        roll = dice1 + dice2;
         activePlayer.setRolls(new int[] {dice1, dice2});
     }
     /**
@@ -520,8 +519,9 @@ public class GameModel {
     /**
      * Setter for Current Card.
      */
-    public void setCurrentCard(int i ) {
-        this.currentCard = gameBoard.get(i);
+    public void setCurrentCard(int i) {
+        currentCard = gameBoard.get(i);
+        //System.out.println(gameBoard.get(21));
     }
 
     /**
