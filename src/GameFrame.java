@@ -282,7 +282,7 @@ public class GameFrame extends JFrame implements GameView {
 
 
         rollButton.setEnabled(enableRoll);
-        rollButton.setActionCommand("roll"); //TODO fix the action command so its not a string
+        rollButton.setActionCommand("roll");
         rollButton.addActionListener(controller);
 
         buyButton.setEnabled(enableBuy);

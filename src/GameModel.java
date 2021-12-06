@@ -502,7 +502,6 @@ public class GameModel {
         c.setHouses(c.getHouses() + 1);
         c.setCost(c.getCost() + c.getHouseCost());
         activePlayer.setMoney(activePlayer.getMoney() - c.getHouseCost());
-        // TODO should change the method call
         for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
@@ -542,7 +541,6 @@ public class GameModel {
         c.setHotels(1);
         c.setCost(c.getCost() + c.getHotelCost());
         activePlayer.setMoney(activePlayer.getMoney() - c.getHotelCost());
-        // TODO should change the method call
         for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
