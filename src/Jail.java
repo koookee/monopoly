@@ -2,6 +2,11 @@ import java.awt.*;
 
 public class Jail extends Card{
 
+
+
+    public Jail(){
+
+    }
     /**
      * the constructor for the card Class
      * @param name the name of that card
