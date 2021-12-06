@@ -100,4 +100,8 @@ private GameModel model;
         System.out.println("JAILTIME CONTROLLER");
         JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
     }
+
+    public void announcePassGo(GameFrame frame, String message){
+        JOptionPane.showMessageDialog(frame, message, null, JOptionPane.PLAIN_MESSAGE);
+    }
 }

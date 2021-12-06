@@ -48,4 +48,6 @@ public interface GameView {
     void closeWindow();
 
     void closeBuyWindow();
+
+    void announcePassGo(GameEvent gameEvent);
 }

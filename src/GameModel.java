@@ -269,6 +269,13 @@ public class GameModel {
         }
 
          */
+        if(activePlayer.getPrevPosition() + (dice1 + dice2) > 30){
+            for (GameView v :
+                    views) {
+                v.announcePassGo(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+            }
+            this.activePlayer.setMoney(activePlayer.getMoney() + 200);
+        }
 
 
         if(activePlayer.getIsInJail() > 1){

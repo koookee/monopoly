@@ -551,6 +551,14 @@ public class GameFrame extends JFrame implements GameView {
         displayGUI();
     }
 
+    @Override
+    public void announcePassGo(GameEvent gameEvent) {
+        GameModel model = gameEvent.getModel();
+        CardController controller = new CardController(model);
+
+        controller.announcePassGo(this, "You passed go!\nYou Received $200!");
+    }
+
     /**
      * Asks the player if they want to buy a hotel
      * @param gameEvent is a game event that holds useful information
