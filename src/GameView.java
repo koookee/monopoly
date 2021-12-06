@@ -31,7 +31,7 @@ public interface GameView {
 
     void announcePaidBotRent(GameEvent gameEvent);
 
-    void enableBuyButton();
+    void enableBuyButton(Player p);
 
     void disableBuyButton();
 
