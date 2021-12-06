@@ -23,11 +23,11 @@ public class GameController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // System.out.println("Working");
+        //
         if (e.getActionCommand().equals("roll")){
             this.model.roll();
         }
-        else if(e.getActionCommand().equals("buy")){
+        else if(e.getActionCommand().equals("displayBuyOptions")){
             this.model.buy();
         }
         else if(e.getActionCommand().equals("next turn")){
@@ -38,6 +38,10 @@ public class GameController implements ActionListener {
         }
         else if(e.getActionCommand().equals("import")){
             this.model.importXML();
+        }
+        else { // action command in this case is the name of the property
+            this.model.confirmPurchase(e.getActionCommand());
+
         }
 
     }

@@ -5,7 +5,6 @@
 
 
 import java.awt.*;
-import java.beans.ExceptionListener;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.FileInputStream;
@@ -30,6 +29,15 @@ public class Player {
     private int numTimeRolledDouble;
     private boolean isActivePlayer;
     private int[] rolls;
+    private boolean hasRolled;
+    private PlayerNumber playerNumber;
+
+    public static enum PlayerNumber {
+        player1,
+        player2,
+        player3,
+        player4
+    }
 
     public Player(){}
 
@@ -51,6 +59,23 @@ public class Player {
         this.numTimeRolledDouble =0;
         isActivePlayer = false;
         rolls = new int[2];
+        hasRolled =false;
+    }
+
+    public PlayerNumber getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(PlayerNumber playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+    public void setPlayerNumber(int playerNumber) {
+        switch (playerNumber){
+            case 1: this.playerNumber = PlayerNumber.player1; return;
+            case 2: this.playerNumber = PlayerNumber.player2; return;
+            case 3: this.playerNumber = PlayerNumber.player3; return;
+            case 4: this.playerNumber = PlayerNumber.player4;
+        }
     }
 
     public void setName(String name) {
@@ -61,8 +86,8 @@ public class Player {
         return rolls;
     }
 
-    public void setRolls(int[] rolls) {
-        this.rolls = rolls;
+    public boolean isHasRolled() {
+        return hasRolled;
     }
 
     @Override
@@ -81,7 +106,17 @@ public class Player {
                 ", numTimeRolledDouble=" + numTimeRolledDouble +
                 ", isActivePlayer=" + isActivePlayer +
                 ", rolls=" + Arrays.toString(rolls) +
+                ", hasRolled=" + hasRolled +
+                ", playerPosition=" + playerNumber +
                 '}';
+    }
+
+    public void setHasRolled(boolean hasRolled) {
+        this.hasRolled = hasRolled;
+    }
+
+    public void setRolls(int[] rolls) {
+        this.rolls = rolls;
     }
 
     public boolean isActivePlayer() {

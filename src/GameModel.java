@@ -28,6 +28,7 @@ public class GameModel {
     private Card currentCard;
     private int numTimesRolledDouble;
     private boolean hasNotRolled;
+    private ArrayList<Card> buyArrOptions;
     private int numOfHouses;
     private int numOfHotels;
     int dice1;
@@ -43,7 +44,8 @@ public class GameModel {
         this.currTurn = 0;
         this.status = GameModel.Status.UNDECIDED;
         this.views = new ArrayList();
-        this.gameBoard = new HashMap<>();
+        this.gameBoard = new HashMap();
+        this.buyArrOptions = new ArrayList<>();
         this.players = new ArrayList<>();
         this.numTimesRolledDouble = 0;
         this.hasNotRolled = true;
@@ -51,17 +53,7 @@ public class GameModel {
         this.numOfHotels = 12;
     }
 
-    /**
-     * This method adds a player to our list of players
-     * We set the active player to the first player since they are Player 1
-     * @param name is the String of the name the player wants
-     */
-    private void addPlayer(String name){
-        players.add(new Player(name, false));
-        players.add(new AutoPlayer(name, true));
-        if(players.size()==1) activePlayer = players.get(0);
-        activePlayer.setActivePlayer(true);
-    }
+
 
     /**
      * This method creates the gameboard for the players
@@ -104,12 +96,14 @@ public class GameModel {
             for (GameView view : views) {
                 view.payJailFee(new GameEvent(this, status, currentCard, new int[]{0, 0}));
             }
+            updateStatus();
 
         }
         if(activePlayer.getIsInJail() == 3 ){
             announceJailTime();
             activePlayer.setIsInJail(0);
             activePlayer.setMoney(activePlayer.getMoney() - 50);
+            updateStatus();
         }
 
     }
@@ -143,7 +137,16 @@ public class GameModel {
                 playerLost = 1;
                 for(Card c : x.getProperties()){
                     c.setOwned(false);
+                    c.setHouses(0);
+                    c.setHotels(0);
                 }
+                for (GameView v :
+                        views) {
+                    v.announceBankruptcy(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                    v.removePlayerIcon(x);
+                }
+
+
 
             }
         }
@@ -161,6 +164,11 @@ public class GameModel {
         }
         if(currentPlayers == 1){
             status = Status.WINNER;
+            for (GameView v :
+                    views) {
+                v.announceWinner(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                v.closeWindow();
+            }
         }
 
         return numToReturn;
@@ -191,7 +199,7 @@ public class GameModel {
         if (activePlayer.getIsBot() && (activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3)){
             activePlayer.setIsInJail(0);
             activePlayer.setMoney(activePlayer.getMoney() - 50);
-            System.out.println(activePlayer.getMoney());
+            updateStatus();
         }
         if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3 && dice1!=dice2){
             currentCard = gameBoard.get(8);
@@ -200,7 +208,7 @@ public class GameModel {
             int current = this.activePlayer.getIsInJail();
             current += 1;
             this.activePlayer.setIsInJail(current);
-            System.out.println(activePlayer.getIsInJail());
+
         }
         else{
             activePlayer.setPrevPosition(activePlayer.getPosition());
@@ -209,6 +217,7 @@ public class GameModel {
         }
 
         if (dice1 == dice2){
+            activePlayer.setHasRolled(false);
             if(activePlayer.getIsInJail() != 0 && activePlayer.getIsInJail() < 3){
                 announceJailTime();
                 setEnableRoll(false);
@@ -232,50 +241,100 @@ public class GameModel {
     }
 
     public void roll(){
+        activePlayer.setHasRolled(true);
         rollDice();
-        System.out.println(activePlayer.getPrevPosition() + " "+ activePlayer.getPosition());
+        enableBuyButton();
         checkJailRoll();
-
 
         if(currentCard instanceof Jail){
             ((Jail) currentCard).putInJail(activePlayer);
             if (dice1 == dice2) setEnableRoll(false);
             announceJail();
+            //disableBuyButton();
         }
-        else if (currentCard.isOwned()) {
-            payRent(currentCard.getOwner(),currentCard);
+        else if (currentCard.isOwned() && currentCard.getOwner()!= activePlayer) {
+            if (!activePlayer.isBot()) {
+                for (GameView v :
+                        views) {
+                    v.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+                }
+                payRent(currentCard.getOwner(),currentCard);
+                updateStatus();
+            }
+
+        }
+        /*
+        else if (currentCard.getCost()==0 || currentCard.getCost() > activePlayer.getMoney()){
             disableBuyButton();
         }
-        else if (currentCard.getCost()==0){
-            disableBuyButton();
-        }
-        else enableBuyButton();
+
+         */
+
 
         if(activePlayer.getIsInJail() > 1){
             dice1 = 0;
             dice2 = 0;
         }
-
         updateViews(dice1,dice2);
+
+
 
     }
 
     public void buy(){
-        activePlayer.buyCard(currentCard);
-        views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        //if (activePlayer.getMoney() > currentCard.getCost()) {
+        //    activePlayer.buyCard(currentCard);
+        //    views.get(0).unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
+        //    disableBuyButton();
+        //}
+        clearBuyArrOptions();
+        addCardsToBuyArr();
+        for(GameView view : views) view.displayBuyArrOptions(buyArrOptions);
+    }
+
+    public void confirmPurchase(String cardName){
+        Card tile = getCard(cardName);
+
+        if (tile.isOwned() == false) buyProperty(); // No owner so purchase property
+        else if (tile.getHouses() == 4) buyHotel(tile); // Player has enough to buy a hotel
+        else if (tile.getHouses() < 4) buyHouse(tile); // Not enough to buy hotel but owns property
         disableBuyButton();
+    }
+
+    /**
+     * Clears the buyArrOptions ArrayList
+     */
+    private void clearBuyArrOptions(){
+        while (buyArrOptions.size() != 0) buyArrOptions.remove(0);
+    }
+
+    /**
+     * Adds all tiles (cards) on the board to the buyArrOptions ArrayList assuming they can be added
+     */
+    private void addCardsToBuyArr(){
+        if (checkIfCanBuyProperty()) buyArrOptions.add(currentCard);
+        for (Integer key: gameBoard.keySet()){
+            if (checkIfCanBuyHouse(gameBoard.get(key)) || checkIfCanBuyHotel(gameBoard.get(key))){
+                buyArrOptions.add(gameBoard.get(key));
+            }
+        }
     }
 
     public void nextTurn(){
         this.updateStatus();
         this.changeTurn();
         activePlayer.setNumTimeRolledDouble(0);
+        activePlayer.setHasRolled(false);
+
         setEnableRoll(true);
         disableBuyButton();
         updateViews(0,0);
 
-
+        for (GameView view : views) {
+            view.closeBuyWindow();
+        }
     }
+
     public void announceJailTime(){
         for(GameView view : views){
             view.announceJailTime(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
@@ -290,73 +349,42 @@ public class GameModel {
 
 
 
-    /**
-     * Determines what to do when a player lands on a card
-     */
-    private void landedOnCard(){
-        int result = currentCard.functionality(activePlayer);
-        for (GameView view : views) {
-            view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            if (result == 0) { // No owners
-                view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            } else if (result == 1) { // Owns property
-                if (currentCard.getHouses() < 4 && currentCard.getHotels() == 0 && checkIfCanBuyHouse()) view.askToBuyHouse(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                else if (currentCard.getHouses() == 4 && checkIfCanBuyHotel()) view.askToBuyHotel(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            }
-            else if (result == 2) { // Has to pay rent
-                view.ownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            } else if (result == 3){
-                activePlayer.goToJail();
-                view.handleGameStatusUpdate(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-                view.announceToJail(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
-            }
-        }
-    }
+
 
     private void botLandOnProperty() {
-        if(currentCard.isOwned()){
+
+        if(currentCard.isOwned() && currentCard.getOwner() != activePlayer){
             activePlayer.payRent(currentCard.getOwner(),currentCard);
             for(GameView view: views){
                 view.announcePaidBotRent(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
             }
 
-        }
-        else{
-            if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0){
-                activePlayer.buyCard(currentCard);
-                for(GameView view: views){
-                    view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
-                }
-
+        }else if(activePlayer.getMoney() > currentCard.getCost() && currentCard.getCost() != 0 && !currentCard.isOwned()){
+            activePlayer.buyCard(currentCard);
+            for(GameView view: views){
+                view.announceBoughtBotProperty(new GameEvent(this, status, currentCard, new int[]{dice1,dice2}));
             }
         }
     }
 
     public void botPlay() {
-
-
-
-
         roll();
-
         botLandOnProperty();
-        if (dice1 == dice2){
+        if (dice1 == dice2 && activePlayer.getNumTimeRolledDouble() <= 3){
             botPlay();
-            
         }
         else nextTurn();
-
-
     }
 
     private void rollDice() {
         dice1 = (int) (Math.random() * 6 + 1);
         dice2 = (int) (Math.random() * 6 + 1);
         roll = dice1 + dice2;
-        activePlayer.setRolls(new int[] {dice1, dice2});
-        
 
-//        // For debugging purposes (can make players move to specific tiles)
+
+
+
+//         For debugging purposes (can make players move to specific tiles)
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Enter roll 1");
 //        int num = scanner.nextInt();
@@ -365,6 +393,15 @@ public class GameModel {
 //        num = scanner.nextInt();
 //        dice2 = num;
 //        roll = dice1 + dice2;
+        activePlayer.setRolls(new int[] {dice1, dice2});
+    }
+    /**
+     * this method is used to check if the player can buy the property
+     * @return the boolean of whether the player can buy the property or not
+     */
+    private boolean checkIfCanBuyProperty(){
+        if (activePlayer.getMoney() > currentCard.getCost() && currentCard.isOwned() == false && currentCard.getCost() != 0) return true;
+        return false;
     }
 
 
@@ -373,16 +410,18 @@ public class GameModel {
      */
     public void buyProperty(){
         this.activePlayer.buyCard(currentCard);
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
-     * this method is used to buy a house for a player
+     * this method is used to see if a player can buy a house
+     * @param c the tile to check on
      * @return the boolean of whether the player can buy a house or not
      */
-    private boolean checkIfCanBuyHouse(){ // Check if player has enough funds before calling this method
+    private boolean checkIfCanBuyHouse(Card c){ // Check if player has enough funds before calling this method
         boolean ownsAllTiles = true;
         ArrayList<Card> cards = new ArrayList<>();
-        Color color = currentCard.getColor();
+        Color color = c.getColor();
 
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
@@ -396,33 +435,37 @@ public class GameModel {
         boolean allowedToBuyHouse = true;
         if (ownsAllTiles){
             for (Card card : cards){
-                if (currentCard.getHouses() - card.getHouses() > 0 || currentCard.getHouses() == 4) allowedToBuyHouse = false;
+                if (c.getHouses() - card.getHouses() > 0 || c.getHouses() == 4) allowedToBuyHouse = false;
             }
         }
 
-        if (numOfHouses == 0 || !ownsAllTiles || activePlayer.getMoney() < currentCard.getHouseCost()) allowedToBuyHouse = false;
+        if (numOfHouses == 0 || !ownsAllTiles || activePlayer.getMoney() < c.getHouseCost()) allowedToBuyHouse = false;
 
         return allowedToBuyHouse;
     }
 
     /**
      * Buys the house
+     * @param c the tile the house is on
      */
-    private void buyHouse(){
+    public void buyHouse(Card c){
         numOfHouses--;
-        currentCard.setHouses(currentCard.getHouses() + 1);
-        currentCard.setCost(currentCard.getCost() + currentCard.getHouseCost());
-        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHouseCost());
+        c.setHouses(c.getHouses() + 1);
+        c.setCost(c.getCost() + c.getHouseCost());
+        activePlayer.setMoney(activePlayer.getMoney() - c.getHouseCost());
+        // TODO should change the method call
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
-     * this method is used to buy a hotel for a player
+     * this method is used to see if a player can buy a hotel
+     * @param c the tile to check on
      * @return the boolean of whether the player can buy a hotel or not
      */
-    private boolean checkIfCanBuyHotel(){
+    private boolean checkIfCanBuyHotel(Card c){
         boolean canBuy = true;
         ArrayList<Card> cards = new ArrayList<>();
-        Color color = currentCard.getColor();
+        Color color = c.getColor();
 
         for (Integer integer : gameBoard.keySet()){
             Card card = gameBoard.get(integer);
@@ -435,20 +478,23 @@ public class GameModel {
             if (card.getHouses() != 4 && card.getHotels() == 0) canBuy = false;
         }
 
-        if (activePlayer.getMoney() < currentCard.getHotelCost() || numOfHotels == 0) canBuy = false;
+        if (activePlayer.getMoney() < c.getHotelCost() || numOfHotels == 0) canBuy = false;
         return canBuy;
     }
 
     /**
      * converts the 4 houses into a hotel
+     * @param c the tile the house is on
      */
-    private void buyHotel(){
+    private void buyHotel(Card c){
         numOfHouses += 4;
         numOfHotels--;
-        currentCard.setHouses(0);
-        currentCard.setHotels(1);
-        currentCard.setCost(currentCard.getCost() + currentCard.getHotelCost());
-        activePlayer.setMoney(activePlayer.getMoney() - currentCard.getHotelCost());
+        c.setHouses(0);
+        c.setHotels(1);
+        c.setCost(c.getCost() + c.getHotelCost());
+        activePlayer.setMoney(activePlayer.getMoney() - c.getHotelCost());
+        // TODO should change the method call
+        for(GameView view : views)  view.unownedProperty(new GameEvent(this, status, currentCard, new int[]{dice1, dice2}));
     }
 
     /**
@@ -457,6 +503,11 @@ public class GameModel {
      */
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    private Card getCard(String cardName){
+        for (Integer key: gameBoard.keySet()) if (gameBoard.get(key).getName().equals(cardName)) return gameBoard.get(key);
+        return null; // No card found
     }
 
     /**
@@ -501,13 +552,35 @@ public class GameModel {
         if(playerNum + botNum > 4 || (playerNum == 1 && botNum == 0)){
             return;
         }
-        for (int i = 0; i <playerNum; i++){
-            this.players.add(new Player("P"+(i+1), false));
+        int i = 0;
+        String name ="";
+        for (i = 0; i <playerNum; i++){
+
+
+            switch (i){
+                case 0: name = "Shoe"; break;
+                case 1: name = "Thimble"; break;
+                case 2: name = "Iron"; break;
+                case 3: name = "Hat"; break;
+            }
+            Player player = new Player(name, false);
+            player.setPlayerNumber(i+1);
+            this.players.add(player);
         }
         for(int j = 0; j < botNum; j++){
-            this.players.add(new AutoPlayer("Bot"+ (j+1),  true));
+            switch (i+j){
+
+                case 1: name = "Thimble Bot"; break;
+                case 2: name = "Iron Bot"; break;
+                case 3: name = "Hat Bot"; break;
+            }
+            Player autoPlayer = new AutoPlayer(name,  true);
+            autoPlayer.setPlayerNumber(j+i+1);
+            this.players.add(autoPlayer);
         }
         activePlayer = players.get(0);
+        activePlayer.setActivePlayer(true);
+
     }
 
     /**
@@ -517,6 +590,7 @@ public class GameModel {
      */
     public void payRent(Player owner, Card card) {
         this.activePlayer.payRent(owner, card);
+
     }
     // ---------------------------------------------------------------------------------
     /**
@@ -541,77 +615,39 @@ public class GameModel {
                 players) {
             p.serializeToXML("xml folder\\"+p.getName() +".xml");
         }
-        try{
-            DocumentBuilder builder = null;
-            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = builder.newDocument();
-            Element root = document.createElement("original");
-            for(int key : gameBoard.keySet()){
-
-                Card value = gameBoard.get(key);
-
-                Element newNode = document.createElement("entry");
-                Element newKey = document.createElement("key");
-                Element newValue = document.createElement("value");
-
-                newKey.setTextContent(key + "");
-
-
-                StringWriter sw = new StringWriter();
-
-                newValue.setTextContent(value.toString());
-
-                newNode.appendChild(newKey);
-                newNode.appendChild(newValue);
-
-                root.appendChild(newNode);
-
-            }
-            document.appendChild(root);
-
-            TransformerFactory y = TransformerFactory.newInstance();
-            Transformer transformer = y.newTransformer();
-            DOMSource source = new DOMSource(document);
-            FileWriter write = new FileWriter(new File("src/data.xml"));
-            StreamResult result = new StreamResult(write);
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt%7Dindent-amount", "4");
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            transformer.transform(source, result);
-            /*
-            Source source = new DOMSource(document);
-            File file = new File("data.xml");
-            Result result = new StreamResult(file);*/
-            //transformer.transform(source,result);
-
-
-        }catch(IOException | TransformerConfigurationException ex){
-            ex.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
+        for (GameView v :
+                views) {
+            v.setImportButtonEnable(true);
         }
     }
 
     public void importXML() {
 
+
         ArrayList<Player> importedPLayers = new ArrayList<>();
         setGameBoard(new File("originalcards1\\"));
         setEnableRoll(true);
+        boolean[] dontUpdate = new boolean[4];
+        setEnableRoll(false);
+
 
         int k = 0;
         for (Player p :
                 players) {
-
             p = Player.deserializeFromXML("xml folder\\" + p.getName() + ".xml");
+
+            dontUpdate[k] = p.getPosition() == players.get(k).getPosition();
+            if (p.getPosition() != players.get(k).getPosition())
+                p.setPrevPosition(players.get(k).getPosition());
+            if (!p.isHasRolled()) setEnableRoll(true);
+            else if (p.getRolls()[0] == p.getRolls()[1])setEnableRoll(true);
             System.out.println(p);
             importedPLayers.add(p);
             for (Card c :
                     p.getProperties()) {
                 gameBoard.put(c.getPosition(), c);
             }
-            k++;
+        k++;
         }
         players = importedPLayers;
 
@@ -619,54 +655,21 @@ public class GameModel {
             if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
             if (players.get(i).isActivePlayer()) {
                 activePlayer = players.get(i);
+                currTurn = i;
             }
-
-            views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
-        }
-    }
-    public void importPlayers(){
-        ArrayList<Player> importedPLayers = new ArrayList<>();
-        for (Player p :
-                players) {
-
-            p = Player.deserializeFromXML("xml folder\\"+p.getName() + ".xml");
-
-            importedPLayers.add(p);
-            for (Card c :
-                    p.getProperties()) {
-                gameBoard.put(c.getPosition(), c);
-            }
-
-        }
-        players = importedPLayers;
-
-        for (int i = 0; i < players.size(); i++) {
-            if (!gameBoard.get(players.get(i).getPosition()).isOwned()) enableBuyButton();
-            if (players.get(i).isActivePlayer()){
-                activePlayer = players.get(i);
-            }
-
-            views.get(0).updateFromImport(players.get(i),players.get(i).getRolls());
+            if (!dontUpdate[i] || players.get(i).getRolls()[0] == 0)
+                views.get(0).updateFromImport(players.get(i), players.get(i).getRolls());
         }
     }
 
 
 
 
-//        Player p = Player.deserializeFromXML("xml folder\\p1.xml");
-//        System.out.println(p);
 
 
 
-    /*
-    public static void main(String[] args) {
-        GameModel gameModel = new GameModel();
-        for (Card c :
-                gameModel.getGameBoard().values()) {
-            System.out.println(c.getCardType());
-        }
-    }
 
-     */
+
+
 
 }

@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,10 +18,10 @@ public class GameFrame extends JFrame implements GameView {
     private ArrayList<JLayeredPane> squares;
 
 
-    private final JLabel icon = new JLabel(new ImageIcon("boot.png"));
-    private final JLabel icon2 = new JLabel(new ImageIcon("pin.png"));
-    private final JLabel icon3 = new JLabel(new ImageIcon("iron.png"));
-    private final JLabel icon4 = new JLabel(new ImageIcon("hat.png"));
+    private final JLabel icon ;
+    private final JLabel icon2;
+    private final JLabel icon3;
+    private final JLabel icon4;
     private JButton rollButton;
 
     private JLabel[] icons;
@@ -36,13 +37,18 @@ public class GameFrame extends JFrame implements GameView {
     private JPanel playerPanel;
     private ArrayList<JPanel> squareBottomArr; // Will display information about who owns the card and how many houses/hotels it has
     private ArrayList<JButton> squareCenterArr; // Stores the buy buttons
-
+    private JFrame buyOptionsWindow;
     private JButton buyButton;
     private JButton pass;
+    private JButton importButton;
+    private boolean savePressed;
+    private boolean iconUpdated;
 
     private WelcomeController welcomeControl;
 
     private int[] startInformation;
+
+    private boolean hasImported;
 
 
     /**
@@ -50,6 +56,10 @@ public class GameFrame extends JFrame implements GameView {
      */
     public GameFrame() {
         super("Monopoly");
+        icon = new JLabel(new ImageIcon("boot.png"));
+        icon2 = new JLabel(new ImageIcon("pin.png"));
+        icon3 = new JLabel(new ImageIcon("iron.png"));
+        icon4 = new JLabel(new ImageIcon("hat.png"));
         this.model = new GameModel();
         this.squares = new ArrayList<>();
         this.squareBottomArr = new ArrayList<>();
@@ -60,6 +70,8 @@ public class GameFrame extends JFrame implements GameView {
         this.setSize(frameSize.width, frameSize.height - 20);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         enableRoll = true;
+        savePressed = false;
+        iconUpdated = false;
 
 
 
@@ -88,6 +100,7 @@ public class GameFrame extends JFrame implements GameView {
         icon4.setBounds(130,40, 50,50);
 
         enableBuy = false;
+        hasImported = false;
 
 
     }
@@ -257,12 +270,13 @@ public class GameFrame extends JFrame implements GameView {
         footerPanel.add(save);
 
 
-        JButton importButton = new JButton("import");
+        importButton = new JButton("import");
         footerPanel.add(importButton);
 
         save.setActionCommand("save");
         save.addActionListener(controller);
-        if (startInformation[1] == 1) importButton.setEnabled(false);
+        if (startInformation[1] == 1 && !savePressed) importButton.setEnabled(false);
+
         importButton.setActionCommand("import");
         importButton.addActionListener(controller);
 
@@ -272,7 +286,7 @@ public class GameFrame extends JFrame implements GameView {
         rollButton.addActionListener(controller);
 
         buyButton.setEnabled(enableBuy);
-        buyButton.setActionCommand("buy");
+        buyButton.setActionCommand("displayBuyOptions");
         buyButton.addActionListener(controller);
 
         pass.setEnabled(!enableRoll);
@@ -316,9 +330,10 @@ public class GameFrame extends JFrame implements GameView {
         }
     }
 
+    /*
     /**
      * Displays the buy button on each card the player owns
-     */
+
     public void displayBuyButtonOnCard(Player p){
         Map<Integer, Card> board = model.getGameBoard();
         for (Integer key : board.keySet()){                 // TEMPORARILY
@@ -329,11 +344,16 @@ public class GameFrame extends JFrame implements GameView {
         }
     }
 
+     */
+
     /**
      * Displays the GUI of the whole game
      */
     public void displayGUI() {
         this.setLayout(new BorderLayout());
+
+
+
         //this.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height ));
 
         this.mainPanel.revalidate();
@@ -347,7 +367,11 @@ public class GameFrame extends JFrame implements GameView {
         }
 
 
+
+
+
         this.revalidate();
+
         this.setVisible(true);
     }
 
@@ -359,14 +383,17 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void handleGameStatusUpdate(GameEvent e) {
         this.model = (GameModel) e.getSource();
-        
+
         getContentPane().remove(playerPanel);
 
         playerPanel = paintPlayerInfo(model.getActivePlayer(), e.getRoll());
 
         displayGUI();
 
-        updatePlayerIcon(model.getActivePlayer(), e.getRoll());
+        if(model.getActivePlayer().isPlaying() && !iconUpdated)
+            updatePlayerIcon(model.getActivePlayer(), e.getRoll());
+        else iconUpdated = !iconUpdated;
+
 
     }
     @Override
@@ -379,13 +406,36 @@ public class GameFrame extends JFrame implements GameView {
         if (p.isActivePlayer())
         playerPanel = paintPlayerInfo(p, roll);
 
+
         displayGUI();
+
+
 
 
         updatePlayerIcon(p, roll);
 
 
+    }
 
+    @Override
+    public void setImportButtonEnable(boolean b){
+        importButton.setEnabled(b);
+        savePressed = true;
+    }
+
+    @Override
+    public void removePlayerIcon(Player p) {
+        squares.get(p.getPrevPosition()).remove(icons[model.getPlayers().indexOf(p)]);
+        squares.get(p.getPrevPosition()).revalidate();
+        squares.get(p.getPrevPosition()).repaint();
+
+    }
+
+    @Override
+    public void closeWindow() {
+        this.setVisible(false);
+        this.dispose();
+        System.exit(0);
     }
 
     @Override
@@ -405,7 +455,7 @@ public class GameFrame extends JFrame implements GameView {
     public void enableBuyButton(Player p) {
         enableBuy = true;
         buyButton.setEnabled(true);
-        displayBuyButtonOnCard(p);
+
     }
     @Override
     public void disableBuyButton() {
@@ -423,6 +473,32 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    @Override
+    public void displayBuyArrOptions(ArrayList<Card> buyArrOptions) {
+        buyOptionsWindow = new JFrame("Buy Options");
+        buyOptionsWindow.setLayout(new BorderLayout());
+        JPanel grid = new JPanel(new GridLayout(buyArrOptions.size(), 2));
+        buyOptionsWindow.add(grid, BorderLayout.CENTER);
+        for (Card c : buyArrOptions){
+            GameController controller = new GameController(model);
+            String buyButtonName;
+            if (c.isOwned() == false) buyButtonName = "Buy property";
+            else if (c.getHouses() == 4) buyButtonName = "Buy hotel";
+            else buyButtonName = "Buy house";
+            JLabel nameAndCost = new JLabel("Name: " + c.getName() + " | Cost: " + c.getCost());
+            JButton button = new JButton(buyButtonName);
+            button.addActionListener(controller);
+            button.setActionCommand(c.getName());
+            grid.add(nameAndCost);
+            grid.add(button);
+        }
+        if (buyArrOptions.size() == 0) {
+            grid.add(new JLabel("Nothing to buy"));
+        }
+        buyOptionsWindow.setSize(600, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        buyOptionsWindow.setVisible(true);
+    }
 
     /**
      * Gives the player information about the property they landed on and the option to buy (if possible)
@@ -431,22 +507,9 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void unownedProperty(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
-//        CardController unowned = new CardController(model);
-//        Card card = gameEvent.getCard();
-//
-//        if(card.getCost() !=0 && model.getActivePlayer().getMoney() >= card.getCost()){
-//            if (card.getCardType() == Card.CardType.ultility){
-//                unowned.buyProperty(this,"You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-//                        "\nRent is dependent on your roll"+ "\nWould you like to purchase?");
-//            }else {
-//                unowned.buyProperty(this, "You landed on " + card.getName() + ". Cost is $" + card.getCost() +
-//                        "\nRent is $" + card.getRent() + "\nWould you like to purchase?");
-//            }
-//        }
-//
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
-
+        closeBuyWindow();
         displayGUI();
     }
 
@@ -459,13 +522,15 @@ public class GameFrame extends JFrame implements GameView {
         GameModel model = gameEvent.getModel();
         CardController owned = new CardController(model);
         Card card = gameEvent.getCard();
-
-        owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
-        model.payRent(card.getOwner(), card);
         getContentPane().remove(playerPanel);
         playerPanel = paintPlayerInfo(model.getActivePlayer(),gameEvent.getRoll());
 
         displayGUI();
+        updatePlayerIcon(model.getActivePlayer(),model.getActivePlayer().getRolls());
+        iconUpdated = true;
+
+        owned.payRent(this, "You landed on " + card.getName() + ". You must pay $" + card.getRent() + " to " + card.getOwner().getName());
+
     }
 
     /**
@@ -523,8 +588,10 @@ public class GameFrame extends JFrame implements GameView {
     public void announceBankruptcy(GameEvent gameEvent) {
         GameModel model = gameEvent.getModel();
         GameController control = new GameController(model);
-        control.bankruptcy(this, "P" + (model.getCurrTurn() + 1) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
+        control.bankruptcy(this, (model.getActivePlayer().getName()) + " has gone bankrupt sux 2 suk"); // Added + 1 because getCurrTurn returns 0 - 3
         squares.get(model.getActivePlayer().getPosition()).remove(icons[model.getPlayers().indexOf(model.getActivePlayer())]);
+        squares.get(model.getActivePlayer().getPosition()).revalidate();
+        squares.get(model.getActivePlayer().getPosition()).repaint();
     }
 
     /**
@@ -560,8 +627,9 @@ public class GameFrame extends JFrame implements GameView {
             control.announceJailTime(this, "You have served your sentence and have been fined $50");
         }
         else {
-            control.announceJailTime(this, "You did not roll a double! \nTime in Jail: "
-                    + model.getActivePlayer().getIsInJail());
+            control.announceJailTime(this, "You did not roll a double! \nYou Rolled: " + gameEvent.getRoll()[0]+
+                    " " + gameEvent.getRoll()[1] +
+                    "\nTime in Jail: " + model.getActivePlayer().getIsInJail());
         }
     }
 
@@ -573,6 +641,11 @@ public class GameFrame extends JFrame implements GameView {
 
     }
 
+    @Override
+    public void closeBuyWindow() {
+         if (buyOptionsWindow != null)
+             buyOptionsWindow.dispatchEvent(new WindowEvent(buyOptionsWindow, WindowEvent.WINDOW_CLOSING)); // Closes the window that has the options of buying a property, house, or hotel
+    }
 
     /**
      * Updates the player icons on the board GUI
@@ -583,49 +656,14 @@ public class GameFrame extends JFrame implements GameView {
         int position = activePlayer.getPosition();
         int prev = activePlayer.getPrevPosition();
 
-        if(roll[0] != 0 && roll[1] != 0){
-            if(activePlayer.getName().equals("P1")){
-                //squares.get(position).add(icon);
 
-                squares.get(prev).remove(icons[0]);
-                squares.get(position).add(icons[0],JLayeredPane.PALETTE_LAYER);
+
+        if(prev != position){
+            if (roll[0] != 0) {
+                squares.get(prev).remove(icons[model.getPlayers().indexOf(activePlayer)]);
+                squares.get(position).add(icons[model.getPlayers().indexOf(activePlayer)], JLayeredPane.PALETTE_LAYER);
                 squares.get(prev).revalidate();
                 squares.get(prev).repaint();
-
-
-            }else if(activePlayer.getName().equals("P2") ||activePlayer.getName().equals("Bot1")){
-
-                squares.get(prev).remove(icons[1]);
-                squares.get(position).add(icons[1],JLayeredPane.PALETTE_LAYER);
-                squares.get(prev).revalidate();
-                squares.get(prev).repaint();
-
-            }
-            else if (activePlayer.getName().equals("P3")||activePlayer.getName().equals("Bot2")) {
-
-                squares.get(prev).remove(icon3);
-                squares.get(position).add(icon3,JLayeredPane.PALETTE_LAYER);
-                squares.get(prev).revalidate();
-                squares.get(prev).repaint();
-
-//                if (position >botSquares-1 && position<=leftSquares-1 || position> topSquares-1 && position <= rightSquares-1){
-//                    icon3.setBounds(150,75,50,50);
-//                }else icon3.setBounds(150,100, 50,50);
-//                icon4.setBounds(1,100, 50,50);
-
-
-
-            }
-            else if (activePlayer.getName().equals("P4")|| position> topSquares-1 && position <= rightSquares-1
-                    ||activePlayer.getName().equals("Bot3")) {
-
-                squares.get(prev).remove(icon4);
-                squares.get(position).add(icon4,JLayeredPane.PALETTE_LAYER);
-                squares.get(prev).revalidate();
-                squares.get(prev).repaint();
-//                if (position >botSquares-1 && position<=leftSquares-1){
-//                    icon4.setBounds(1,60,50,50);
-//                }else icon4.setBounds(1,100, 50,50);
 
             }
         }
@@ -642,6 +680,16 @@ public class GameFrame extends JFrame implements GameView {
         GameFrame gameFrame = new GameFrame();
 
         gameFrame.displayGUI();
+        //I know this is bad and not the way to do things but have mercy plz 
+        try {
+            if (gameFrame.startInformation[1] == 0 && !gameFrame.hasImported) {
+                gameFrame.model.importXML();
+                gameFrame.hasImported = true;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
 
     }
