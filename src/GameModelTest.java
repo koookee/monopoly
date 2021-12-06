@@ -132,8 +132,17 @@ public class GameModelTest extends TestCase {
 
         gm.setCurrentCard(1);
         gm.buyHotel(gm.getCurrentCard());
+
         assertEquals(gm.getCurrentCard().getHotels(), 1);
         assertEquals(gm.getCurrentCard().getCost(), cardCost + gm.getCurrentCard().getHouseCost() * 4 + gm.getCurrentCard().getHotelCost());
         assertEquals(930, gm.getActivePlayer().getMoney());
     }
+
+
+    public void testToJail(){
+        gm.getActivePlayer().goToJail();
+        assertEquals(1 , gm.getActivePlayer().getIsInJail());
+        assertEquals(8, gm.getActivePlayer().getPosition());
+    }
+
 }
