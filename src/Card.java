@@ -298,7 +298,7 @@ public class Card {
             e.printStackTrace();
         }
     }
-    private static Card deserializeFromXML(String filename) {
+    public static Card deserializeFromXML(String filename) {
         Card cardToReturn = null;
         try{
             FileInputStream fis = new FileInputStream(filename);
